@@ -1,0 +1,37 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "afriat"
+version = "0.1.0"
+description = "Mechanistic moral and affective geometry of financial decisions in open-weight LLMs"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2.0",
+    "scipy>=1.13",
+    "matplotlib>=3.9",
+]
+
+[project.optional-dependencies]
+gpu = [
+    "torch>=2.4",
+    "transformers>=4.51",
+    "accelerate>=1.0",
+    "safetensors>=0.4",
+    "huggingface-hub>=0.28",
+]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+afriat-discover = "afriat.run_discovery:main"
+afriat-inequity = "afriat.inequity:main"
+afriat-valuation = "afriat.valuation:main"
+afriat-audit = "afriat.schema:main_audit"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
