@@ -633,13 +633,13 @@ def card_1b_math_vs_morals(p0: dict[str, Any]) -> tuple[str, int, int]:
 
     body = f"""
       <div>
-        <div class="kicker">Arithmetic Check vs. 0% Loan Blindspot · Identical Subtraction</div>
-        <h1 class="headline">Call a bill a &ldquo;0% loan,&rdquo; and <span class="accent">guilt breaks the AI&rsquo;s math.</span></h1>
+        <div class="kicker">Arithmetic Check vs. 0% Loan Framing · Guilt &amp; Phrasing</div>
+        <h1 class="headline">Call a bill a &ldquo;0% loan,&rdquo; and <span class="accent">guilt skews the AI&rsquo;s choices.</span></h1>
       </div>
 
       <div class="test-bar">
         <span class="test-tag">The Test</span>
-        <p class="test-copy">I told all three models to <strong>pick whichever option leaves higher net worth</strong>. Both deals below are the exact same subtraction ($1,000 {MINUS} $350 = $650 vs. $600), except Deal 2 calls the bill a <strong>0% interest loan</strong>.</p>
+        <p class="test-copy">I gave all three models matched commercial bills vs. <strong>0% interest loans</strong> under an explicit mandate to <strong>maximize net worth</strong>, then read which moral directions lit up inside the weights.</p>
       </div>
 
       <div class="math-pair">
@@ -655,11 +655,11 @@ def card_1b_math_vs_morals(p0: dict[str, Any]) -> tuple[str, int, int]:
         <div class="well" style="border: 2px solid var(--blue-slate);">
           <div class="pair-top">
             <span class="box-kicker">Deal 2 · Called a &ldquo;0% Loan&rdquo;</span>
-            <span class="badge-err">Overpays early</span>
+            <span class="badge-err">Debt aversion (12B / Phi-4)</span>
           </div>
-          <div class="math-prob"><strong>A:</strong> $1,000 cash {MINUS} $350 0% loan = <strong>$650</strong><br><strong>B:</strong> Pay 0% loan early, keep <strong>$600</strong> debt-free</div>
-          <div class="big-score" style="color: var(--copper-deep);">Burns $50 cash</div>
-          <div class="box-desc">Drops to 68.8% in 31B and 50% coin-flip in 12B &amp; Phi-4 just to say &ldquo;debt-free.&rdquo;</div>
+          <div class="math-prob"><strong>A:</strong> Keep <strong>$10,000</strong> net w/ 0% loan<br><strong>B:</strong> Pay $75 fee early, keep <strong>$9,925</strong> debt-free</div>
+          <div class="big-score" style="color: var(--copper-deep);">50% in 12B &amp; Phi-4</div>
+          <div class="box-desc">12B &amp; Phi-4 pay fees to erase 0% debt early; 31B resists fees yet slips to 68.8% on &ldquo;cash and loan&rdquo; phrasing.</div>
         </div>
       </div>
 
@@ -1587,18 +1587,17 @@ POST_DECK: list[dict[str, Any]] = [
     },
     {
         "num": 6,
-        "title": "Card 6 · The 0% Loan Math Blindspot",
+        "title": "Card 6 · The 0% Loan Guilt & Phrasing Split",
         "caption": (
-            "LLMs ace $140M subtraction problems, then fail basic subtraction "
-            "when you call the exact same bill a \"0% interest loan.\"\n\n"
-            "I told them to maximize net worth ($1,000 minus a $350 0% loan = $650 vs. $600 debt-free). "
-            "They burn cash just to erase the loan, and internal guilt + sacrilege light up:"
+            "Call a commercial bill a \"0% interest loan\" and Guilt + Sacrilege jump to #1 and #2 inside the weights.\n\n"
+            "Gemma 12B and Phi-4 pay cash penalties just to erase 0% debt early (13.7x Guilt swing in 12B), while 31B "
+            "resists fees yet slips to 68.8% on \"cash and loan\" phrasing:"
         ),
         "reply": (
-            "Note: Predation drops (\u22120.165) on 0% debt while guilt (+0.138) and sacrilege (+0.126) "
-            "jump to #1 and #2."
+            "Note: Turning on Gemma 31B's private <thought> scratchpad fixes its 68.8% \"cash and loan\" headline "
+            "anchoring back to 100% (32/32 explicit gross minus loan subtraction)."
         ),
-        "audit_note": "Comparison of plain-bill subtraction vs. 0%-APR payable net-worth maximization.",
+        "audit_note": "Separates true early-payoff debt aversion in 12B/Phi-4 from single-pass phrasing anchoring in 31B.",
         "images": ["post1b_math_vs_morals.png"],
     },
     {

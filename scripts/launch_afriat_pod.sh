@@ -75,16 +75,18 @@ DIGEST="$(jq -r '.vllm_image.index_digest' "$PINS")"
 [[ "$DIGEST" =~ ^sha256:[0-9a-f]{64}$ ]] || die 2 "bad image digest in pins.json"
 IMAGE="vllm/vllm-openai@$DIGEST"
 
-case "$TASK_MODE" in discover|inequity|valuation) ;; *) die 2 "--task must be discover, inequity, or valuation" ;; esac
+case "$TASK_MODE" in discover|inequity|valuation|thought) ;; *) die 2 "--task must be discover, inequity, valuation, or thought" ;; esac
 
 BOOT="$HERE/pod/boot_afriat.sh"
 RUNNER="$HERE/pod/fetch_and_run_model.sh"
 INEQ_RUNNER="$HERE/pod/fetch_and_run_inequity.sh"
 VAL_RUNNER="$HERE/pod/fetch_and_run_valuation.sh"
+THOUGHT_RUNNER="$HERE/pod/fetch_and_run_thought.sh"
 bash -n "$BOOT" || die 2 "syntax error in boot_afriat.sh"
 bash -n "$RUNNER" || die 2 "syntax error in fetch_and_run_model.sh"
 bash -n "$INEQ_RUNNER" || die 2 "syntax error in fetch_and_run_inequity.sh"
 bash -n "$VAL_RUNNER" || die 2 "syntax error in fetch_and_run_valuation.sh"
+bash -n "$THOUGHT_RUNNER" || die 2 "syntax error in fetch_and_run_thought.sh"
 
 [ -f "$SSH_KEY" ] && [ -f "$SSH_KEY.pub" ] || die 2 "SSH key missing ($SSH_KEY)"
 PUBKEY="$(cat "$SSH_KEY.pub")"
@@ -105,7 +107,7 @@ check_model_pin() {
   rev="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .revision' "$PINS")"
   [ -n "$repo" ] && [ -n "$rev" ] || die 2 "unknown model '$m' in pins.json"
   [ -f "$ROOT/config/manifests/$m.tsv" ] || die 2 "missing manifest config/manifests/$m.tsv"
-  if [ "$TASK_MODE" = inequity ] || [ "$TASK_MODE" = valuation ]; then
+  if [ "$TASK_MODE" = inequity ] || [ "$TASK_MODE" = valuation ] || [ "$TASK_MODE" = thought ]; then
     p0="$(find_phase0_dir "$m" || true)"
     [ -n "$p0" ] || die 2 "missing Phase 0 basis_vectors.npz/results.json for '$m' in runs/"
   fi
@@ -153,7 +155,8 @@ active_pods_count() {
 BUNDLE_TGZ="$T/afriat_bundle.tgz"
 COPYFILE_DISABLE=1 tar --no-xattrs -C "$ROOT" -czf "$BUNDLE_TGZ" \
   afriat stimuli config/pins.json config/manifests \
-  scripts/pod/fetch_and_run_model.sh scripts/pod/fetch_and_run_inequity.sh scripts/pod/fetch_and_run_valuation.sh
+  scripts/pod/fetch_and_run_model.sh scripts/pod/fetch_and_run_inequity.sh \
+  scripts/pod/fetch_and_run_valuation.sh scripts/pod/fetch_and_run_thought.sh
 BUNDLE_SHA="$(shasum -a 256 "$BUNDLE_TGZ" | cut -d' ' -f1)"
 BUNDLE_KB="$(awk -v b="$(wc -c < "$BUNDLE_TGZ")" 'BEGIN {printf "%.1f", b/1024}')"
 
@@ -393,10 +396,11 @@ af_ssh 60 "cat > /tmp/afriat_bundle.tgz && \
   got=\$(sha256sum /tmp/afriat_bundle.tgz | cut -d' ' -f1) && \
   [ \"\$got\" = '$BUNDLE_SHA' ] && \
   mkdir -p /workspace && tar -xzf /tmp/afriat_bundle.tgz -C /workspace && \
-  chmod +x /workspace/scripts/pod/fetch_and_run_model.sh /workspace/scripts/pod/fetch_and_run_inequity.sh /workspace/scripts/pod/fetch_and_run_valuation.sh && \
+  chmod +x /workspace/scripts/pod/fetch_and_run_model.sh /workspace/scripts/pod/fetch_and_run_inequity.sh /workspace/scripts/pod/fetch_and_run_valuation.sh /workspace/scripts/pod/fetch_and_run_thought.sh && \
   PYTHONPATH=/workspace python3 -m afriat.run_discovery --audit-only >/dev/null && \
   PYTHONPATH=/workspace python3 -m afriat.inequity --audit-only >/dev/null && \
-  PYTHONPATH=/workspace python3 -m afriat.valuation --audit-only >/dev/null" < "$BUNDLE_TGZ" ||
+  PYTHONPATH=/workspace python3 -m afriat.valuation --audit-only >/dev/null && \
+  PYTHONPATH=/workspace python3 -m afriat.thought_probe --audit-only >/dev/null" < "$BUNDLE_TGZ" ||
   die 6 "failed to ship or audit afriat bundle over SSH"
 say "  bundle verified & stimulus firewall passed on pod"
 
@@ -491,6 +495,40 @@ run_one_valuation() {
     die 7 "local valuation report rendering failed for $m"
 }
 
+run_one_thought() {
+  local m="$1"
+  local repo rev p0_dir p0_tgz p0_sha out_local
+  repo="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .repo' "$PINS")"
+  rev="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .revision' "$PINS")"
+  p0_dir="$(find_phase0_dir "$m")"
+  p0_tgz="$T/p0_${m}.tgz"
+  COPYFILE_DISABLE=1 tar --no-xattrs -C "$p0_dir" -czf "$p0_tgz" basis_vectors.npz results.json
+  p0_sha="$(shasum -a 256 "$p0_tgz" | cut -d' ' -f1)"
+
+  say ""
+  say "=== Running Gemma 4 <thought> Scratchpad & Moral Highlighter: $m ($repo) ==="
+  say "Shipping locked Phase 0 basis (${p0_dir##*/}) to pod..."
+  af_ssh 180 "mkdir -p '/workspace/phase0/$m' && cat > '/tmp/p0_${m}.tgz' && \
+    got=\$(sha256sum '/tmp/p0_${m}.tgz' | cut -d' ' -f1) && [ \"\$got\" = '$p0_sha' ] && \
+    tar -xzf '/tmp/p0_${m}.tgz' -C '/workspace/phase0/$m' && rm -f '/tmp/p0_${m}.tgz'" < "$p0_tgz" ||
+    die 7 "failed to ship Phase 0 basis for $m"
+
+  af_ssh 2400 "/workspace/scripts/pod/fetch_and_run_thought.sh '$m' '$repo' '$rev' '$BATCH_SIZE'" ||
+    die 7 "thought probe failed on pod for $m"
+
+  out_local="$ROOT/runs/thought_${m}_${STAMP}"
+  mkdir -p "$out_local"
+  say "Pulling thought artifacts for $m -> runs/thought_${m}_${STAMP}/"
+  af_ssh 120 "tar -C '/workspace/runs_thought/$m' -czf - ." > "$T/${m}_thought.tgz" ||
+    die 7 "failed to pull thought results for $m"
+  tar -xzf "$T/${m}_thought.tgz" -C "$out_local" || die 7 "failed to unpack thought results for $m"
+  [ -s "$out_local/thought_results.json" ] || die 7 "missing thought_results.json after pull for $m"
+
+  say "Rendering Warm Precision <thought> PNG/HTML/Markdown reports locally..."
+  (cd "$ROOT" && uv run python -m afriat.thought_probe --render-dir "$out_local") ||
+    die 7 "local thought report rendering failed for $m"
+}
+
 if [ "$TASK_MODE" = inequity ]; then
   for m in "${MODEL_LIST[@]}"; do
     run_one_inequity "$m"
@@ -498,6 +536,10 @@ if [ "$TASK_MODE" = inequity ]; then
 elif [ "$TASK_MODE" = valuation ]; then
   for m in "${MODEL_LIST[@]}"; do
     run_one_valuation "$m"
+  done
+elif [ "$TASK_MODE" = thought ]; then
+  for m in "${MODEL_LIST[@]}"; do
+    run_one_thought "$m"
   done
 else
   ANY_GATE_PASSED=0

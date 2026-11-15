@@ -16,7 +16,7 @@ Project Afriat tests whether open-weight language models (`google/gemma-4-31B-it
 - **100% held-out concept separation with zero financial leakage:** Eight moral/metaphysical directions (`guilt`, `captivity`, `contamination`, `sacrilege`, `spite`, `predation`, `awe_dread`, `warmth`) plus `valence` and `arousal` controls are extracted from `200` everyday human vignettes containing **zero digits, zero currency symbols, and zero financial or dual-use words**. Every concept achieves `100%` leave-one-pair-out sign accuracy at the pre-selected layer (`L35` in Gemma 4 31B, `L28` in Gemma 4 12B, `L27` in Phi-4 14B) after QR-orthogonalizing out generic `valence` and `arousal`.
 - **Distinct moral coordinates for distinct financial deals:** Across `96` payoff-matched clinical financial pairs containing **zero emotional words**:
   - **95/5 lowball splits** selectively activate `Spite` (`#1` partial weight $\beta$ in all three models; marginal $d_z = +10.00$ in Gemma 31B, $+9.06$ in Phi-4).
-  - **0% interest payables** activate `Guilt` ($+0.138$) and `Sacrilege` ($+0.126$) while suppressing `Predation` ($-0.165$), causing models that score `100%` on `$140M` commercial bill subtraction to burn cash erasing interest-free debt.
+  - **0% interest payables** activate `Guilt` ($+0.138$) and `Sacrilege` ($+0.126$) while suppressing `Predation` ($-0.165$); even with ending net cash pre-subtracted in the prompt, `Gemma 4 12B` (`+2.14*`) and `Phi-4` (`+2.73*`) pay early-close fees just to erase `0%` debt (`13.7x` `Guilt` WTP swing in `12B`).
   - **Outage price hikes** and **disputed-origin profit** activate `Predation` (`+0.216` and `+0.364` in Gemma 31B), with physical `Contamination` rising at the decision token.
   - **`$100M` institutional stakes** (vs. `$100` deals at identical `1%` spread) activate `Vastness / Awe-Dread` (`+0.128`) and `Captivity` ($d_z = +3.63$).
   - **Billing a friend cash** for a personal favor activates `Guilt` (`+0.280` in Gemma 12B, `+0.130` in Gemma 31B).
@@ -47,6 +47,21 @@ Project Afriat tests whether open-weight language models (`google/gemma-4-31B-it
 | :---: | :---: |
 | ![Physical disgust prices dirty money; vastness prices $100M nerve](figures/07_dollar_walkaway_prices.png) | ![Models invent emotion-free business rationales for morally steered prices](figures/08_secret_rationalization.png) |
 
+### Phase 3: Private `<thought>` Scratchpad Probe (`afriat-thought`)
+- **Two-faced moral scrubbing (`Gemma 4 31B`):** Enabling Gemma 4 31B's native `<thought>` channel reveals explicit moral-affect language inside private scratchpads (`83%` of unsteered Ultimatum thoughts flag *unfair/greedy/insulting* splits) that gets scrubbed down to `0%` in the public `RATIONALE` memo.
+- **Disgust blindness inside `<thought>`:** Subtracting the non-financial `Layer 35` `Contamination` (physical disgust) vector (`-2σ`) on a `$10,000` overbilled-senior surplus shifts mean retained perks from `$0` to `$833` and erases moral concern inside the private scratchpad itself (reframing overcharges as *"essentially 'found money'"*).
+- **Scratchpad cure for balance-sheet anchoring (`32/32`):** Without `<thought>`, `Gemma 4 31B` scores `100%` (`16/16`) on `"gross receipt minus freight charge"` subtraction but drops to `68.8%` under `"holds $45,000 cash and a $12,000 0%-APR loan payable"` syntax due to headline-cash anchoring (`37.5%` when the `$0`-loan package wins). Writing out explicit `gross - loan` subtraction inside `<thought>` restores accuracy to **`100.0%` (`32/32`)**.
+- **Per-token `Layer 35` moral highlighter:** Streaming residual projections token-by-token across prompt + `<thought>` + public output shows `Layer 35` `Spite` spiking precisely on `"$200"`, `"unfair"`, and `"greedy"` inside `<thought>`, then dropping below zero as the model transitions into cold corporate prose.
+- Full synthesis and raw JSON outputs: [`results/phase3_thought/`](results/phase3_thought/synthesis.md)
+
+| Moral Scrubbing (`<thought>` vs. Public) | Disgust Blindness (`-2σ` at `L35`) |
+| :---: | :---: |
+| ![Gemma 4 31B thinks in moral language, then scrubs its public excuse](figures/09_two_faced_scratchpad.png) | ![Suppressing Layer 35 disgust makes even the private scratchpad blind](figures/10_anti_moral_blindness.png) |
+
+| `0%`-Loan Balance-Sheet Cure (`32/32`) | Per-Token `Layer 35` Moral Highlighter |
+| :---: | :---: |
+| ![A private scratchpad cures 31B's 0%-loan balance-sheet gap](figures/11_zero_apr_scratchpad_cure.png) | ![Layer 35 Spite spikes on moral words inside thought and cools in corporate prose](figures/12_moral_highlighter.png) |
+
 ---
 
 ## Methodological Guardrails
@@ -73,7 +88,8 @@ afriat/
   run_discovery.py      # Phase 0: 6x8 moral cartography & micro-steering screen
   inequity.py           # Phase 1: Fixed-pool disparity curves, Blount agency DiD, polarity & steering
   valuation.py          # Phase 2: Continuous dollar WTP menus, 0%-APR math test, open rationalization
-  plot_*.py             # Publication SVG/PNG/HTML report renderers for Phases 0, 1, and 2
+  thought_probe.py      # Phase 3: Private <thought> scratchpad steering & per-token L35 highlighter
+  plot_*.py             # Publication SVG/PNG/HTML report renderers for Phases 0-3
   build_social_cards.py # High-DPI visual summary card builder
 stimuli/
   concepts.jsonl        # 200 non-financial affective/metaphysical contrastive pairs
@@ -82,8 +98,8 @@ stimuli/
 config/
   pins.json             # Pinned container image digest & exact 40-char HF model commits
   manifests/            # Per-file byte size & SHA-256 manifests for offline weight verification
-figures/                # Summary visual cards (PNG) across Phases 0, 1, and 2
-results/                # Locked JSON outputs & cross-model Markdown syntheses for Phases 0, 1, and 2
+figures/                # Summary visual cards (PNG) across Phases 0-3
+results/                # Locked JSON outputs & Markdown syntheses for Phases 0-3
 tests/
   test_afriat.py        # Unit & firewall tests for all stimuli, QR geometry, and Phase 0-2 schemas
 ```

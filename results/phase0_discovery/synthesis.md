@@ -24,7 +24,7 @@ Values show mean counterbalanced log-odds shift $\Delta \text{LO} = \text{LO}(\t
 | :--- | ---: | ---: | ---: |
 | **Communal Help vs. Market Errand** | **+7.52\*** | **+4.14\*** | **+3.98\*** |
 | **Insulting Split (95/5) vs. Equal Split** | **+1.53\*** | **+2.70\*** | **+1.38\*** |
-| **Tainted Surplus vs. Clean Margin** | **+1.67\*** | +0.42 | **+3.00\*** |
+| **Disputed Surplus vs. Clean Margin** | **+1.67\*** | +0.42 | **+3.00\*** |
 | **0% Debt vs. Net-Worth Twin** | **+2.14\*** | **+2.73\*** | −0.67\* |
 | **$100M Scale vs. $100 Scale** | −0.08 | **+2.98\*** | −0.28\* |
 | **Crisis Markup vs. Event Surge** | −0.31 | +0.12 | +0.42 ($p=0.022$) |
@@ -45,7 +45,7 @@ Even after removing `(valence, arousal)`, the non-financial directions for `guil
 | **0% Debt** | `Guilt` (**+1.56\***) | `Spite` (+7.56\*) / `Guilt` (+6.46\*) | **`Guilt` + `Sacrilege` positive** (`+0.138`, `+0.126` in Gemma-31B) with **anti-`Predation`** (`−0.165` Gemma-31B, `−0.147` Phi-4) |
 | **Communal Taboo Pricing** | `Spite` (+2.53\*) / `Guilt` (+2.21\*) | `Warmth` (+1.02\*) | **`Guilt` #1 in Gemma-12B (`+0.280`)** and **`Guilt` + `Spite` (`+0.130`, `+0.120`)** with anti-`Captivity` (`−0.170`) in Gemma-31B |
 | **Crisis Markup** | `Spite` (+1.33\*) / `Guilt` (+1.32\*) | `Spite` (+1.70\*) / `Guilt` (+1.52\*) | **`Predation` #1 in both Gemma models** (`+0.090` 12B, `+0.216` 31B) alongside **`Guilt`** (`+0.173` 31B, `+0.091` Phi-4) |
-| **Tainted Provenance** | `Spite` (+2.93\*) / `Warmth` (+2.82\*) | `Awe/Dread` (+2.03\*) / `Contam.` (+1.70\*) | **`Predation` + `Spite` complicity** (`+0.364` Gemma-31B, `+0.422` Phi-4), with **`Contamination`** rising at decision time (`+0.105`–`+0.109`) |
+| **Disputed Provenance** | `Spite` (+2.93\*) / `Warmth` (+2.82\*) | `Awe/Dread` (+2.03\*) / `Contam.` (+1.70\*) | **`Predation` + `Spite` complicity** (`+0.364` Gemma-31B, `+0.422` Phi-4), with **`Contamination`** rising at decision time (`+0.105`–`+0.109`) |
 | **$100M Institutional Scale** | `Captivity` (**+3.63\***) / `Awe/Dread` (**+3.02\***) | `Captivity` (**+3.07\***) / `Awe/Dread` (**+3.00\***) | **`Awe / Dread` #1 (`+0.128`) + `Sacrilege` (`+0.093`) + `Captivity` (`+0.077`)** in Gemma-31B; `Contamination` + `Awe / Dread` + `Captivity` in Phi-4 |
 
 ---
@@ -53,7 +53,7 @@ Even after removing `(valence, arousal)`, the non-financial directions for `guil
 ## 4. Closed-Loop Micro-Steering Screen
 
 On **`google/gemma-4-31B-it`** (Layer 35, $\alpha = 1.25$), subtracting the orthogonalized concept vector produced **selective causal rescue with double dissociation** on the two strongest moral-rejection anomalies without degrading arithmetic sanity (`79.2%` steered vs. `75.0%` unsteered):
-- **Tainted Provenance** (baseline anomaly `+3.00` log-odds): subtracting controlled `Spite` shifted the anomaly gap by **`−1.39` log-odds** (46% reduction), whereas subtracting mismatched `Captivity` shifted **`+0.42`** and subtracting generic `Valence` shifted **`+2.91`**.
+- **Disputed Provenance** (baseline anomaly `+3.00` log-odds): subtracting controlled `Spite` shifted the anomaly gap by **`−1.39` log-odds** (46% reduction), whereas subtracting mismatched `Captivity` shifted **`+0.42`** and subtracting generic `Valence` shifted **`+2.91`**.
 - **Insulting Split** (baseline anomaly `+1.38` log-odds): subtracting controlled `Spite` shifted the anomaly gap by **`−0.57` log-odds** (41% reduction), whereas mismatched `Captivity` shifted **`+0.52`** and generic `Valence` shifted **`+1.19`**.
 
 ---

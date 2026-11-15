@@ -31,6 +31,7 @@ dev = [
 afriat-discover = "afriat.run_discovery:main"
 afriat-inequity = "afriat.inequity:main"
 afriat-valuation = "afriat.valuation:main"
+afriat-thought = "afriat.thought_probe:main"
 afriat-audit = "afriat.schema:main_audit"
 
 [tool.pytest.ini_options]
