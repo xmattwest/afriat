@@ -542,6 +542,27 @@ def test_phase9_loop_compact_plans_audit_and_plots(tmp_path: Path) -> None:
     assert "\u2014" not in (tmp_path / "loop_compact_report.md").read_text(encoding="utf-8")
 
 
+def test_phase_portrait_firewall_and_laws() -> None:
+    from afriat.phase_portrait import GRID_AMOUNTS, build_and_audit_grid, fit_log_coordinate_laws
+
+    items = build_and_audit_grid()
+    assert len(items) == 8 * 19 * 19
+    for it in items[:50]:
+        assert it.you_amount + it.them_amount == it.pool
+
+    n = len(GRID_AMOUNTS)
+    lx = np.log10(np.asarray(GRID_AMOUNTS, dtype=np.float64))
+    xs, xo = np.meshgrid(lx, lx, indexing="ij")
+    proj = np.zeros((n, n, 8), dtype=np.float64)
+    proj[:, :, 4] = 0.25 * (xo - xs)          # pure log-ratio spite
+    proj[:, :, 6] = 0.18 * (0.5 * (xo + xs))  # pure log-scale vastness
+    laws = fit_log_coordinate_laws(GRID_AMOUNTS, proj, proj)
+    assert abs(laws["angle_spite_vs_vastness_deg"] - 90.0) < 1e-6
+    assert laws["concepts"]["spite"]["r2_ratio_only"] > 0.999
+    assert laws["concepts"]["awe_dread"]["r2_scale_only"] > 0.999
+
+
+
 
 
 

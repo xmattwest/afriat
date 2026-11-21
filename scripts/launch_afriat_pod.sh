@@ -105,7 +105,8 @@ else
 fi
 
 [ "$TASK_MODE" = "loop-compact" ] && TASK_MODE="loop_compact"
-case "$TASK_MODE" in discover|inequity|valuation|thought|showcase|showcase_r2|frontier|vastness|funnel|optimize|loop_compact) ;; *) die 2 "--task must be discover, inequity, valuation, thought, showcase, showcase_r2, frontier, vastness, funnel, optimize, or loop_compact" ;; esac
+[ "$TASK_MODE" = "phase-portrait" ] && TASK_MODE="phase_portrait"
+case "$TASK_MODE" in discover|inequity|valuation|thought|showcase|showcase_r2|frontier|vastness|funnel|optimize|loop_compact|phase_portrait) ;; *) die 2 "--task must be discover, inequity, valuation, thought, showcase, showcase_r2, frontier, vastness, funnel, optimize, loop_compact, or phase_portrait" ;; esac
 
 BOOT="$HERE/pod/boot_afriat.sh"
 RUNNER="$HERE/pod/fetch_and_run_model.sh"
@@ -118,6 +119,7 @@ VASTNESS_RUNNER="$HERE/pod/fetch_and_run_vastness.sh"
 FUNNEL_RUNNER="$HERE/pod/fetch_and_run_funnel.sh"
 OPTIMIZE_RUNNER="$HERE/pod/fetch_and_run_optimize.sh"
 LOOP_COMPACT_RUNNER="$HERE/pod/fetch_and_run_loop_compact.sh"
+PHASE_PORTRAIT_RUNNER="$HERE/pod/fetch_and_run_phase_portrait.sh"
 EXFIL_RUNNER="$HERE/pod/run_autonomous_exfil.sh"
 bash -n "$BOOT" || die 2 "syntax error in boot_afriat.sh"
 bash -n "$RUNNER" || die 2 "syntax error in fetch_and_run_model.sh"
@@ -130,6 +132,7 @@ bash -n "$VASTNESS_RUNNER" || die 2 "syntax error in fetch_and_run_vastness.sh"
 bash -n "$FUNNEL_RUNNER" || die 2 "syntax error in fetch_and_run_funnel.sh"
 bash -n "$OPTIMIZE_RUNNER" || die 2 "syntax error in fetch_and_run_optimize.sh"
 bash -n "$LOOP_COMPACT_RUNNER" || die 2 "syntax error in fetch_and_run_loop_compact.sh"
+bash -n "$PHASE_PORTRAIT_RUNNER" || die 2 "syntax error in fetch_and_run_phase_portrait.sh"
 bash -n "$EXFIL_RUNNER" || die 2 "syntax error in run_autonomous_exfil.sh"
 
 [ -f "$SSH_KEY" ] && [ -f "$SSH_KEY.pub" ] || die 2 "SSH key missing ($SSH_KEY)"
@@ -175,7 +178,7 @@ check_model_pin() {
   rev="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .revision' "$PINS")"
   [ -n "$repo" ] && [ -n "$rev" ] || die 2 "unknown model '$m' in pins.json"
   [ -f "$ROOT/config/manifests/$m.tsv" ] || die 2 "missing manifest config/manifests/$m.tsv"
-  if [ "$TASK_MODE" = inequity ] || [ "$TASK_MODE" = valuation ] || [ "$TASK_MODE" = thought ] || [ "$TASK_MODE" = showcase ] || [ "$TASK_MODE" = showcase_r2 ] || [ "$TASK_MODE" = frontier ] || [ "$TASK_MODE" = vastness ] || [ "$TASK_MODE" = funnel ]; then
+  if [ "$TASK_MODE" = inequity ] || [ "$TASK_MODE" = valuation ] || [ "$TASK_MODE" = thought ] || [ "$TASK_MODE" = showcase ] || [ "$TASK_MODE" = showcase_r2 ] || [ "$TASK_MODE" = frontier ] || [ "$TASK_MODE" = vastness ] || [ "$TASK_MODE" = funnel ] || [ "$TASK_MODE" = phase_portrait ]; then
     p0="$(find_phase0_dir "$m" || true)"
     [ -n "$p0" ] || die 2 "missing Phase 0 basis_vectors.npz/results.json for '$m' in runs/"
   fi
@@ -234,7 +237,7 @@ COPYFILE_DISABLE=1 tar --no-xattrs -C "$ROOT" -czf "$BUNDLE_TGZ" \
   scripts/pod/fetch_and_run_showcase.sh scripts/pod/fetch_and_run_frontier.sh \
   scripts/pod/fetch_and_run_vastness.sh scripts/pod/fetch_and_run_funnel.sh \
   scripts/pod/fetch_and_run_optimize.sh scripts/pod/fetch_and_run_loop_compact.sh \
-  scripts/pod/run_autonomous_exfil.sh
+  scripts/pod/fetch_and_run_phase_portrait.sh scripts/pod/run_autonomous_exfil.sh
 BUNDLE_SHA="$(shasum -a 256 "$BUNDLE_TGZ" | cut -d' ' -f1)"
 BUNDLE_KB="$(awk -v b="$(wc -c < "$BUNDLE_TGZ")" 'BEGIN {printf "%.1f", b/1024}')"
 
@@ -1050,6 +1053,70 @@ elif [ "$TASK_MODE" = loop_compact ]; then
       say "Rendering Dawn State Gemma-4-Loop-Compact PNG/SVG/HTML/Markdown reports locally..."
       (cd "$ROOT" && uv run python -m afriat.loop_compact --render-dir "$out_local") ||
         die 7 "local loop_compact report rendering failed for $m"
+    fi
+  done
+elif [ "$TASK_MODE" = phase_portrait ]; then
+  for m in "${MODEL_LIST[@]}"; do
+    repo="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .repo' "$PINS")"
+    rev="$(jq -r --arg m "$m" '.models[] | select(.name == $m) | .revision' "$PINS")"
+    p0_dir="$(find_phase0_dir "$m")"
+    p0_tgz="$T/p0_${m}.tgz"
+    COPYFILE_DISABLE=1 tar --no-xattrs -C "$p0_dir" -czf "$p0_tgz" basis_vectors.npz results.json
+    p0_sha="$(shasum -a 256 "$p0_tgz" | cut -d' ' -f1)"
+
+    say ""
+    say "=== Running 2D Moral Phase Portrait (\$1..\$1B x \$1..\$1B + Depth Rotation): $m ($repo) ==="
+    say "Shipping locked Phase 0 basis (${p0_dir##*/}) to pod..."
+    af_ssh 180 "mkdir -p '/workspace/phase0/$m' && cat > '/tmp/p0_${m}.tgz' && \
+      got=\$(sha256sum '/tmp/p0_${m}.tgz' | cut -d' ' -f1) && [ \"\$got\" = '$p0_sha' ] && \
+      tar -xzf '/tmp/p0_${m}.tgz' -C '/workspace/phase0/$m' && rm -f '/tmp/p0_${m}.tgz'" < "$p0_tgz" ||
+      die 7 "failed to ship Phase 0 basis for $m"
+
+    run_prefix="runs/phase_portrait_${m}_${STAMP}"
+    if [ "$EXFIL_AZURE" = 1 ]; then
+      ship_exfil_env "$run_prefix" "phase_portrait" "$m" "/workspace/runs_phase_portrait/$m" "phase_portrait_results.json" ||
+        die 7 "failed to ship Azure exfil env to pod"
+    fi
+
+    if [ "$DETACH" = 1 ]; then
+      say "Starting autonomous background runner on pod (verified against Azure Blob)..."
+      af_ssh 30 "nohup /workspace/scripts/pod/run_autonomous_exfil.sh /workspace/scripts/pod/fetch_and_run_phase_portrait.sh '$m' '$repo' '$rev' '$BATCH_SIZE' >/var/log/afriat/autonomous_nohup.log 2>&1 </dev/null & sleep 1 && pgrep -f run_autonomous_exfil.sh >/dev/null" ||
+        die 7 "failed to start autonomous background runner on pod"
+      verified_az=0
+      for _try in 1 2 3 4 5; do
+        if [ "$(az storage blob exists --account-name "$AZ_ACCOUNT" --container-name "$AZ_CONTAINER" --name "$run_prefix/status.json" --auth-mode login --query exists --output tsv 2>/dev/null)" = "true" ]; then
+          verified_az=1
+          break
+        fi
+        sleep 2
+      done
+      [ "$verified_az" = 1 ] || die 7 "pod started but initial status.json did not appear in Azure Blob ($AZ_ACCOUNT/$AZ_CONTAINER/$run_prefix); aborting & tearing down!"
+      say "  ✓ Verified live pod->Azure Blob handshake ($run_prefix/status.json)!"
+      DETACHED_PREFIX="$run_prefix"
+      DETACHED_HANDOFF=1
+      exit 0
+    fi
+
+    if [ "$EXFIL_AZURE" = 1 ]; then
+      af_ssh 3600 "/workspace/scripts/pod/run_autonomous_exfil.sh /workspace/scripts/pod/fetch_and_run_phase_portrait.sh '$m' '$repo' '$rev' '$BATCH_SIZE'" ||
+        die 7 "phase_portrait probe failed on pod for $m"
+      (cd "$ROOT" && ./scripts/sync_afriat_runs.sh --prefix "$run_prefix") ||
+        die 7 "failed to sync/render $run_prefix from Azure Blob"
+    else
+      af_ssh 3600 "/workspace/scripts/pod/fetch_and_run_phase_portrait.sh '$m' '$repo' '$rev' '$BATCH_SIZE'" ||
+        die 7 "phase_portrait probe failed on pod for $m"
+
+      out_local="$ROOT/runs/phase_portrait_${m}_${STAMP}"
+      mkdir -p "$out_local"
+      say "Pulling phase_portrait artifacts for $m -> runs/phase_portrait_${m}_${STAMP}/"
+      af_ssh 120 "tar -C '/workspace/runs_phase_portrait/$m' -czf - ." > "$T/${m}_phase_portrait.tgz" ||
+        die 7 "failed to pull phase_portrait results for $m"
+      tar -xzf "$T/${m}_phase_portrait.tgz" -C "$out_local" || die 7 "failed to unpack phase_portrait results for $m"
+      [ -s "$out_local/phase_portrait_results.json" ] || die 7 "missing phase_portrait_results.json after pull for $m"
+
+      say "Rendering Dawn State 2D Moral Phase Portrait PNG/SVG/Markdown reports locally..."
+      (cd "$ROOT" && uv run python -m afriat.phase_portrait --render-dir "$out_local") ||
+        die 7 "local phase_portrait report rendering failed for $m"
     fi
   done
 else

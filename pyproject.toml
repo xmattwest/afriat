@@ -36,6 +36,7 @@ afriat-showcase = "afriat.showcase:main"
 afriat-funnel = "afriat.funnel:main"
 afriat-optimize = "afriat.optimize:main"
 afriat-loop-compact = "afriat.loop_compact:main"
+afriat-phase-portrait = "afriat.phase_portrait:main"
 afriat-audit = "afriat.schema:main_audit"
 
 [tool.pytest.ini_options]
