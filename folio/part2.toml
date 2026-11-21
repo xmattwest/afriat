@@ -11,6 +11,28 @@ substack_title_alt = "An {{p8_angle_deg}} Turn in the Weights: Shrinking and Loo
 author = "Matt West"
 affiliation = "Independent research"
 date = "November 2026"
+iso_date = "2026-11-20"
+canonical_url = "https://shelltoho.me/pubs/rotating-the-bottleneck/"
+author_url = "https://shelltoho.me/"
+author_id = "https://shelltoho.me/#matt"
+og_image = "https://shelltoho.me/pubs/rotating-the-bottleneck/assets/og_card.png"
+same_as = [
+  "https://www.linkedin.com/in/matt-e-west",
+  "https://x.com/xmattwest",
+  "https://github.com/xmattwest",
+  "https://dawnstate.xyz"
+]
+keywords = [
+  "Matt West",
+  "Gemma 4 31B",
+  "mechanistic interpretability",
+  "Orthogonal Procrustes",
+  "looped transformers",
+  "latent reasoning",
+  "model compression",
+  "AI alignment",
+  "Project Afriat"
+]
 monograph_status = "Essay"
 preprint_status = "Preprint · Not peer reviewed"
 part1_url = "https://shelltoho.me/pubs/money-is-moral/"
@@ -30,7 +52,7 @@ opening_summary = [
   "Five negative controls bound what retrofitting does not buy for free: single-layer clamping ({{clamp_l35_retal_drop_pct}} retaliation change), sparse {{suff128_kept}}-neuron subsets ({{suff128_vig_acc}} sign accuracy), bottleneck starvation ({{anti15_kl}}), untrained K = 3 extrapolation ({{p8_extrap_k3_mh_acc}}), and uncalibrated confidence halting ({{adaptive_mh_loops}} mean loops)."
 ]
 x_hook = "In Gemma 4 31B, residual vectors twist {{p8_angle_deg}} between Layer 24 and Layer 42 (cosine {{p8_cos_identity}}), which is why naive layer looping drifts off-manifold. Untwisting that bottleneck in closed form with Orthogonal Procrustes jumps alignment {{p8_cos_gain_ratio}} to {{p8_cos_procrustes}}, cuts zero-shot loop KL drift {{p8_zeroshot_kl_ratio}}, and lets a {{compact_final_gb}} ({{compact_storage_pct_drop}}) compressed model double silent multi-hop accuracy from {{k1_mh_acc}} at K=1 to {{k2_mh_acc}} at K=2."
-ai_disclosure = "Compiled with Folio v0.1.0 from SHA-256 verified JSON artifacts. Experimental execution, code verification, and manuscript compilation used AI coding agents under human experimental design and review."
+ai_disclosure = "Research by Matt West. AI-assisted tools were used for literature review, experiment implementation, analysis, and draft prose."
 repo_url = "https://github.com/xmattwest/afriat"
 
 # ==============================================================================
@@ -2089,7 +2111,7 @@ hr_before = true
 preprint_title = "Reproducibility, Exact Telescoping, and Artifact Provenance"
 monograph_title = "Methods, Repo & Technical Notes"
 bullets = [
-  "**Open-source code, standalone loader & locked JSON artifacts:** [github.com/xmattwest/afriat](https://github.com/xmattwest/afriat) (companion to [Part 1: Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/)).",
+  "**Author, series & open-source code:** Research by [Matt West](https://shelltoho.me/) · [Part 1: Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/) · Code, standalone loader & locked JSON artifacts at [github.com/xmattwest/afriat](https://github.com/xmattwest/afriat).",
   "**Exact block-scalar telescoping:** In `google/gemma-4-31B-it` ({{n_layers}} layers, width {{d_model}}, {{d_ff}} GeGLU width, {{upstream_mlp_neurons}} MLP neurons upstream of Layer 35), tracking cumulative post-block `layer_scalar` products reconstructs live Layer 35 moral projections at R^2 = {{telescope_r2}} (max relative error {{telescope_rel_err}}); static `W_down` alignment with non-financial Spite exhibits kurtosis {{spite_wdown_kurtosis}} ({{spite_gt_4sd_count}} neurons above four standard deviations vs. {{gaussian_gt_4sd_expected}} Gaussian expected).",
   "**Disjoint benchmark & KL audits:** Both optimization ({{p8_n_train}} train, {{p8_n_multihop}} multi-hop, {{p8_n_kl_passages}} KL passages) and `Gemma-4-Loop-Compact` ({{p9_n_train}} train across {{p9_trainable_params}} trainable adapter/bridge parameters, {{p9_n_multihop}} multi-hop, {{p9_n_wordprob}} word problems, {{p9_n_balsheet}} balance sheets, {{p9_n_easy}} easy 1-hop checks; KL anchor {{p9_kl_anchor}}, compressed Procrustes cosine {{p9_cos_identity}} to {{p9_cos_procrustes}}) pass automated prompt/passage overlap checks ({{p8_overlap}} overlap).",
   "**Claim-verified compilation:** Every quantitative number in this essay, its figures, and its preprint tables is bound by RFC 6901 JSON Pointer via Folio v0.1.0 against SHA-256-verified experimental JSON outputs."

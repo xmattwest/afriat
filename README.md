@@ -1,6 +1,10 @@
 # Project Afriat
 
-**Mechanistic Moral and Affective Geometry of Financial Decisions in Open-Weight LLMs**
+**Mechanistic Moral Geometry, Hourglass Sparsity, and Procrustes Mid-Stack Recurrence in Open-Weight LLMs**
+
+**Author:** [Matt West](https://shelltoho.me/) ([GitHub](https://github.com/xmattwest) · [X](https://x.com/xmattwest) · [LinkedIn](https://www.linkedin.com/in/matt-e-west))
+- **Part 1 (Essay):** [Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/)
+- **Part 2 (Essay & Preprint):** [Rotating the Bottleneck](https://shelltoho.me/pubs/rotating-the-bottleneck/) — Read/write funnel dissection, `23.08 GB` (`−63.1%`) Hourglass compression, and `87.1°` Orthogonal Procrustes mid-stack recurrence (`Gemma-4-Loop-Compact`)
 
 Standard microeconomics treats money as cold and fungible: a dollar is a dollar regardless of where it came from, `+$1,000` cash paired with a `-$350` zero-interest payable equals `+$650` net worth, and `+$20` beats `$0` regardless of what a counterparty keeps. Human economic behavior systematically violates those axioms, attaching spite, guilt, physical disgust, predation, captivity, and dread to specific deal structures.
 
