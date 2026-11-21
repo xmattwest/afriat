@@ -9,6 +9,7 @@ logs/
 .DS_Store
 *.npz
 *.pdf
+!papers/*.pdf
 .env
 .env.*
 *.pem
