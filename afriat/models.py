@@ -297,6 +297,63 @@ class TransformerHarness:
         finally:
             handle.remove()
 
+    @staticmethod
+    def build_subspace_clamp_matrices(
+        directions: Sequence[np.ndarray] | np.ndarray,
+        neutral_mean: np.ndarray | None = None,
+    ) -> tuple[np.ndarray, np.ndarray]:
+        """Compute `(q_f32 [D, K], mu_proj_f32 [D])` for mean-centered QR subspace clamping."""
+        arr = np.asarray(directions, dtype=np.float64)
+        if arr.ndim == 1:
+            cols = arr[:, None]
+        else:
+            cols = arr.T if arr.shape[0] < arr.shape[1] else arr
+        q_np, _ = np.linalg.qr(cols, mode="reduced")
+        q_f32_np = q_np.astype(np.float32)
+        if neutral_mean is not None:
+            mu_np = np.asarray(neutral_mean, dtype=np.float64).reshape(-1)
+            mu_proj_np = ((mu_np @ q_np) @ q_np.T).astype(np.float32)
+        else:
+            mu_proj_np = np.zeros(q_np.shape[0], dtype=np.float32)
+        return q_f32_np, mu_proj_np
+
+    @contextmanager
+    def residual_subspace_clamp(
+        self,
+        layer_idx: int,
+        directions: Sequence[np.ndarray] | np.ndarray,
+        neutral_mean: np.ndarray | None = None,
+    ) -> Iterator[None]:
+        """Project out span(directions) around `neutral_mean` at `layer_idx`:
+        h_clamped = h - ((h - mu) @ Q) @ Q.T
+        """
+        torch = self.torch
+        q_f32_np, mu_proj_np = self.build_subspace_clamp_matrices(directions, neutral_mean)
+
+        cached: dict[Any, tuple[Any, Any]] = {}
+
+        def _hook(_module: Any, _inputs: Any, output: Any) -> Any:
+            hidden = output[0] if isinstance(output, tuple) else output
+            dev = hidden.device
+            if dev not in cached:
+                cached[dev] = (
+                    torch.tensor(q_f32_np, device=dev, dtype=torch.float32),
+                    torch.tensor(mu_proj_np, device=dev, dtype=torch.float32),
+                )
+            q_t, mu_p_t = cached[dev]
+            h32 = hidden.to(torch.float32)
+            proj = torch.matmul(torch.matmul(h32, q_t), q_t.transpose(0, 1)) - mu_p_t
+            modified = (h32 - proj).to(hidden.dtype)
+            if isinstance(output, tuple):
+                return (modified,) + tuple(output[1:])
+            return modified
+
+        handle = self.layers[layer_idx].register_forward_hook(_hook)
+        try:
+            yield
+        finally:
+            handle.remove()
+
     def extract_last_token_states(
         self,
         prompts: Sequence[str],

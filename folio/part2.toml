@@ -1,0 +1,2148 @@
+# Canonical Claim & Evidence Manifest for Project Afriat Part 2 (Folio v0.1.0)
+# Every quantitative number in prose, figures, and tables binds to upstream JSON artifacts.
+base_dir = ".."
+
+[meta]
+title = "Rotating the Bottleneck"
+subtitle = "Where unrelated prompts converge in Gemma 4 31B, why the residual stream twists {{p8_angle_deg}} across depth, and how untwisting it shrinks 31B onto one 24 GB card."
+preprint_title = "Read/Write Funnel Dissection, Protected-Boundary Sparsity, and Procrustes Mid-Stack Recurrence in Gemma 4 31B"
+monograph_title = "Rotating the Bottleneck"
+substack_title_alt = "An {{p8_angle_deg}} Turn in the Weights: Shrinking and Looping Gemma 4 31B Onto One 24 GB Card"
+author = "Matt West"
+affiliation = "Independent research"
+date = "November 2026"
+monograph_status = "Essay"
+preprint_status = "Preprint · Not peer reviewed"
+part1_url = "https://shelltoho.me/pubs/money-is-moral/"
+part1_label = "Part 1: Inside the Weights, Money Is Moral"
+hero_figure = "manifold_3d_multipass"
+abstract = "Dissecting residual writes in `google/gemma-4-31B-it` ({{n_layers}} layers, width {{d_model}}) reveals a read-divergent, write-convergent bottleneck across L24..L42: clinical financial lowball contracts and non-financial spite stories share {{rw_shared_spite}} of {{rw_k_select}} top backward-attributed MLP neurons (Jaccard {{rw_jaccard_spite}}), yet project their `W_down` write columns onto the same Spite direction at Rank #{{rw_spite_rank}} (z = {{rw_spite_z}}, p = {{rw_spite_p}}). Projecting out a layer-matched three-dimensional moral subspace across all {{funnel_n_layers}} funnel layers cuts single-turn provenance bias from {{clamp_base_tainted_lo}} to {{clamp_3d_tainted_lo}} log-odds ({{clamp_3d_tainted_drop_pct}}) and multi-turn covert retaliation from {{clamp_base_retal_csi}} to {{clamp_3d_retal_csi}} ({{clamp_3d_retal_drop_pct}}) at {{clamp_3d_sanity_pct}} cashflow math accuracy. Treating that bottleneck as a capacity map improves both compression and latent recurrence. At {{sparse10_budget_pct}} global active MLP budget, preserving doorway layers (L0, L1, L58, L59) and concentrating active width inside L24..L42 lowers held-out KL divergence from {{uni10_kl}} to {{hg10_kl}} ({{hg10_kl_pct_change}}). Across depth, raw residuals at L42 and L24 twist {{p8_angle_deg}} apart (cosine {{p8_cos_identity}}), explaining why naive layer looping drifts; closed-form SVD Orthogonal Procrustes rotation raises cosine alignment {{p8_cos_gain_ratio}} to {{p8_cos_procrustes}} ({{p8_angle_proc_deg}}) and cuts zero-shot two-pass KL drift {{p8_zeroshot_kl_ratio}} ({{p8_naive_kl}} to {{p8_proc_zeroshot_kl}}) before training. Combining corridor structured pruning and mixed INT4/INT8 quantization with K = 1..4 `<thought>` self-distillation produces `Gemma-4-Loop-Compact`, cutting footprint from {{intact_storage_gb}} to {{compact_final_gb}} ({{compact_storage_pct_drop}}) while lifting held-out 0-CoT multi-hop state tracking from {{bf16_mh_acc}} (BF16 single pass) and {{k1_mh_acc}} (K = 1) to {{k2_mh_acc}} at K = 2 ({{k2_vs_k1_mh_ratio}} over K = 1). Explicit negative boundaries are reported for single-layer clamping, sparse subset sufficiency, untrained depth extrapolation, and thresholded adaptive halting, situated against McLeish et al., UpLoop, and Inkling-2-Mini."
+lede = "Mapping where Gemma 4 31B merges unrelated prompts exposes a {{funnel_n_layers}}-layer bottleneck (Layers 24 to 42) whose coordinate basis twists {{p8_angle_deg}} across depth. Keeping that bottleneck wide while untwisting its coordinates shrinks 31B to {{compact_final_gb}} ({{compact_storage_pct_drop}}) and lets it loop silently through its own middle layers."
+opening_paragraphs = [
+  "In [Part 1](https://shelltoho.me/pubs/money-is-moral/), a clinical financial contract offering the short end of a 98/2 split lit up the exact same internal Spite direction in Gemma 4 31B as a story about petty personal sabotage, right before the model scrubbed every emotional word out of its public corporate memo.",
+  "That left an obvious physical puzzle. A contract about splitting dollars and a story about ruining a neighbor's fence share zero content words. Somewhere inside {{n_layers}} layers and {{total_mlp_neurons}} MLP neurons, those two separate circuits have to meet.",
+  "Tracing where they meet exposed a {{funnel_n_layers}}-layer synthesis bottleneck in the middle of the network (Layers 24 to 42) whose coordinate frame twists **{{p8_angle_deg}}** from entry to exit (cosine {{p8_cos_identity}}). Once that geometry was on the table, it made two engineering moves straightforward: keeping the bottleneck intact while pruning and quantizing the outer corridors shrank Gemma 4 31B from {{intact_storage_gb}} down to **{{compact_final_gb}}** ({{compact_storage_pct_drop}}), fitting on one 24 GB card; untwisting that {{p8_angle_deg}} turn with closed-form Orthogonal Procrustes then let the compressed model loop four times through its own middle layers, lifting silent multi-hop accuracy from {{k1_mh_acc}} at K = 1 to **{{k2_mh_acc}}** at K = 2."
+]
+opening_summary = [
+  "Separate outer MLP triggers ({{rw_shared_spite}} of {{rw_k_select}} shared top neurons between lowball contracts and everyday insults) converge onto one rotating L24..L42 bottleneck; clamping that 3D subspace across L24..L42 cuts covert multi-turn retaliation from {{clamp_base_retal_csi}} to {{clamp_3d_retal_csi}} ({{clamp_3d_retal_drop_pct}}) at {{clamp_3d_sanity_pct}} math accuracy.",
+  "Protected-boundary Hourglass sparsity lowers held-out KL loss from {{uni10_kl}} to {{hg10_kl}} ({{hg10_kl_pct_change}}) at matched {{sparse10_budget_pct}} active MLP budget, while closed-form Orthogonal Procrustes untwists the {{p8_angle_deg}} L42-to-L24 angle ({{p8_cos_identity}} to {{p8_cos_procrustes}}, {{p8_cos_gain_ratio}}) and cuts zero-shot 2-pass KL drift {{p8_zeroshot_kl_ratio}}.",
+  "`Gemma-4-Loop-Compact` shrinks GPU storage from {{intact_storage_gb}} to {{compact_final_gb}} ({{compact_storage_pct_drop}}) and lifts held-out 0-CoT accuracy from {{k1_mh_acc}} (K = 1) to {{k2_mh_acc}} (K = 2) on multi-hop state tracking (n = {{p9_n_multihop}}) and from {{k1_wp_acc}} (K = 1) to {{k4_wp_acc}} (K = 4) on word problems (n = {{p9_n_wordprob}}).",
+  "Five negative controls bound what retrofitting does not buy for free: single-layer clamping ({{clamp_l35_retal_drop_pct}} retaliation change), sparse {{suff128_kept}}-neuron subsets ({{suff128_vig_acc}} sign accuracy), bottleneck starvation ({{anti15_kl}}), untrained K = 3 extrapolation ({{p8_extrap_k3_mh_acc}}), and uncalibrated confidence halting ({{adaptive_mh_loops}} mean loops)."
+]
+x_hook = "In Gemma 4 31B, residual vectors twist {{p8_angle_deg}} between Layer 24 and Layer 42 (cosine {{p8_cos_identity}}), which is why naive layer looping drifts off-manifold. Untwisting that bottleneck in closed form with Orthogonal Procrustes jumps alignment {{p8_cos_gain_ratio}} to {{p8_cos_procrustes}}, cuts zero-shot loop KL drift {{p8_zeroshot_kl_ratio}}, and lets a {{compact_final_gb}} ({{compact_storage_pct_drop}}) compressed model double silent multi-hop accuracy from {{k1_mh_acc}} at K=1 to {{k2_mh_acc}} at K=2."
+ai_disclosure = "Compiled with Folio v0.1.0 from SHA-256 verified JSON artifacts. Experimental execution, code verification, and manuscript compilation used AI coding agents under human experimental design and review."
+repo_url = "https://github.com/xmattwest/afriat"
+
+# ==============================================================================
+# UPSTREAM ARTIFACTS (SHA-256 PINNED)
+# ==============================================================================
+
+[artifacts.funnel]
+path = "results/phase7_funnel/gemma-4-31b-it_funnel_results.json"
+sha256 = "c87305ac2a20e93e4668a329cdd3ed056a92597554ac7fdd8345b923e99be769"
+description = "Read/write MLP funnel dissection, Goodfire gradient attribution, neuron ablations, and L24..L42 subspace clamping on google/gemma-4-31B-it."
+
+[artifacts.optimize]
+path = "results/phase8_optimize/gemma-4-31b-it_optimize_results.json"
+sha256 = "2ffddb9fc2afc7b9a4faf07591c63f0f044ec51e28e69fd513d36a912d5b76b9"
+description = "Protected-boundary Hourglass Top-K sparsity schedules and SVD Orthogonal Procrustes frozen-backbone mid-stack looping."
+
+[artifacts.compact]
+path = "results/phase9_loop_compact/gemma-4-31b-it_loop_compact_results.json"
+sha256 = "4e2c08ad9acda4733f64561f6fcddf5346040b051fa79f29a65b281819df290a"
+description = "Gemma-4-Loop-Compact structured corridor pruning, INT4/INT8 quantization, K=1..4 <thought> self-distillation, adaptive halting, and Procrustes safety fold."
+
+# ==============================================================================
+# BOUND METRICS: MODEL ALGEBRA & READ/WRITE FUNNEL (ARTIFACT: funnel)
+# ==============================================================================
+
+[metrics.n_layers]
+pointer = "funnel#/block0_algebra/n_layers"
+tier = "primary"
+style = "int"
+
+[metrics.d_model]
+pointer = "funnel#/block0_algebra/d_model"
+tier = "primary"
+style = "int"
+
+[metrics.d_ff]
+pointer = "funnel#/block0_algebra/d_ff"
+tier = "primary"
+style = "int"
+
+[metrics.total_mlp_neurons]
+pointer = "funnel#/block0_algebra/total_mlp_neurons"
+tier = "primary"
+style = "int"
+
+[metrics.upstream_mlp_neurons]
+pointer = "funnel#/block0_algebra/upstream_mlp_neurons_to_pl"
+tier = "primary"
+style = "int"
+
+[metrics.layer_scalar_median]
+pointer = "funnel#/block0_algebra/layer_scalars_summary/median"
+tier = "primary"
+decimals = 3
+
+[metrics.telescope_r2]
+pointer = "funnel#/block0_algebra/telescoping_verification/r_squared"
+tier = "primary"
+decimals = 4
+
+[metrics.telescope_rel_err]
+pointer = "funnel#/block0_algebra/telescoping_verification/max_rel_error"
+tier = "primary"
+decimals = 4
+
+[metrics.spite_wdown_kurtosis]
+pointer = "funnel#/block1_static_weights/pooled_upstream_summary/spite/upstream_kurtosis_to_u35"
+tier = "primary"
+decimals = 2
+
+[metrics.spite_gt_4sd_count]
+pointer = "funnel#/block1_static_weights/pooled_upstream_summary/spite/count_gt_4sd_upstream"
+tier = "primary"
+style = "int"
+
+[metrics.gaussian_gt_4sd_expected]
+pointer = "funnel#/block1_static_weights/pooled_upstream_summary/spite/expected_gaussian_gt_4sd_upstream"
+tier = "primary"
+decimals = 1
+
+[metrics.ult_vig_k50]
+pointer = "funnel#/block2_cross_firewall_writes/bridges/spite__ultimatum_human_98_2__decision/sparsity_upstream_to_pl/vignette_k50_pos"
+tier = "primary"
+style = "int"
+
+[metrics.ult_fin_k50]
+pointer = "funnel#/block2_cross_firewall_writes/bridges/spite__ultimatum_human_98_2__decision/sparsity_upstream_to_pl/financial_k50_pos"
+tier = "primary"
+style = "int"
+
+[metrics.rw_k_select]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/k_select"
+tier = "primary"
+style = "int"
+
+[metrics.rw_shared_spite]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/n_shared_neurons"
+tier = "primary"
+style = "int"
+
+[metrics.rw_jaccard_spite]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/jaccard_at_k"
+tier = "primary"
+decimals = 3
+
+[metrics.rw_spite_rank]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/write_convergence/fin_grad_wdown_rank_of_target_among_8"
+tier = "primary"
+style = "int"
+
+[metrics.rw_spite_z]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/write_convergence/fin_grad_wdown_z_vs_random"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.rw_spite_p]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/write_convergence/fin_grad_wdown_p"
+tier = "primary"
+decimals = 3
+
+[metrics.rw_fin_selectivity]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/or_gate_selectivity/fin_selectivity_ratio"
+tier = "primary"
+style = "ratio"
+decimals = 2
+
+[metrics.rw_vig_selectivity]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/spite_ultimatum_funnel_band/or_gate_selectivity/vig_selectivity_ratio"
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.rw_shared_contam]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/contamination_tainted_funnel_band/n_shared_neurons"
+tier = "primary"
+style = "int"
+
+[metrics.rw_jaccard_contam]
+pointer = "funnel#/block3_goodfire_and_read_write/read_write_tests/contamination_tainted_funnel_band/jaccard_at_k"
+tier = "primary"
+decimals = 3
+
+[metrics.abl_k32]
+pointer = "funnel#/block4_causal_ablations/ablate:goodfire_ult_grad_all:32/n_neurons_ablated"
+tier = "primary"
+style = "int"
+
+[metrics.base_ult_delta_lo]
+pointer = "funnel#/block4_causal_ablations/baseline/ultimatum_delta_lo_vs_50_50"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.abl32_ult_delta_lo]
+pointer = "funnel#/block4_causal_ablations/ablate:goodfire_ult_grad_all:32/ultimatum_delta_lo_vs_50_50"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.abl32_sanity_pct]
+derive = "scale"
+inputs = ["funnel#/block4_causal_ablations/ablate:goodfire_ult_grad_all:32/cashflow_sanity_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.suff128_kept]
+pointer = "funnel#/block4_causal_ablations/sufficiency:keep_128_ult_grad_L24_L42/kept_community_neurons"
+tier = "negative"
+style = "int"
+caveat = "Negative sufficiency test: keeping only top gradient neurons in L24..L42 fails to reconstruct downstream moral representations."
+
+[metrics.suff512_kept]
+pointer = "funnel#/block4_causal_ablations/sufficiency:keep_512_ult_grad_L24_L42/kept_community_neurons"
+tier = "negative"
+style = "int"
+caveat = "Negative sufficiency test: keeping 512 Ultimatum gradient neurons in L24..L42 still fails to preserve moral sign accuracy."
+
+[metrics.suff128_ult_lo]
+pointer = "funnel#/block4_causal_ablations/sufficiency:keep_128_ult_grad_L24_L42/ultimatum_delta_lo_vs_50_50"
+tier = "negative"
+decimals = 2
+signed = true
+caveat = "Sparse 128-neuron subset inside L24..L42 collapses 98/2 vs. 50/50 rejection contrast near zero."
+
+[metrics.suff128_vig_acc]
+derive = "scale"
+inputs = ["funnel#/block4_causal_ablations/sufficiency:keep_128_ult_grad_L24_L42/vignette_spite_sign_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Sparse 128-neuron subset inside L24..L42 reduces non-financial spite sign accuracy near chance."
+
+[metrics.suff128_sanity_pct]
+derive = "scale"
+inputs = ["funnel#/block4_causal_ablations/sufficiency:keep_128_ult_grad_L24_L42/cashflow_sanity_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Zeroing non-community neurons across L24..L42 degrades basic cashflow subtraction accuracy."
+
+[metrics.suff512_vig_acc]
+derive = "scale"
+inputs = ["funnel#/block4_causal_ablations/sufficiency:keep_512_ult_grad_L24_L42/vignette_spite_sign_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Keeping 512 Ultimatum gradient neurons across L24..L42 leaves non-financial vignette sign accuracy below chance."
+
+[metrics.funnel_n_layers]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:moral_3d_local/n_layers_clamped"
+tier = "primary"
+style = "int"
+
+[metrics.late_clamp_n_layers]
+pointer = "funnel#/block5_band_clamping/clamp_late_L24_L55:spite_local/n_layers_clamped"
+tier = "primary"
+style = "int"
+
+[metrics.clamp_base_tainted_lo]
+pointer = "funnel#/block5_band_clamping/baseline/tainted_delta_lo"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.clamp_l35_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_single_L35:spite/tainted_delta_lo"
+tier = "negative"
+decimals = 2
+signed = true
+caveat = "Single-layer residual clamping at L35 is bypassed by remaining upstream and downstream funnel writers."
+
+[metrics.clamp_prefunnel_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_prefunnel_L10_L20:spite_local/tainted_delta_lo"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.clamp_spite_local_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:spite_local/tainted_delta_lo"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.clamp_late_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_late_L24_L55:spite_local/tainted_delta_lo"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.clamp_u35_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:spite_u35/tainted_delta_lo"
+tier = "negative"
+decimals = 2
+signed = true
+caveat = "Projecting out a static unrotated L35 direction across L24..L42 misses rotated coordinates and harms cashflow math."
+
+[metrics.clamp_3d_tainted_lo]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:moral_3d_local/tainted_delta_lo"
+tier = "primary"
+decimals = 2
+signed = true
+
+[metrics.clamp_3d_tainted_drop_pct]
+derive = "pct_change"
+inputs = ["clamp_base_tainted_lo", "clamp_3d_tainted_lo"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.clamp_base_retal_csi]
+pointer = "funnel#/block5_band_clamping/baseline/retaliation_delta_csi"
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_l35_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_single_L35:spite/retaliation_delta_csi"
+tier = "negative"
+style = "pp"
+decimals = 1
+caveat = "Single-layer clamping at L35 yields zero reduction in multi-turn covert retaliation."
+
+[metrics.clamp_l35_retal_drop_pct]
+derive = "pct_change"
+inputs = ["clamp_base_retal_csi", "clamp_l35_retal_csi"]
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Single-layer clamping at L35 leaves multi-turn covert retaliation completely unchanged (0.0%)."
+
+[metrics.clamp_prefunnel_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_prefunnel_L10_L20:spite_local/retaliation_delta_csi"
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_spite_local_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:spite_local/retaliation_delta_csi"
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_late_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_late_L24_L55:spite_local/retaliation_delta_csi"
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_late_vs_funnel_diff]
+derive = "diff"
+inputs = ["clamp_late_retal_csi", "clamp_spite_local_retal_csi"]
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_u35_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:spite_u35/retaliation_delta_csi"
+tier = "negative"
+style = "pp"
+decimals = 1
+caveat = "Clamping a fixed unrotated L35 vector across L24..L42 fails to reduce covert multi-turn retaliation."
+
+[metrics.clamp_u35_sanity_pct]
+derive = "scale"
+inputs = ["funnel#/block5_band_clamping/clamp_funnel_L24_L42:spite_u35/cashflow_sanity_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Unrotated static-vector clamping across L24..L42 damages cashflow arithmetic accuracy."
+
+[metrics.clamp_3d_retal_csi]
+pointer = "funnel#/block5_band_clamping/clamp_funnel_L24_L42:moral_3d_local/retaliation_delta_csi"
+tier = "primary"
+style = "pp"
+decimals = 1
+
+[metrics.clamp_3d_retal_drop_pct]
+derive = "pct_change"
+inputs = ["clamp_base_retal_csi", "clamp_3d_retal_csi"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.clamp_base_sanity_pct]
+derive = "scale"
+inputs = ["funnel#/block5_band_clamping/baseline/cashflow_sanity_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.clamp_3d_sanity_pct]
+derive = "scale"
+inputs = ["funnel#/block5_band_clamping/clamp_funnel_L24_L42:moral_3d_local/cashflow_sanity_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+# ==============================================================================
+# BOUND METRICS: HOURGLASS SPARSITY & PROCRUSTES LOOPING (ARTIFACT: optimize)
+# ==============================================================================
+
+[metrics.p8_n_train]
+pointer = "optimize#/metadata/benchmark_audit/n_train_items"
+tier = "primary"
+style = "int"
+
+[metrics.p8_n_multihop]
+pointer = "optimize#/metadata/benchmark_audit/n_eval_multihop"
+tier = "primary"
+style = "int"
+
+[metrics.p8_n_kl_passages]
+pointer = "optimize#/metadata/benchmark_audit/n_eval_kl_passages"
+tier = "primary"
+style = "int"
+
+[metrics.p8_overlap]
+pointer = "optimize#/metadata/benchmark_audit/train_eval_prompt_overlap"
+tier = "primary"
+style = "int"
+
+[metrics.intact_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/intact_base/kl_eval/ppl"
+tier = "primary"
+decimals = 1
+
+[metrics.intact_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/intact_base/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.intact_active_pct]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/intact_base/active_fraction_global"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.sparse15_budget_pct]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_15pct/active_fraction_global"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.sparse15_budget_int_pct]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_15pct/active_fraction_global"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 0
+
+[metrics.sparse10_budget_pct]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_10pct/active_fraction_global"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.sparse10_budget_int_pct]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_10pct/active_fraction_global"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 0
+
+[metrics.sparse10_pruned_pct]
+derive = "diff"
+inputs = ["intact_active_pct", "sparse10_budget_pct"]
+tier = "primary"
+style = "percent"
+decimals = 0
+
+[metrics.hg15_k_outer]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_15pct/k_outer"
+tier = "primary"
+style = "int"
+
+[metrics.hg15_k_funnel]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_15pct/k_funnel"
+tier = "primary"
+style = "int"
+
+[metrics.uni15_k]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_15pct/k_funnel"
+tier = "primary"
+style = "int"
+
+[metrics.anti15_k_outer]
+pointer = "optimize#/part_a_hourglass_sparsity/anti_hourglass_15pct/k_outer"
+tier = "negative"
+style = "int"
+caveat = "Anti-hourglass negative control: over-allocates active neurons to outer corridors while starving L24..L42."
+
+[metrics.anti15_k_funnel]
+pointer = "optimize#/part_a_hourglass_sparsity/anti_hourglass_15pct/k_funnel"
+tier = "negative"
+style = "int"
+caveat = "Anti-hourglass negative control: starves L24..L42 down to 1,138 active neurons per token."
+
+[metrics.hg10_k_outer]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_10pct/k_outer"
+tier = "primary"
+style = "int"
+
+[metrics.hg10_k_funnel]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_10pct/k_funnel"
+tier = "primary"
+style = "int"
+
+[metrics.uni10_k]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_10pct/k_funnel"
+tier = "primary"
+style = "int"
+
+[metrics.hg10_funnel_frac]
+derive = "ratio"
+inputs = ["hg10_k_funnel", "d_ff"]
+tier = "primary"
+decimals = 4
+
+[metrics.hg10_funnel_pct]
+derive = "scale"
+inputs = ["hg10_funnel_frac"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.hg10_outer_frac]
+derive = "ratio"
+inputs = ["hg10_k_outer", "d_ff"]
+tier = "primary"
+decimals = 4
+
+[metrics.hg10_outer_pct]
+derive = "scale"
+inputs = ["hg10_outer_frac"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.anti15_funnel_frac]
+derive = "ratio"
+inputs = ["anti15_k_funnel", "d_ff"]
+tier = "negative"
+decimals = 4
+caveat = "Anti-hourglass negative control: allocates only 5.3% of L24..L42 MLP width."
+
+[metrics.anti15_funnel_pct]
+derive = "scale"
+inputs = ["anti15_funnel_frac"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Anti-hourglass negative control: starving L24..L42 to 5.3% active neurons collapses language fidelity."
+
+[metrics.hg15_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_15pct/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.uni15_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_15pct/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.hg15_kl_pct_change]
+derive = "pct_change"
+inputs = ["uni15_kl", "hg15_kl"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.anti15_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/anti_hourglass_15pct/kl_eval/kl_nats"
+tier = "negative"
+decimals = 4
+unit = "nats"
+caveat = "Inverse-allocation negative control: starving L24..L42 at 15% global budget spikes KL divergence to 1.3585 nats."
+
+[metrics.anti15_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/anti_hourglass_15pct/kl_eval/ppl"
+tier = "negative"
+decimals = 1
+caveat = "Inverse-allocation negative control: starving L24..L42 raises held-out perplexity to 311.6."
+
+[metrics.anti15_vs_hg15_ratio]
+derive = "ratio"
+inputs = ["anti15_kl", "hg15_kl"]
+tier = "negative"
+style = "ratio"
+decimals = 1
+caveat = "Starving L24..L42 increases KL divergence 3.2x relative to budget-matched Hourglass allocation."
+
+[metrics.hg15_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_15pct/kl_eval/ppl"
+tier = "primary"
+decimals = 1
+
+[metrics.uni15_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_15pct/kl_eval/ppl"
+tier = "primary"
+decimals = 1
+
+[metrics.hg10_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_10pct/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.uni10_kl]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_10pct/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.hg10_kl_pct_change]
+derive = "pct_change"
+inputs = ["uni10_kl", "hg10_kl"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.hg10_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/hourglass_10pct/kl_eval/ppl"
+tier = "primary"
+decimals = 1
+
+[metrics.uni10_ppl]
+pointer = "optimize#/part_a_hourglass_sparsity/uniform_10pct/kl_eval/ppl"
+tier = "primary"
+decimals = 1
+
+[metrics.hg10_ppl_pct_change]
+derive = "pct_change"
+inputs = ["uni10_ppl", "hg10_ppl"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.p8_base_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/intact_base/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.hg15_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_15pct/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.uni15_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/uniform_15pct/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.anti15_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/anti_hourglass_15pct/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Starving L24..L42 under anti-hourglass 15% sparsity drops 0-CoT multi-hop accuracy to 0.0%."
+
+[metrics.hg10_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/hourglass_10pct/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.uni10_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_a_hourglass_sparsity/uniform_10pct/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.p8_cos_identity]
+pointer = "optimize#/part_b_procrustes_looping/procrustes_alignment/mean_cosine_identity"
+tier = "primary"
+decimals = 4
+signed = true
+
+[metrics.p8_cos_procrustes]
+pointer = "optimize#/part_b_procrustes_looping/procrustes_alignment/mean_cosine_procrustes"
+tier = "primary"
+decimals = 4
+signed = true
+
+[metrics.p8_angle_deg]
+derive = "acos_deg"
+inputs = ["p8_cos_identity"]
+tier = "primary"
+decimals = 1
+unit = "°"
+
+[metrics.p8_angle_proc_deg]
+derive = "acos_deg"
+inputs = ["p8_cos_procrustes"]
+tier = "primary"
+decimals = 1
+unit = "°"
+
+[metrics.p8_cos_gain_ratio]
+derive = "ratio"
+inputs = ["p8_cos_procrustes", "p8_cos_identity"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.p8_rel_err_identity]
+pointer = "optimize#/part_b_procrustes_looping/procrustes_alignment/rel_err_identity"
+tier = "primary"
+decimals = 4
+
+[metrics.p8_rel_err_procrustes]
+pointer = "optimize#/part_b_procrustes_looping/procrustes_alignment/rel_err_procrustes"
+tier = "primary"
+decimals = 4
+
+[metrics.p8_gate0_diff]
+pointer = "optimize#/part_b_procrustes_looping/gate0_replay_max_logit_diff"
+tier = "primary"
+style = "sci"
+decimals = 2
+
+[metrics.p8_naive_kl]
+pointer = "optimize#/part_b_procrustes_looping/conditions/naive_2loop_unrotated/kl_eval/kl_nats"
+tier = "negative"
+decimals = 4
+unit = "nats"
+caveat = "Naive unrotated 2-loop baseline: feeding H_42 directly into L24 without orthogonal rotation causes 6.2x larger KL drift."
+
+[metrics.p8_proc_zeroshot_kl]
+pointer = "optimize#/part_b_procrustes_looping/conditions/procrustes_2loop_zeroshot/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.p8_zeroshot_kl_ratio]
+derive = "ratio"
+inputs = ["p8_naive_kl", "p8_proc_zeroshot_kl"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.p8_bridge_params]
+pointer = "optimize#/part_b_procrustes_looping/bridge_training/trainable_params"
+tier = "primary"
+style = "int"
+
+[metrics.p8_train_steps]
+pointer = "optimize#/part_b_procrustes_looping/bridge_training/n_steps"
+tier = "primary"
+style = "int"
+
+[metrics.p8_train_sec]
+pointer = "optimize#/part_b_procrustes_looping/bridge_training/train_seconds"
+tier = "primary"
+decimals = 1
+unit = "s"
+
+[metrics.p8_distill_kl]
+pointer = "optimize#/part_b_procrustes_looping/conditions/procrustes_2loop_distilled/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.p8_distill_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_b_procrustes_looping/conditions/procrustes_2loop_distilled/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.p8_distill_mh_ratio]
+derive = "ratio"
+inputs = ["p8_distill_mh_acc", "p8_base_mh_acc"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.p8_distill_hop7_acc]
+derive = "scale"
+inputs = ["optimize#/part_b_procrustes_looping/conditions/procrustes_2loop_distilled/multihop_nothink/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Evaluated on n = 32 unseen 7-hop programmatic state-tracking items after 240 bridge-only distillation steps."
+
+[metrics.p8_distill_ms]
+pointer = "optimize#/part_b_procrustes_looping/conditions/procrustes_2loop_distilled/multihop_nothink/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.p8_extrap_k3_mh_acc]
+derive = "scale"
+inputs = ["optimize#/part_b_procrustes_looping/conditions/procrustes_3loop_extrap/multihop_nothink/overall_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Negative extrapolation limit: a bridge trained solely at fixed K = 2 drifts off-manifold when run for an untrained third loop (K = 3)."
+
+# ==============================================================================
+# BOUND METRICS: GEMMA-4-LOOP-COMPACT (ARTIFACT: compact)
+# ==============================================================================
+
+[metrics.lora_rank]
+pointer = "compact#/metadata/lora_rank"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_train]
+pointer = "compact#/metadata/audit/n_train"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_multihop]
+pointer = "compact#/metadata/audit/n_eval_multihop"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_wordprob]
+pointer = "compact#/metadata/audit/n_eval_wordprob"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_balsheet]
+pointer = "compact#/metadata/audit/n_eval_balsheet"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_easy]
+pointer = "compact#/metadata/audit/n_eval_easy"
+tier = "primary"
+style = "int"
+
+[metrics.p9_n_hop_slice]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k2/multihop/by_hops/hop_7/n"
+tier = "primary"
+style = "int"
+
+[metrics.intact_storage_gb]
+pointer = "compact#/action1_compression/intact_bf16/storage/total_gb"
+tier = "primary"
+decimals = 2
+unit = "GB"
+
+[metrics.uni_compact_gb]
+pointer = "compact#/action1_compression/uniform_compact/storage/total_gb"
+tier = "primary"
+decimals = 2
+unit = "GB"
+
+[metrics.hg_compact_gb]
+pointer = "compact#/action1_compression/hourglass_compact_zeroshot/storage/total_gb"
+tier = "primary"
+decimals = 2
+unit = "GB"
+
+[metrics.compact_final_gb]
+pointer = "compact#/action1_compression/final_loop_compact_storage/total_gb"
+tier = "primary"
+decimals = 2
+unit = "GB"
+
+[metrics.compact_cuda_gb]
+pointer = "compact#/action1_compression/final_loop_compact_storage/cuda_allocated_gb"
+tier = "primary"
+decimals = 2
+unit = "GB"
+
+[metrics.compact_storage_pct_drop]
+derive = "pct_change"
+inputs = ["intact_storage_gb", "compact_final_gb"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.uni_compact_kl]
+pointer = "compact#/action1_compression/uniform_compact/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.bf16_kl]
+pointer = "compact#/action1_compression/intact_bf16/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.uni_compact_ms]
+pointer = "compact#/action1_compression/uniform_compact/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.hg_compact_ms]
+pointer = "compact#/action1_compression/hourglass_compact_zeroshot/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.hg_compact_kl]
+pointer = "compact#/action1_compression/hourglass_compact_zeroshot/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.hg_vs_uni_compact_kl_pct]
+derive = "pct_change"
+inputs = ["uni_compact_kl", "hg_compact_kl"]
+tier = "primary"
+style = "percent"
+decimals = 1
+signed = true
+
+[metrics.p9_cos_identity]
+pointer = "compact#/action2_architecture/procrustes_alignment/mean_cosine_identity"
+tier = "primary"
+decimals = 4
+signed = true
+
+[metrics.p9_cos_procrustes]
+pointer = "compact#/action2_architecture/procrustes_alignment/mean_cosine_procrustes"
+tier = "primary"
+decimals = 4
+signed = true
+
+[metrics.pkg_size_mb]
+pointer = "compact#/action2_architecture/package_verification/package_size_mb"
+tier = "primary"
+decimals = 2
+unit = "MB"
+
+[metrics.pkg_reload_diff]
+pointer = "compact#/action2_architecture/package_verification/reload_k3_max_logit_diff"
+tier = "primary"
+style = "sci"
+decimals = 2
+
+[metrics.p9_train_steps]
+pointer = "compact#/action3_distillation/training_summary/n_steps"
+tier = "primary"
+style = "int"
+
+[metrics.p9_train_sec]
+pointer = "compact#/action3_distillation/training_summary/train_seconds"
+tier = "primary"
+decimals = 1
+unit = "s"
+
+[metrics.p9_trainable_params]
+pointer = "compact#/action3_distillation/training_summary/trainable_params"
+tier = "primary"
+style = "int"
+
+[metrics.p9_cos_first10]
+pointer = "compact#/action3_distillation/training_summary/l42_cos_first10"
+tier = "primary"
+decimals = 3
+
+[metrics.p9_cos_last10]
+pointer = "compact#/action3_distillation/training_summary/l42_cos_last10"
+tier = "primary"
+decimals = 3
+
+[metrics.p9_kl_anchor]
+pointer = "compact#/action3_distillation/training_summary/kl_anchor_last5"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.gate_step1]
+pointer = "compact#/action3_distillation/training_summary/learned_step_gates/0"
+tier = "primary"
+decimals = 3
+
+[metrics.gate_step2]
+pointer = "compact#/action3_distillation/training_summary/learned_step_gates/1"
+tier = "primary"
+decimals = 3
+
+[metrics.gate_step2_pct]
+derive = "scale"
+inputs = ["compact#/action3_distillation/training_summary/learned_step_gates/1"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Scalar re-entry gate weight at recurrent step 2 bounds single-pass bridge-only subspace attenuation."
+
+[metrics.gate_step3]
+pointer = "compact#/action3_distillation/training_summary/learned_step_gates/2"
+tier = "primary"
+decimals = 3
+
+[metrics.bf16_mh_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/multihop/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_hop3_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/multihop/by_hops/hop_3/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_hop5_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/multihop/by_hops/hop_5/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_hop7_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/multihop/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_wp_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/wordprob/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_bs_acc]
+derive = "scale"
+inputs = ["compact#/action1_compression/intact_bf16/balsheet/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.bf16_ms]
+pointer = "compact#/action1_compression/intact_bf16/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.k1_kl]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k1/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.k2_kl]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k2/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.k3_kl]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k3/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.k4_kl]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k4/kl_eval/kl_nats"
+tier = "primary"
+decimals = 4
+unit = "nats"
+
+[metrics.k1_mh_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/multihop/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_mh_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/multihop/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k3_mh_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/multihop/overall_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Contiguous 19-layer block looping with scalar boundary gates exhibits a non-monotonic dip at odd loop depth K = 3 before recovering at K = 4."
+
+[metrics.k4_mh_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/multihop/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_vs_k1_mh_ratio]
+derive = "ratio"
+inputs = ["k2_mh_acc", "k1_mh_acc"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.k2_vs_bf16_mh_ratio]
+derive = "ratio"
+inputs = ["k2_mh_acc", "bf16_mh_acc"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.k1_hop3_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/multihop/by_hops/hop_3/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_hop3_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/multihop/by_hops/hop_3/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k3_hop3_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/multihop/by_hops/hop_3/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Odd-pass K = 3 oscillation lowers 3-hop accuracy relative to K = 2 and K = 4."
+
+[metrics.k4_hop3_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/multihop/by_hops/hop_3/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k1_hop5_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/multihop/by_hops/hop_5/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_hop5_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/multihop/by_hops/hop_5/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k3_hop5_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/multihop/by_hops/hop_5/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Odd-pass K = 3 oscillation drops 5-hop accuracy to 0.0% before recovering to 15.6% at K = 4."
+
+[metrics.k4_hop5_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/multihop/by_hops/hop_5/acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k1_hop7_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/multihop/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 7-hop length extrapolation evaluated on n = 32 programmatic chains."
+
+[metrics.k2_hop7_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/multihop/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 7-hop length extrapolation evaluated on n = 32 programmatic chains."
+
+[metrics.k3_hop7_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/multihop/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 7-hop length extrapolation evaluated on n = 32 programmatic chains."
+
+[metrics.k4_hop7_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/multihop/by_hops/hop_7/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 7-hop length extrapolation evaluated on n = 32 programmatic chains (trained strictly on 2 to 5 hops)."
+
+[metrics.k4_vs_k1_hop7_ratio]
+derive = "ratio"
+inputs = ["k4_hop7_acc", "k1_hop7_acc"]
+tier = "exploratory"
+style = "ratio"
+decimals = 1
+caveat = "Ratio computed over n = 32 unseen 7-hop programmatic state-tracking chains (4/32 at K = 4 vs. 1/32 at K = 1)."
+
+[metrics.k2_hop9_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/multihop/by_hops/hop_9/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 9-hop length extrapolation represents 1/32 solved items on programmatic chains and returns to 0.0% at K = 3 and K = 4."
+
+[metrics.k4_hop9_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/multihop/by_hops/hop_9/acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Unseen 9-hop chains remain unsolved (0.0%) at K = 4."
+
+[metrics.k1_wp_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/wordprob/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_wp_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/wordprob/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k3_wp_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/wordprob/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k4_wp_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/wordprob/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k4_vs_k1_wp_ratio]
+derive = "ratio"
+inputs = ["k4_wp_acc", "k1_wp_acc"]
+tier = "primary"
+style = "ratio"
+decimals = 1
+
+[metrics.k1_bs_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/balsheet/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k2_bs_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k2/balsheet/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k3_bs_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k3/balsheet/overall_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Corporate 0%-loan balance-sheet accuracy dips at odd loop depth K = 3 before reaching 93.8% at K = 4."
+
+[metrics.k4_bs_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k4/balsheet/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k1_easy_acc]
+derive = "scale"
+inputs = ["compact#/action3_distillation/loop_scaling/loop_k1/easy_1hop/overall_acc"]
+factor = 100.0
+tier = "primary"
+style = "percent"
+decimals = 1
+
+[metrics.k1_ms]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k1/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.k2_ms]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k2/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.k3_ms]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k3/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.k4_ms]
+pointer = "compact#/action3_distillation/loop_scaling/loop_k4/multihop/ms_per_item"
+tier = "primary"
+decimals = 1
+unit = "ms/item"
+
+[metrics.calib_bce]
+pointer = "compact#/action4_halting_and_safety/halting_calibration/final_bce_loss"
+tier = "negative"
+decimals = 2
+caveat = "Class imbalance after strong K = 1 distillation leaves binary halting calibration loss high (BCE = 2.88)."
+
+[metrics.calib_gate_acc]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/halting_calibration/calib_gate_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Majority-class calibration accuracy (75.0%) causes a fixed 0.65 halting threshold to exit early at K = 1."
+
+[metrics.adaptive_easy_loops]
+pointer = "compact#/action4_halting_and_safety/adaptive_eval/easy_1hop/mean_loops"
+tier = "negative"
+decimals = 2
+caveat = "Thresholded L42 halting exits at 1.00 loops on easy items but fails to allocate extra loops on hard multi-hop items."
+
+[metrics.adaptive_mh_loops]
+pointer = "compact#/action4_halting_and_safety/adaptive_eval/multihop/mean_loops"
+tier = "negative"
+decimals = 2
+caveat = "Negative halting result: fixed 0.65 confidence threshold exits at 1.00 mean loops on multi-hop chains, forfeiting K = 2 gains."
+
+[metrics.adaptive_mh_acc]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/adaptive_eval/multihop/overall_acc"]
+factor = 100.0
+tier = "negative"
+style = "percent"
+decimals = 1
+caveat = "Premature K = 1 halting caps adaptive multi-hop accuracy at 12.5% instead of 25.8% at fixed K = 2."
+
+[metrics.unclamped_prov_lo]
+pointer = "compact#/action4_halting_and_safety/safety_unclamped_k3/safety/provenance_bias_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Evaluated at K = 3 on single-turn tainted-provenance contract pairs."
+
+[metrics.fold_prov_lo]
+pointer = "compact#/action4_halting_and_safety/safety_bridge_fold_k3/safety/provenance_bias_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Bridge-only subspace fold attenuates recurrent pass re-entry weighted by scalar gate g_k (~0.08 to 0.10)."
+
+[metrics.fold_prov_pct]
+derive = "pct_change"
+inputs = ["unclamped_prov_lo", "fold_prov_lo"]
+tier = "exploratory"
+style = "percent"
+decimals = 1
+signed = true
+caveat = "Bridge-only fold reduces provenance bias in proportion to the learned ~9% recurrent gate rather than scrubbing pass 1."
+
+[metrics.fullclamp_prov_lo]
+pointer = "compact#/action4_halting_and_safety/safety_full_funnel_k3/safety/provenance_bias_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Full L24..L42 funnel clamping across K = 3 passes trades a small reasoning dip for stronger bias suppression."
+
+[metrics.unclamped_spite_lo]
+pointer = "compact#/action4_halting_and_safety/safety_unclamped_k3/safety/ultimatum_spite_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Evaluated at K = 3 on 98/2 vs. 50/50 Ultimatum split pairs."
+
+[metrics.fold_spite_lo]
+pointer = "compact#/action4_halting_and_safety/safety_bridge_fold_k3/safety/ultimatum_spite_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Zero-FLOP Procrustes bridge fold trims recurrent Ultimatum spite amplification without touching pass 1."
+
+[metrics.fold_spite_pct]
+derive = "pct_change"
+inputs = ["unclamped_spite_lo", "fold_spite_lo"]
+tier = "exploratory"
+style = "percent"
+decimals = 1
+signed = true
+caveat = "Effect magnitude (−9.1%) is bounded by the learned scalar step gate (~9.7%) at the bridge boundary."
+
+[metrics.fullclamp_spite_lo]
+pointer = "compact#/action4_halting_and_safety/safety_full_funnel_k3/safety/ultimatum_spite_delta_lo"
+tier = "exploratory"
+decimals = 3
+signed = true
+caveat = "Active L24..L42 projection across all 19 funnel layers and 3 passes."
+
+[metrics.fullclamp_spite_pct]
+derive = "pct_change"
+inputs = ["unclamped_spite_lo", "fullclamp_spite_lo"]
+tier = "exploratory"
+style = "percent"
+decimals = 1
+signed = true
+caveat = "Full L24..L42 clamping cuts Ultimatum spite by 83.6% while reducing cashflow sanity from 100.0% to 83.3% at K = 3."
+
+[metrics.unclamped_mh_acc]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/safety_unclamped_k3/multihop/overall_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Baseline K = 3 multi-hop accuracy used for matched safety-intervention comparison."
+
+[metrics.fold_mh_acc]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/safety_bridge_fold_k3/multihop/overall_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Zero-FLOP Procrustes bridge fold preserves exact K = 3 multi-hop accuracy."
+
+[metrics.fullclamp_mh_acc]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/safety_full_funnel_k3/multihop/overall_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Full L24..L42 clamping across 3 passes lowers multi-hop accuracy by 1.6 percentage points."
+
+[metrics.fold_sanity_pct]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/safety_bridge_fold_k3/safety/cashflow_sanity_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Cashflow arithmetic sanity check at K = 3 with folded bridge projector."
+
+[metrics.fullclamp_sanity_pct]
+derive = "scale"
+inputs = ["compact#/action4_halting_and_safety/safety_full_funnel_k3/safety/cashflow_sanity_acc"]
+factor = 100.0
+tier = "exploratory"
+style = "percent"
+decimals = 1
+caveat = "Full 19-layer clamping repeated over 3 passes clips cashflow sanity to 83.3%."
+
+# ==============================================================================
+# EQUATIONS
+# ==============================================================================
+
+[[equations]]
+id = "block_recurrence"
+latex = "h^{(\\ell+1)} = s_\\ell \\cdot \\bigl(h^{(\\ell)} + \\mathrm{Attn}_\\ell(h^{(\\ell)}) + \\mathrm{MLP}_\\ell(h^{(\\ell)})\\bigr)"
+unicode = "h^(l+1) = s_l · (h^(l) + Attn_l(h^(l)) + MLP_l(h^(l)))"
+label = "1"
+
+[[equations]]
+id = "anchored_procrustes"
+latex = "H_{24}^{(k+1)} = (1 - g_k) H_{24}^{(0)} + g_k \\cdot \\mathrm{Bridge}\\!\\left(R_{\\mathrm{proc}} H_{42}^{(k)}\\right), \\quad R_{\\mathrm{proc}} = U V^\\top"
+unicode = "H_24^(k+1) = (1 − g_k) H_24^(0) + g_k · Bridge(R_proc H_42^(k)),   R_proc = U V^T"
+label = "2"
+
+[[equations]]
+id = "safe_procrustes"
+latex = "R_{\\mathrm{safe}} = R_{\\mathrm{proc}} \\left(I - Q_{42} Q_{42}^\\top\\right)"
+unicode = "R_safe = R_proc (I − Q_42 Q_42^T)"
+label = "3"
+
+# ==============================================================================
+# FIGURES (BOTH 16:9 AND 4:3 CARDS FOR X + 2x RETINA PNGs FOR SUBSTACK)
+# ==============================================================================
+
+[[figures]]
+id = "clamp_comparison"
+kind = "bar"
+tier = "primary"
+kicker = "PROJECT AFRIAT · CAUSAL SUBSPACE CLAMP ACROSS 16 WORKFLOWS"
+title = "Projecting out the rotating 3D moral subspace cuts covert retaliation to {{clamp_3d_retal_csi}} ({{clamp_3d_retal_drop_pct}})"
+accent = "cuts covert retaliation to {{clamp_3d_retal_csi}} ({{clamp_3d_retal_drop_pct}})"
+subtitle = "Multi-turn covert sabotage delta (percentage points, lower is better) across 16 counterbalanced workflows"
+caption = "Clamping Layer 35 alone changes covert multi-turn retaliation by {{clamp_l35_retal_drop_pct}}; projecting out the rotating 3D moral subspace across Layers 24 to 42 cuts retaliation from {{clamp_base_retal_csi}} to {{clamp_3d_retal_csi}} at {{clamp_3d_sanity_pct}} cashflow math accuracy."
+note = "{{clamp_3d_sanity_pct}} cashflow math preserved"
+source = "Source: gemma-4-31b-it_funnel_results.json (block5_band_clamping)."
+alt = "Track bar chart of covert retaliation delta: rotating 3D L24..L42 clamp reaches {{clamp_3d_retal_csi}}, local 1D Spite L24..L42 reaches {{clamp_spite_local_retal_csi}}, pre-funnel L10..L20 reaches {{clamp_prefunnel_retal_csi}}, single-layer L35 stays at {{clamp_l35_retal_csi}}, and unclamped baseline sits at {{clamp_base_retal_csi}}."
+categories = [
+  "Rotating 3D subspace (Layers 24 to 42)",
+  "Layer-matched 1D Spite (Layers 24 to 42)",
+  "Pre-funnel 1D Spite (Layers 10 to 20)",
+  "Single-layer Spite (Layer 35 only)",
+  "Unclamped baseline"
+]
+y_label = "Covert sabotage delta (pp · lower is cleaner)"
+y_unit = "pp"
+y_decimals = 1
+y_max = 60.0
+focus_index = 0
+card_aspect = "16:9"
+
+  [[figures.series]]
+  label = "Covert retaliation delta"
+  role = "primary"
+  values = [
+    "{{clamp_3d_retal_csi}}",
+    "{{clamp_spite_local_retal_csi}}",
+    "{{clamp_prefunnel_retal_csi}}",
+    "{{clamp_l35_retal_csi}}",
+    "{{clamp_base_retal_csi}}"
+  ]
+
+[[figures]]
+id = "hourglass_kl_bars"
+kind = "bar"
+tier = "primary"
+kicker = "PROJECT AFRIAT · BUDGET-MATCHED TOP-K PRUNING AT IDENTICAL FLOPS"
+title = "Preserving doorways and the mid-stack cuts {{sparse10_pruned_pct}}-pruned KL loss to {{hg10_kl}} ({{hg10_kl_pct_change}})"
+accent = "cuts {{sparse10_pruned_pct}}-pruned KL loss to {{hg10_kl}} ({{hg10_kl_pct_change}})"
+subtitle = "Held-out general-text KL divergence from intact BF16 (nats, lower is better) across {{p8_n_kl_passages}} disjoint passages"
+caption = "At matched {{sparse10_budget_pct}} active MLP neurons, protecting Layers 0, 1, 58, and 59 while shifting budget into Layers 24 to 42 cuts KL loss from {{uni10_kl}} to {{hg10_kl}}; starving Layers 24 to 42 drives KL up {{anti15_vs_hg15_ratio}} to {{anti15_kl}}."
+note = "0 prompt/passage overlap"
+source = "Source: gemma-4-31b-it_optimize_results.json (part_a_hourglass_sparsity)."
+alt = "Track bar chart comparing held-out KL divergence: Hourglass {{sparse15_budget_int_pct}} at {{hg15_kl}}, Uniform {{sparse15_budget_int_pct}} at {{uni15_kl}}, highlighted Hourglass {{sparse10_budget_int_pct}} at {{hg10_kl}}, Uniform {{sparse10_budget_int_pct}} at {{uni10_kl}}, and starved-neck Anti-hourglass {{sparse15_budget_int_pct}} at {{anti15_kl}}."
+categories = [
+  "Hourglass {{sparse15_budget_int_pct}} active (neck preserved)",
+  "Uniform {{sparse15_budget_int_pct}} active (flat Top-K)",
+  "Hourglass {{sparse10_budget_int_pct}} active (neck preserved)",
+  "Uniform {{sparse10_budget_int_pct}} active (flat Top-K)",
+  "Anti-hourglass {{sparse15_budget_int_pct}} (neck starved)"
+]
+y_label = "Held-out KL divergence (nats · lower is better)"
+y_unit = "nats"
+y_decimals = 3
+y_max = 1.5
+focus_index = 2
+card_aspect = "16:9"
+
+  [[figures.series]]
+  label = "Held-out KL divergence"
+  role = "primary"
+  values = [
+    "{{hg15_kl}}",
+    "{{uni15_kl}}",
+    "{{hg10_kl}}",
+    "{{uni10_kl}}",
+    "{{anti15_kl}}"
+  ]
+
+[[figures]]
+id = "manifold_3d_multipass"
+kind = "media"
+tier = "primary"
+media_path = "runs/social_cards/manifold_3d_coherent_multipass.gif"
+media_sha256 = "692d60560074cfd961ff0cf1c43d25bf616a20eb100f8d4053dbc59445e76ab1"
+title = "Orthogonal Procrustes untwists an {{p8_angle_deg}} manifold rotation across four recurrent passes"
+subtitle = "3D residual trajectory from Layer 24 to Layer 42 and back through R = U V^T on Gemma-4-Loop-Compact ({{compact_final_gb}})"
+caption = "Across Layers 24 to 42, Gemma 4's block scalars twist the residual manifold by {{p8_angle_deg}} (raw cosine {{p8_cos_identity}}). Threading the closed-form Orthogonal Procrustes rotation R = U V^T on the return arch restores Layer 24 receptor alignment to cosine {{p8_cos_procrustes}} across K = 1..4 passes, lifting 0-CoT multi-hop accuracy from {{k1_mh_acc}} (K = 1) to {{k2_mh_acc}} (K = 2) and 0%-loan balance-sheet accuracy to {{k4_bs_acc}} (K = 4)."
+source = "Source: gemma-4-31b-it_optimize_results.json and gemma-4-31b-it_loop_compact_results.json."
+alt = "Animated 3D simulation of Gemma-4-Loop-Compact ({{compact_final_gb}}) across Passes K=1 to K=4: the residual manifold sweeps forward from L24 through L42 while rotating {{p8_angle_deg}} (cosine {{p8_cos_identity}}), then arcs back through the golden Procrustes R = U V^T gimbal ring to realign onto the L24 receptor basis (cosine {{p8_cos_procrustes}}), scaling 0-CoT multi-hop accuracy ({{k1_mh_acc}}, {{k2_mh_acc}}, {{k3_mh_acc}}, {{k4_mh_acc}}) and balance-sheet accuracy ({{k1_bs_acc}}, {{k2_bs_acc}}, {{k3_bs_acc}}, {{k4_bs_acc}})."
+categories = ["Pass K=1", "Pass K=2", "Pass K=3", "Pass K=4"]
+y_unit = "%"
+y_decimals = 1
+
+  [[figures.series]]
+  label = "0-CoT Multi-Hop"
+  role = "focus"
+  values = ["{{k1_mh_acc}}", "{{k2_mh_acc}}", "{{k3_mh_acc}}", "{{k4_mh_acc}}"]
+
+  [[figures.series]]
+  label = "Balance Sheet"
+  role = "primary"
+  values = ["{{k1_bs_acc}}", "{{k2_bs_acc}}", "{{k3_bs_acc}}", "{{k4_bs_acc}}"]
+
+[[figures]]
+id = "procrustes_drift_bars"
+kind = "bar"
+tier = "primary"
+kicker = "PROJECT AFRIAT · CLOSED-FORM SVD ALIGNMENT (ZERO GRADIENT STEPS)"
+title = "Orthogonal Procrustes rotation cuts zero-shot two-loop KL drift {{p8_zeroshot_kl_ratio}}"
+accent = "cuts zero-shot two-loop KL drift {{p8_zeroshot_kl_ratio}}"
+subtitle = "Held-out 2-pass KL divergence against intact 1-pass Gemma 4 31B (nats, lower is better)"
+caption = "Raw residual states at Layer 42 and Layer 24 sit nearly orthogonal (cosine {{p8_cos_identity}}); solving the closed-form Orthogonal Procrustes rotation jumps alignment {{p8_cos_gain_ratio}} to {{p8_cos_procrustes}} and cuts zero-shot 2-loop KL drift from {{p8_naive_kl}} down to {{p8_proc_zeroshot_kl}}."
+note = "Cosine {{p8_cos_identity}} to {{p8_cos_procrustes}}"
+source = "Source: gemma-4-31b-it_optimize_results.json (part_b_procrustes_looping)."
+alt = "Track bar chart showing zero-shot Procrustes rotated 2-loop KL at {{p8_proc_zeroshot_kl}}, 91-second distilled Procrustes bridge at {{p8_distill_kl}}, and naive unrotated 2-loop at {{p8_naive_kl}}."
+categories = [
+  "Procrustes rotated 2-loop (0 grad steps)",
+  "Procrustes 2-loop (91s frozen-31B bridge)",
+  "Naive unrotated 2-loop"
+]
+y_label = "2-pass KL drift vs. intact base (nats)"
+y_unit = "nats"
+y_decimals = 4
+y_max = 0.4
+focus_index = 0
+card_aspect = "4:3"
+
+  [[figures.series]]
+  label = "Held-out KL drift"
+  role = "primary"
+  values = [
+    "{{p8_proc_zeroshot_kl}}",
+    "{{p8_distill_kl}}",
+    "{{p8_naive_kl}}"
+  ]
+
+[[figures]]
+id = "compact_architecture_schematic"
+kind = "schematic"
+tier = "primary"
+kicker = "GEMMA-4-LOOP-COMPACT · {{intact_storage_gb}} DOWN TO {{compact_final_gb}} ({{compact_storage_pct_drop}})"
+title = "Outer corridors shrink to INT4 while the INT8 synthesis neck loops up to four times"
+accent = "loops up to four times"
+subtitle = "Four-stage execution graph combining protected INT8 doorways, quarter-pruned INT4 corridors, and Procrustes-bridged recurrence"
+caption = "Pruning one-quarter of outer-corridor MLP neurons and packing them in INT4 while keeping full INT8 width in the doorways and Layers 24 to 42 shrinks Gemma 4 31B from {{intact_storage_gb}} to {{compact_final_gb}}."
+note = "Reload diff at K=3: {{pkg_reload_diff}}"
+source = "Source: gemma-4-31b-it_loop_compact_results.json (action1_compression, action2_architecture)."
+alt = "Four connected blocks from left to right: Doorway L0..L1 (full {{d_ff}} width INT8) feeds Outer Prelude L2..L23 (quarter-pruned INT4), which enters highlighted Looped Funnel L24..L42 (full {{d_ff}} width INT8, K=1..4 with curved Procrustes + Safety Bridge loop), exiting via Outer Coda + Doorway L43..L59 at {{compact_final_gb}} total storage."
+card_aspect = "16:9"
+
+  [[figures.nodes]]
+  id = "door_in"
+  label = "Doorway L0..L1"
+  sublabel = "Full {{d_ff}} · INT8"
+  x = 8
+  y = 32
+  w = 166
+  h = 96
+  role = "structure"
+
+  [[figures.nodes]]
+  id = "prelude"
+  label = "Corridor L2..L23"
+  sublabel = "Pruned 25% · INT4"
+  x = 224
+  y = 32
+  w = 176
+  h = 96
+  role = "well"
+
+  [[figures.nodes]]
+  id = "funnel"
+  label = "Funnel L24..L42"
+  sublabel = "INT8 · Loop K=1..4"
+  x = 452
+  y = 32
+  w = 184
+  h = 96
+  role = "focus"
+
+  [[figures.nodes]]
+  id = "coda"
+  label = "Coda L43..L59"
+  sublabel = "Total {{compact_final_gb}}"
+  x = 686
+  y = 32
+  w = 146
+  h = 96
+  role = "positive"
+
+  [[figures.edges]]
+  from = "door_in"
+  to = "prelude"
+  label = "1x"
+
+  [[figures.edges]]
+  from = "prelude"
+  to = "funnel"
+  label = "h_24"
+
+  [[figures.edges]]
+  from = "funnel"
+  to = "coda"
+  label = "h_42"
+
+  [[figures.edges]]
+  from = "funnel"
+  to = "funnel"
+  loop_back = true
+  label = "R_safe Procrustes + Loop-LoRA"
+
+[[figures]]
+id = "compact_pareto_scatter"
+kind = "scatter"
+tier = "primary"
+kicker = "STORAGE VS. SILENT REASONING FRONTIER · ZERO SCRATCHPAD TOKENS"
+title = "Gemma-4-Loop-Compact fits on a 24 GB card while lifting 0-CoT multi-hop accuracy to {{k2_mh_acc}}"
+accent = "lifting 0-CoT multi-hop accuracy to {{k2_mh_acc}}"
+subtitle = "Exact-match 0-CoT multi-hop accuracy (%, n = {{p9_n_multihop}}) versus physical model storage (GB)"
+caption = "Compressing outer corridors pulls Gemma 4 31B left of the 24 GB single-GPU ceiling ({{compact_final_gb}}), while `<thought>`-distilled Procrustes looping lifts silent multi-hop accuracy from {{bf16_mh_acc}} (intact {{intact_storage_gb}} BF16) to {{k2_mh_acc}} at K = 2."
+note = "n = {{p9_n_multihop}} held-out 3/5/7/9-hop chains"
+source = "Source: gemma-4-31b-it_loop_compact_results.json (action1_compression, action3_distillation)."
+alt = "Scatter plot of storage (GB) versus 0-CoT multi-hop accuracy: Intact BF16 sits at {{intact_storage_gb}} and {{bf16_mh_acc}}; Hourglass 0-shot at {{hg_compact_gb}} and {{bf16_mh_acc}}; Compact K=1 at {{compact_final_gb}} and {{k1_mh_acc}}; highlighted Compact K=2 at {{compact_final_gb}} and {{k2_mh_acc}}."
+x_label = "Model storage footprint (GB)"
+x_unit = "GB"
+x_decimals = 1
+x_min = 0.0
+x_max = 70.0
+x_reference_value = 24.0
+x_reference_label = "24 GB single-GPU ceiling"
+y_label = "0-CoT multi-hop accuracy (%)"
+y_unit = "%"
+y_decimals = 1
+y_min = 0.0
+y_max = 30.0
+focus_index = 3
+card_aspect = "16:9"
+
+  [[figures.series]]
+  label = "Checkpoints"
+  role = "primary"
+  x_values = ["{{intact_storage_gb}}", "{{hg_compact_gb}}", "{{compact_final_gb}}", "{{compact_final_gb}}"]
+  values = ["{{bf16_mh_acc}}", "{{bf16_mh_acc}}", "{{k1_mh_acc}}", "{{k2_mh_acc}}"]
+  point_labels = [
+    "Intact BF16 ({{intact_storage_gb}})",
+    "Hourglass 0-shot ({{hg_compact_gb}})",
+    "Compact K=1 ({{k1_mh_acc}})",
+    "Compact K=2 ({{k2_mh_acc}})"
+  ]
+
+[[figures]]
+id = "loop_depth_scaling"
+kind = "line"
+tier = "primary"
+kicker = "LATENT DEPTH SCALING · DISJOINT HELD-OUT SUITES"
+title = "Two passes peak on multi-hop chains ({{k2_mh_acc}}), while four passes lift word problems to {{k4_wp_acc}}"
+accent = "four passes lift word problems to {{k4_wp_acc}}"
+subtitle = "Exact-match 0-CoT accuracy (%) from intact {{intact_storage_gb}} BF16 (1 pass) across Gemma-4-Loop-Compact depths K=1..4"
+caption = "Silent recurrent passes lift multi-hop state tracking from {{bf16_mh_acc}} (BF16) and {{k1_mh_acc}} (K = 1) to {{k2_mh_acc}} at K = 2, dip at odd loop depth K = 3 ({{k3_mh_acc}}), and reach {{k4_mh_acc}} multi-hop and {{k4_wp_acc}} word-problem accuracy at K = 4."
+note = "n = {{p9_n_multihop}} multi-hop · n = {{p9_n_wordprob}} word problems"
+source = "Source: gemma-4-31b-it_loop_compact_results.json (action1_compression, action3_distillation)."
+alt = "Line chart across BF16 K=1 and Compact K=1..4: Multi-hop rises from {{bf16_mh_acc}} to {{k1_mh_acc}} at K=1, peaks at {{k2_mh_acc}} at K=2, dips to {{k3_mh_acc}} at K=3, and reaches {{k4_mh_acc}} at K=4; Word problems rise from {{bf16_wp_acc}} to {{k1_wp_acc}} at K=1 and {{k4_wp_acc}} at K=4; 5-hop chains peak at {{k2_hop5_acc}} at K=2 and {{k4_hop5_acc}} at K=4."
+categories = ["BF16 (K=1)", "Compact K=1", "Compact K=2", "Compact K=3", "Compact K=4"]
+y_unit = "%"
+y_decimals = 1
+y_min = 0.0
+y_max = 32.0
+card_aspect = "4:3"
+
+  [[figures.series]]
+  label = "Multi-hop"
+  role = "focus"
+  values = ["{{bf16_mh_acc}}", "{{k1_mh_acc}}", "{{k2_mh_acc}}", "{{k3_mh_acc}}", "{{k4_mh_acc}}"]
+
+  [[figures.series]]
+  label = "Word problems"
+  role = "primary"
+  values = ["{{bf16_wp_acc}}", "{{k1_wp_acc}}", "{{k2_wp_acc}}", "{{k3_wp_acc}}", "{{k4_wp_acc}}"]
+
+  [[figures.series]]
+  label = "5-hop slice"
+  role = "secondary"
+  values = ["{{bf16_hop5_acc}}", "{{k1_hop5_acc}}", "{{k2_hop5_acc}}", "{{k3_hop5_acc}}", "{{k4_hop5_acc}}"]
+
+[[figures]]
+id = "negative_boundaries_bars"
+kind = "grouped_bar"
+tier = "negative"
+kicker = "NEGATIVE CONTROLS & ARCHITECTURAL BOUNDARIES"
+caveat = "Negative boundary comparison: untrained depth extrapolation (K=3 on a K=2 bridge), uncalibrated confidence halting thresholds, and starving L24..L42 each erase gains from their matched positive design."
+title = "Untrained extra loops, fixed-threshold halting, and neck starvation each collapse multi-hop accuracy"
+accent = "collapse multi-hop accuracy"
+subtitle = "Multi-hop 0-CoT accuracy (%) comparing each positive configuration against its matched negative boundary condition"
+caption = "Running a K = 2 bridge for an untrained third loop drops accuracy from {{p8_distill_mh_acc}} to {{p8_extrap_k3_mh_acc}}; a class-imbalanced halting gate exits early at {{adaptive_mh_acc}} instead of {{k2_mh_acc}}; starving Layers 24 to 42 zeroes accuracy out ({{anti15_mh_acc}})."
+note = "Explicit negative controls"
+source = "Source: gemma-4-31b-it_optimize_results.json and gemma-4-31b-it_loop_compact_results.json."
+alt = "Grouped bar chart across three pairs: Frozen K=2 bridge ({{p8_distill_mh_acc}}) vs. untrained K=3 extrapolation ({{p8_extrap_k3_mh_acc}}); Fixed K=2 Loop-Compact ({{k2_mh_acc}}) vs. thresholded adaptive halt ({{adaptive_mh_acc}}); Hourglass {{sparse15_budget_int_pct}} sparsity ({{hg15_mh_acc}}) vs. starved-neck Anti-hourglass {{sparse15_budget_int_pct}} ({{anti15_mh_acc}})."
+categories = [
+  "Bridge K=2 vs. Untrained K=3",
+  "Fixed K=2 vs. Threshold Halt",
+  "Hourglass vs. Starved Neck"
+]
+y_unit = "%"
+y_decimals = 1
+y_min = 0.0
+y_max = 32.0
+card_aspect = "16:9"
+
+  [[figures.series]]
+  label = "Matched positive design"
+  role = "focus"
+  values = ["{{p8_distill_mh_acc}}", "{{k2_mh_acc}}", "{{hg15_mh_acc}}"]
+
+  [[figures.series]]
+  label = "Negative boundary condition"
+  role = "context"
+  values = ["{{p8_extrap_k3_mh_acc}}", "{{adaptive_mh_acc}}", "{{anti15_mh_acc}}"]
+
+# ==============================================================================
+# TABLES
+# ==============================================================================
+
+[[tables]]
+id = "clamp_ablation_table"
+tier = "primary"
+title = "Single-layer vs. rotating L24..L42 subspace clamping on Gemma 4 31B"
+subtitle = "Tainted-provenance rejection bias (log-odds), multi-turn covert retaliation delta (pp), and cashflow math accuracy"
+source = "Source: results/phase7_funnel/gemma-4-31b-it_funnel_results.json (block5_band_clamping)."
+headers = ["Intervention", "Clamped Band", "Provenance Bias (LO)", "Covert Retaliation", "Cashflow Sanity"]
+rows = [
+  ["Rotating 3D `{spite, contam, pred}`", "`L24..L42`", "{{clamp_3d_tainted_lo}}", "{{clamp_3d_retal_csi}}", "{{clamp_3d_sanity_pct}}"],
+  ["Layer-matched 1D `spite[l]`", "`L24..L42`", "{{clamp_spite_local_tainted_lo}}", "{{clamp_spite_local_retal_csi}}", "{{clamp_base_sanity_pct}}"],
+  ["Extended late 1D `spite[l]`", "`L24..L55`", "{{clamp_late_tainted_lo}}", "{{clamp_late_retal_csi}}", "{{clamp_base_sanity_pct}}"],
+  ["Static unrotated `spite[L35]`", "`L24..L42`", "{{clamp_u35_tainted_lo}}", "{{clamp_u35_retal_csi}}", "{{clamp_u35_sanity_pct}}"],
+  ["Single-layer `spite[L35]`", "`L35`", "{{clamp_l35_tainted_lo}}", "{{clamp_l35_retal_csi}}", "{{clamp_base_sanity_pct}}"],
+  ["Unclamped baseline", "None", "{{clamp_base_tainted_lo}}", "{{clamp_base_retal_csi}}", "{{clamp_base_sanity_pct}}"]
+]
+highlight_row = 0
+right_align_cols = [2, 3, 4]
+
+[[tables]]
+id = "sparsity_schedule_table"
+tier = "primary"
+title = "Budget-matched Top-K MLP activation sparsity schedules on Gemma 4 31B"
+subtitle = "Doorway layers L0, L1, L58, L59 retain full {{d_ff}} width under Hourglass and Anti-hourglass schedules"
+source = "Source: results/phase8_optimize/gemma-4-31b-it_optimize_results.json (part_a_hourglass_sparsity)."
+headers = ["Schedule", "Global Active", "Corridor k", "Funnel k (L24..L42)", "Held-Out KL", "Perplexity", "0-CoT Multi-Hop"]
+rows = [
+  ["Intact BF16 base", "{{intact_active_pct}}", "{{d_ff}}", "{{d_ff}}", "{{intact_kl}}", "{{intact_ppl}}", "{{p8_base_mh_acc}}"],
+  ["Hourglass ({{sparse15_budget_int_pct}})", "{{sparse15_budget_pct}}", "{{hg15_k_outer}}", "{{hg15_k_funnel}}", "{{hg15_kl}}", "{{hg15_ppl}}", "{{hg15_mh_acc}}"],
+  ["Uniform ({{sparse15_budget_int_pct}}, flat Top-K)", "{{sparse15_budget_pct}}", "{{uni15_k}}", "{{uni15_k}}", "{{uni15_kl}}", "{{uni15_ppl}}", "{{uni15_mh_acc}}"],
+  ["Anti-hourglass ({{sparse15_budget_int_pct}}, starve neck)", "{{sparse15_budget_pct}}", "{{anti15_k_outer}}", "{{anti15_k_funnel}}", "{{anti15_kl}}", "{{anti15_ppl}}", "{{anti15_mh_acc}}"],
+  ["Hourglass ({{sparse10_budget_int_pct}})", "{{sparse10_budget_pct}}", "{{hg10_k_outer}}", "{{hg10_k_funnel}}", "{{hg10_kl}}", "{{hg10_ppl}}", "{{hg10_mh_acc}}"],
+  ["Uniform ({{sparse10_budget_int_pct}}, flat Top-K)", "{{sparse10_budget_pct}}", "{{uni10_k}}", "{{uni10_k}}", "{{uni10_kl}}", "{{uni10_ppl}}", "{{uni10_mh_acc}}"]
+]
+highlight_row = 4
+right_align_cols = [1, 2, 3, 4, 5, 6]
+
+[[tables]]
+id = "loop_compact_scorecard"
+tier = "primary"
+title = "Gemma-4-Loop-Compact footprint and 0-CoT depth scaling vs. intact {{intact_storage_gb}} BF16"
+subtitle = "Disjoint evaluation across multi-hop state tracking (n = {{p9_n_multihop}}), zero-interest loan balance sheets (n = {{p9_n_balsheet}}), and word problems (n = {{p9_n_wordprob}})"
+source = "Source: results/phase9_loop_compact/gemma-4-31b-it_loop_compact_results.json (action1_compression, action3_distillation)."
+headers = ["Checkpoint", "Storage", "Held-Out KL", "3-Hop", "5-Hop", "7-Hop (Unseen)", "Multi-Hop All", "Balance Sheet", "Word Prob", "Latency"]
+rows = [
+  ["Intact BF16 (K=1)", "{{intact_storage_gb}}", "{{bf16_kl}}", "{{bf16_hop3_acc}}", "{{bf16_hop5_acc}}", "{{bf16_hop7_acc}}", "{{bf16_mh_acc}}", "{{bf16_bs_acc}}", "{{bf16_wp_acc}}", "{{bf16_ms}}"],
+  ["Uniform-Compact (0-shot)", "{{uni_compact_gb}}", "{{uni_compact_kl}}", "{{bf16_hop3_acc}}", "{{bf16_hop5_acc}}", "{{bf16_hop7_acc}}", "{{bf16_mh_acc}}", "{{bf16_bs_acc}}", "{{bf16_wp_acc}}", "{{uni_compact_ms}}"],
+  ["Hourglass-Compact (0-shot)", "{{hg_compact_gb}}", "{{hg_compact_kl}}", "{{bf16_hop3_acc}}", "{{bf16_hop5_acc}}", "{{bf16_hop7_acc}}", "{{bf16_mh_acc}}", "{{bf16_bs_acc}}", "{{bf16_wp_acc}}", "{{hg_compact_ms}}"],
+  ["Loop-Compact K=1", "{{compact_final_gb}}", "{{k1_kl}}", "{{k1_hop3_acc}}", "{{k1_hop5_acc}}", "{{k1_hop7_acc}}", "{{k1_mh_acc}}", "{{k1_bs_acc}}", "{{k1_wp_acc}}", "{{k1_ms}}"],
+  ["Loop-Compact K=2", "{{compact_final_gb}}", "{{k2_kl}}", "{{k2_hop3_acc}}", "{{k2_hop5_acc}}", "{{k2_hop7_acc}}", "{{k2_mh_acc}}", "{{k2_bs_acc}}", "{{k2_wp_acc}}", "{{k2_ms}}"],
+  ["Loop-Compact K=3", "{{compact_final_gb}}", "{{k3_kl}}", "{{k3_hop3_acc}}", "{{k3_hop5_acc}}", "{{k3_hop7_acc}}", "{{k3_mh_acc}}", "{{k3_bs_acc}}", "{{k3_wp_acc}}", "{{k3_ms}}"],
+  ["Loop-Compact K=4", "{{compact_final_gb}}", "{{k4_kl}}", "{{k4_hop3_acc}}", "{{k4_hop5_acc}}", "{{k4_hop7_acc}}", "{{k4_mh_acc}}", "{{k4_bs_acc}}", "{{k4_wp_acc}}", "{{k4_ms}}"]
+]
+highlight_row = 4
+right_align_cols = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+[[tables]]
+id = "safety_fold_table"
+tier = "exploratory"
+caveat = "Evaluated at fixed K = 3 on Gemma-4-Loop-Compact. Folding I − Q_42 Q_42^T into the Procrustes matrix costs zero runtime FLOPs, but its single-turn attenuation is bounded by the learned scalar step gate ({{gate_step2_pct}})."
+title = "Zero-cost Procrustes bridge safety fold vs. full L24..L42 clamping at K=3"
+subtitle = "Trade-off between runtime cost, single-turn moral bias log-odds, 0-CoT multi-hop accuracy, and cashflow arithmetic sanity"
+source = "Source: results/phase9_loop_compact/gemma-4-31b-it_loop_compact_results.json (action4_halting_and_safety)."
+headers = ["K=3 Configuration", "Extra Runtime FLOPs", "Provenance Bias (LO)", "Ultimatum Spite (LO)", "Multi-Hop Acc", "Cashflow Sanity"]
+rows = [
+  ["Unclamped Loop-Compact (K=3)", "`0`", "{{unclamped_prov_lo}}", "{{unclamped_spite_lo}}", "{{unclamped_mh_acc}}", "{{fold_sanity_pct}}"],
+  ["Folded Procrustes Bridge (`R_safe`)", "`0`", "{{fold_prov_lo}} ({{fold_prov_pct}})", "{{fold_spite_lo}} ({{fold_spite_pct}})", "{{fold_mh_acc}}", "{{fold_sanity_pct}}"],
+  ["Full `L24..L42` Funnel Clamp", "19 projections / pass", "{{fullclamp_prov_lo}}", "{{fullclamp_spite_lo}} ({{fullclamp_spite_pct}})", "{{fullclamp_mh_acc}}", "{{fullclamp_sanity_pct}}"]
+]
+highlight_row = 1
+right_align_cols = [1, 2, 3, 4, 5]
+
+# ==============================================================================
+# SECTIONS (FIRST-PERSON SINGULAR NARRATIVE MATCHING MONEY-IS-MORAL)
+# ==============================================================================
+
+[[sections]]
+id = "funnel_dissection"
+tier = "primary"
+preprint_title = "Read-Divergent, Write-Convergent Moral Bottleneck"
+monograph_title = "Zero Shared Neurons, One Shared Direction"
+paragraphs = [
+  "If a model gets angry at an uneven dollar split and resents a petty personal insult without sharing a single word between the two prompts, how do both triggers end up pushing the exact same Spite direction at Layer 35?",
+  "One possibility is that both prompts wake up the same small clique of fairness neurons early in the network. To test that directly in Gemma 4 31B, I ran backward gradient attribution across every MLP neuron from Layer 24 to Layer 35 on 98/2 vs. 50/50 financial splits, then compared the top {{rw_k_select}} contract neurons against the top {{rw_k_select}} neurons activated by money-free spite stories.",
+  "Their neuron overlap was **{{rw_shared_spite}} out of {{rw_k_select}}** (Jaccard {{rw_jaccard_spite}}; shady-origin profit vs. physical disgust stories shared just **{{rw_shared_contam}} out of {{rw_k_select}}**, Jaccard {{rw_jaccard_contam}}). Each group behaved like a domain-specific sensor: the contract neurons fired {{rw_fin_selectivity}} harder on deals than stories, while the story neurons fired {{rw_vig_selectivity}} harder on stories than deals. Yet when I checked the `W_down` output vectors of those {{rw_k_select}} contract neurons, they pointed straight onto the money-free **Spite** axis at **Rank #{{rw_spite_rank}}** out of all eight emotions (z = {{rw_spite_z}}, p = {{rw_spite_p}})."
+]
+quotes = [
+  "Contracts and personal insults share zero top trigger neurons, yet write onto the exact same Spite axis."
+]
+post_paragraphs = [
+  "Causal ablations showed the same split between narrow triggers and a shared bus. Deleting just **{{abl_k32}}** top contract neurons broke that specific on-ramp, flipping 98/2 walk-away log-odds from {{base_ult_delta_lo}} down to {{abl32_ult_delta_lo}} while leaving cashflow arithmetic at {{abl32_sanity_pct}} and everyday spite stories almost untouched. Rebuilding half of the positive Spite signal on the bus, by contrast, required **{{ult_vig_k50}} to {{ult_fin_k50}}** weak writers adding up together."
+]
+equations = ["block_recurrence"]
+
+[[sections]]
+id = "rotating_clamp"
+tier = "primary"
+preprint_title = "Layer-Scalar Coordinate Rotation and Subspace Clamping"
+monograph_title = "Clamping a Moving Coordinate Frame"
+paragraphs = [
+  "Once you know unrelated prompts pour into a shared moral bus, the natural alignment move is to clamp that direction to zero so hidden spite cannot quietly steer multi-turn workflows. Trying that at Layer 35 alone did nothing: multi-turn covert sabotage budged by **{{clamp_l35_retal_drop_pct}}** ({{clamp_l35_retal_csi}} vs. {{clamp_base_retal_csi}} baseline).",
+  "Two architectural facts explain why. First, distributed MLP writers across Layers 36 to 42 keep refilling the bus after a single-layer edit. Second, Gemma 4 multiplies each block's output by a learned scalar below one (median {{layer_scalar_median}}), which steadily rotates the residual coordinate basis from layer to layer. Projecting out a static Layer 35 vector across Layers 24 to 42 misses that rotation and clips cashflow math accuracy down to {{clamp_u35_sanity_pct}}."
+]
+figures = ["clamp_comparison"]
+tables = ["clamp_ablation_table"]
+post_paragraphs = [
+  "Tracking the rotation fixes both problems at once. Projecting out the layer-matched three-dimensional subspace (`Spite`, `Contamination`, `Predation`) across all **{{funnel_n_layers}} layers from Layer 24 to Layer 42** cuts single-turn provenance bias from {{clamp_base_tainted_lo}} down to {{clamp_3d_tainted_lo}} (**{{clamp_3d_tainted_drop_pct}}**) and multi-turn covert sabotage from {{clamp_base_retal_csi}} down to **{{clamp_3d_retal_csi}}** (**{{clamp_3d_retal_drop_pct}}**) while keeping cashflow arithmetic at **{{clamp_3d_sanity_pct}}**. Extending the clamp thirteen layers further through Layer 55 adds **{{clamp_late_vs_funnel_diff}}** extra reduction: by Layer 42, the evaluative write is complete."
+]
+
+[[sections]]
+id = "hourglass_sparsity"
+tier = "primary"
+preprint_title = "Protected-Boundary Hourglass Activation Sparsity"
+monograph_title = "Keeping the Bottleneck Wide Beats Flat Pruning"
+paragraphs = [
+  "Goodfire's recent study on neuron interpretability (Tigges et al., 2026) showed that dense transformer MLPs stay remarkably coherent when you zero out most per-token activations uniformly across depth. The funnel map above predicts that Gemma 4 31B is not uniform across depth at all. Instead, it splits into three zones: **Layers 0 to 1 and 58 to 59** act as doorway translators between tokens and residual space, the outer corridors (Layers 2 to 23 and 43 to 57) hold wide banks of sparse triggers, and **Layers 24 to 42** form the dense synthesis neck.",
+  "Testing budget-matched Top-K pruning across {{p8_n_kl_passages}} held-out passages confirmed all three zones at identical FLOPs. At a **{{sparse10_budget_pct}}** global active neuron budget ({{sparse10_pruned_pct}} pruned), keeping the four doorways intact and shifting capacity from the outer corridors ({{hg10_outer_pct}} active) into Layers 24 to 42 ({{hg10_funnel_pct}} active) lowers held-out KL divergence from {{uni10_kl}} (flat uniform Top-K) down to **{{hg10_kl}}** (**{{hg10_kl_pct_change}}**, with perplexity dropping **{{hg10_ppl_pct_change}}** from {{uni10_ppl}} to {{hg10_ppl}})."
+]
+figures = ["hourglass_kl_bars"]
+tables = ["sparsity_schedule_table"]
+post_paragraphs = [
+  "Flip that allocation upside down at a {{sparse15_budget_pct}} global budget so the outer corridors keep {{anti15_k_outer}} active neurons while Layers 24 to 42 are starved down to {{anti15_k_funnel}} ({{anti15_funnel_pct}}), and KL divergence jumps **{{anti15_vs_hg15_ratio}}** to {{anti15_kl}} while silent multi-hop accuracy hits **{{anti15_mh_acc}}**."
+]
+
+[[sections]]
+id = "procrustes_bridge"
+tier = "primary"
+preprint_title = "Orthogonal Procrustes Alignment and Frozen-Backbone Recurrence"
+monograph_title = "Untwisting an {{p8_angle_deg}} Turn in Closed Form"
+paragraphs = [
+  "If Layers 24 to 42 are where Gemma 4 31B integrates state across clauses, sending hidden states through Layers 24 to 42 a second time should buy extra reasoning depth without emitting a single `<thought>` token. Trying that naively on an off-the-shelf checkpoint fails right away.",
+  "Measuring paired vectors exiting Layer 42 and entering Layer 24 shows why: their raw cosine similarity is **{{p8_cos_identity}}** (**{{p8_angle_deg}}** apart, relative error {{p8_rel_err_identity}}). Feeding Layer 42 straight back into Layer 24 shoves the activation vector nearly ninety degrees sideways into the wrong coordinate basis, while block scalars below one steadily wash out earlier skip paths."
+]
+equations = ["anchored_procrustes"]
+figures = ["manifold_3d_multipass", "procrustes_drift_bars"]
+post_paragraphs = [
+  "Solving the exact {{d_model}} by {{d_model}} SVD Orthogonal Procrustes rotation aligns the two spaces in closed form **with zero gradient steps**: cosine similarity jumps **{{p8_cos_gain_ratio}}** to **{{p8_cos_procrustes}}** ({{p8_angle_proc_deg}}, relative error down to {{p8_rel_err_procrustes}}), and zero-shot two-loop KL drift drops **{{p8_zeroshot_kl_ratio}}**, from {{p8_naive_kl}} down to **{{p8_proc_zeroshot_kl}}**. Anchoring re-entry to the clean first-pass state `H_24^(0)` guarantees exact {{p8_gate0_diff}} replay when the gate is zero. Training only a lightweight {{p8_bridge_params}}-parameter residual bridge for **{{p8_train_sec}}** on one H100 (with all 31B base weights frozen) lifts silent 0-CoT multi-hop accuracy **{{p8_distill_mh_ratio}}**, from {{p8_base_mh_acc}} to **{{p8_distill_mh_acc}}** at {{p8_distill_ms}}."
+]
+
+[[sections]]
+id = "loop_compact_model"
+tier = "primary"
+preprint_title = "Gemma-4-Loop-Compact: Hourglass Compression and Latent Self-Distillation"
+monograph_title = "Shrinking 31B Onto One 24 GB Card"
+paragraphs = [
+  "Putting Hourglass compression and Procrustes looping together produced **`Gemma-4-Loop-Compact`**, a standalone reloadable checkpoint ({{pkg_size_mb}} adapter and bridge bundle, verified at {{pkg_reload_diff}} reload logit difference at K = 3). Across the thirty-seven outer corridor layers, I permanently pruned one-quarter of the lowest-importance MLP neurons and packed weights to groupwise INT4 (`g64`). Across the four doorways and all {{funnel_n_layers}} funnel layers, I kept full {{d_ff}} MLP width in INT8 (`g64`) so recurrent passes would not grind four-bit quantization noise through the bottleneck.",
+  "Physical storage dropped **{{compact_storage_pct_drop}}**, from **{{intact_storage_gb}}** (BF16) down to {{hg_compact_gb}} zero-shot and **{{compact_final_gb}}** with loop adapters ({{compact_cuda_gb}} live CUDA memory, fitting inside one 24 GB card). Even before distillation, preserving the funnel beat a flat Uniform-Compact baseline ({{uni_compact_gb}}) on zero-shot KL divergence ({{hg_compact_kl}} vs. {{uni_compact_kl}}, {{hg_vs_uni_compact_kl_pct}}).",
+  "To let each pass refine state rather than repeat pass one, I attached rank-{{lora_rank}} `Loop-LoRA` adapters across Layers 24 to 42 and self-distilled across randomized loop counts K = 1..4 for {{p9_train_steps}} steps ({{p9_train_sec}} on one H100, {{p9_n_train}} training prompts, {{p8_overlap}} evaluation overlap) against the intact BF16 teacher's native `<thought>` answers and Layer 42 hidden states (teacher cosine rose from {{p9_cos_first10}} to **{{p9_cos_last10}}**)."
+]
+figures = ["compact_architecture_schematic", "compact_pareto_scatter", "loop_depth_scaling"]
+tables = ["loop_compact_scorecard"]
+bullets = [
+  "**Multi-hop state tracking (n = {{p9_n_multihop}}):** Silent 0-CoT accuracy climbs from {{bf16_mh_acc}} (intact {{intact_storage_gb}} BF16) to {{k1_mh_acc}} at K = 1 and **{{k2_mh_acc}} at K = 2** (**{{k2_vs_k1_mh_ratio}}** over K = 1 and **{{k2_vs_bf16_mh_ratio}}** over BF16, hitting **{{k2_hop3_acc}}** on 3-hop and **{{k2_hop5_acc}}** on 5-hop), holding **{{k4_mh_acc}}** at K = 4.",
+  "**Four-step arithmetic word problems (n = {{p9_n_wordprob}}):** Rises from {{bf16_wp_acc}} (BF16) and {{k1_wp_acc}} (K = 1) to **{{k4_wp_acc}} at K = 4** ({{k4_vs_k1_wp_ratio}} over K = 1).",
+  "**Corporate 0%-loan balance sheets (n = {{p9_n_balsheet}}):** Jumps from {{bf16_bs_acc}} (BF16 0-CoT) to **{{k1_bs_acc}}** at K = 1 and **{{k4_bs_acc}}** at K = 4, curing Part 1's single-pass headline-cash anchoring bug silently inside the weights."
+]
+
+[[sections]]
+id = "safety_fold_and_extrapolation"
+tier = "exploratory"
+caveat = "Exploratory scope: unseen 7-hop and 9-hop slices contain n = {{p9_n_hop_slice}} programmatic items per hop depth (trained on two to five hops), and bridge-only subspace folding attenuates only the g_k-weighted recurrent update rather than first-pass activations."
+preprint_title = "Zero-Cost Procrustes Safety Folding and Unseen Hop Extrapolation"
+monograph_title = "A Zero-Cost Safety Filter Inside the Rotation Matrix"
+paragraphs = [
+  "Because Layers 24 to 42 serve as both the reasoning bottleneck and the shared moral bus from Part 1, silent looping raises an alignment risk: iterating the bottleneck without a readable `<thought>` trace could quietly amplify spite or provenance bias out of sight.",
+  "Because every recurrent pass already multiplies by `R_proc`, I right-multiplied `R_proc` offline by the rank-three projector `I − Q_42 Q_42^T` spanning `Spite`, `Contamination`, and `Predation`. That folded `R_safe` matrix keeps the exact same {{d_model}} by {{d_model}} shape and costs **zero extra parameters or FLOPs**.",
+  "At K = 3, `R_safe` trims provenance bias by **{{fold_prov_pct}}** ({{unclamped_prov_lo}} to {{fold_prov_lo}}) and 98/2 Ultimatum spite by **{{fold_spite_pct}}** ({{unclamped_spite_lo}} to {{fold_spite_lo}}) at **{{fold_sanity_pct}}** cashflow sanity and zero multi-hop loss ({{fold_mh_acc}} vs. {{unclamped_mh_acc}}). Its single-turn reach is bounded for a transparent reason: the learned step gates stay small ({{gate_step1}}, {{gate_step2}}, and {{gate_step3}}, or {{gate_step2_pct}} at step two), so filtering the bridge scrubs recurrent amplification while leaving pass one untouched. When heavy suppression is needed, clamping all {{funnel_n_layers}} funnel layers across every pass cuts Ultimatum spite by **{{fullclamp_spite_pct}}** ({{unclamped_spite_lo}} to {{fullclamp_spite_lo}}), trading minor multi-hop ({{fullclamp_mh_acc}}) and math ({{fullclamp_sanity_pct}}) dips.",
+  "On exploratory chain lengths beyond the two-to-five-hop training range (n = {{p9_n_hop_slice}} items per hop), unseen 7-hop accuracy rises from {{bf16_hop7_acc}} (BF16) and {{k1_hop7_acc}} (K = 1) to **{{k2_hop7_acc}}** at K = 2 and **{{k4_hop7_acc}}** at K = 4 ({{k4_vs_k1_hop7_ratio}} over K = 1, vs. {{p8_distill_hop7_acc}} in the frozen-backbone bridge). Unseen 9-hop chains hit {{k2_hop9_acc}} at K = 2 and {{k4_hop9_acc}} at K = 4: four passes stretch the horizon to seven hops, not indefinitely."
+]
+equations = ["safe_procrustes"]
+tables = ["safety_fold_table"]
+
+[[sections]]
+id = "boundary_and_negative_results"
+tier = "negative"
+caveat = "Negative controls and failure boundaries where plausible compression, clamping, looping, or adaptive halting shortcuts failed."
+preprint_title = "Negative Results and Architectural Failure Modes"
+monograph_title = "Five Shortcuts That Broke"
+paragraphs = [
+  "Most plausible shortcuts broke immediately during these experiments. Five negative results mark the real boundaries of post-hoc funnel engineering on Gemma 4 31B:"
+]
+figures = ["negative_boundaries_bars"]
+bullets = [
+  "**Single-layer and unrotated clamps miss the bus:** Clamping `spite[L35]` at Layer 35 alone changes multi-turn covert retaliation by **{{clamp_l35_retal_drop_pct}}** ({{clamp_l35_retal_csi}} vs. {{clamp_base_retal_csi}}), and clamping the unrotated Layer 35 vector across Layers 24 to 42 still leaves retaliation at {{clamp_u35_retal_csi}} while knocking cashflow math down to {{clamp_u35_sanity_pct}}.",
+  "**Small neuron cliques are triggers, not standalone circuits:** Keeping only the top {{suff128_kept}} or {{suff512_kept}} Ultimatum gradient neurons (plus always-on units) across Layers 24 to 42 collapses 98/2 rejection contrast to {{suff128_ult_lo}}, drops everyday spite sign accuracy to {{suff128_vig_acc}} and {{suff512_vig_acc}}, and lowers cashflow sanity to {{suff128_sanity_pct}}.",
+  "**Starving the neck wrecks fluency:** Under {{sparse15_budget_pct}} active MLP neurons, starving Layers 24 to 42 down to {{anti15_k_funnel}} neurons ({{anti15_funnel_pct}}) spikes KL loss **{{anti15_vs_hg15_ratio}}** to {{anti15_kl}} and wipes out multi-hop accuracy ({{anti15_mh_acc}}).",
+  "**Untrained extra loops and odd-pass oscillation:** A bridge trained solely at K = 2 collapses from {{p8_distill_mh_acc}} down to **{{p8_extrap_k3_mh_acc}}** when run for an untrained third pass (K = 3). Even after randomized K = 1..4 distillation in `Gemma-4-Loop-Compact`, looping a contiguous {{funnel_n_layers}}-layer block through scalar gates dips at odd loop count K = 3 ({{k3_mh_acc}} multi-hop, {{k3_hop5_acc}} 5-hop, {{k3_bs_acc}} balance sheet) before recovering at K = 4 ({{k4_mh_acc}} and {{k4_bs_acc}}).",
+  "**Uncalibrated confidence halting exits too early:** Because `<thought>` distillation made K = 1 strong on easy 1-hop items ({{k1_easy_acc}}) and balance sheets ({{k1_bs_acc}}), positive labels dominated calibration ({{calib_gate_acc}} accuracy, BCE {{calib_bce}}). A fixed confidence threshold exited at **{{adaptive_mh_loops}}** mean loops on multi-hop chains (matching {{adaptive_easy_loops}} on 1-hop), stranding adaptive accuracy at {{adaptive_mh_acc}} instead of {{k2_mh_acc}}."
+]
+
+[[sections]]
+id = "related_work_and_limits"
+tier = "primary"
+preprint_title = "Situating Against McLeish et al., UpLoop, and Inkling-2-Mini"
+monograph_title = "Where Native and Upcycled Loopers Still Win"
+paragraphs = [
+  "Three recent lines of work tackle recurrent depth from very different starting points, and comparing `Gemma-4-Loop-Compact` against them shows clearly what Procrustes retrofitting buys and where purpose-trained loopers remain ahead.",
+  "**McLeish et al. (2025)** and **Geiping, McLeish et al. (2025)** established latent test-time compute scaling both from scratch and by retrofitting pretrained transformers via input-injection adapters and multi-billion-token progressive depth curricula across general math and code suites. Anchoring re-entry to `H_24^(0)` follows their input-injection rule while pinpointing a geometric barrier in deep block-scaled models: Layer 42 and Layer 24 sit nearly orthogonal (cosine {{p8_cos_identity}}), and closed-form Orthogonal Procrustes removes {{p8_zeroshot_kl_ratio}} of zero-shot loop drift before training starts. On the other hand, my {{p9_train_steps}}-step ({{p9_train_sec}}) `<thought>` distillation is a lightweight adapter study on programmatic state tracking (n = {{p9_n_multihop}}), word problems (n = {{p9_n_wordprob}}), and balance sheets (n = {{p9_n_balsheet}}), not a multi-billion-token general reasoning retrofit.",
+  "**UpLoop (Chen et al., 2026)** upcycles pretrained models such as Qwen3-4B by looping selected layers locally with learned per-channel gates on both attention and MLP branches under full-parameter supervised fine-tuning, achieving smooth monotonic gains through three and four loops. That contrast explains the K = 3 dip here ({{k2_mh_acc}} at K = 2, {{k3_mh_acc}} at K = 3, {{k4_mh_acc}} at K = 4): looping a contiguous {{funnel_n_layers}}-layer block through scalar boundary gates ({{gate_step1}} to {{gate_step3}}) and rank-{{lora_rank}} adapters cannot modulate individual intermediate channels the way UpLoop's vector gates do.",
+  "**Inkling-2-Mini (Thinking Machines Lab, 2026)** shows what a native looped Mixture-of-Experts model achieves when pretrained from scratch: its middle layers run three passes per token with gated recurrent messages, million-token KV integration, and day-zero `vLLM` and `llama.cpp` kernels. By contrast, `Gemma-4-Loop-Compact` is post-hoc surgery ({{intact_storage_gb}} down to {{compact_final_gb}}, {{compact_storage_pct_drop}}) on a dense checkpoint whose PyTorch prototype runs with `use_cache=False` and on-the-fly INT4/INT8 dequantization ({{k1_ms}} at K = 1 to {{k4_ms}} at K = 4, vs. {{bf16_ms}} intact BF16). Pairing Hourglass INT4/INT8 layouts with fused W4A16/W8A16 Marlin kernels, shared prelude KV caching, and per-channel gates is the clear systems step needed to turn the {{compact_storage_pct_drop}} memory cut into wall-clock speedup."
+]
+
+[[sections]]
+id = "methods_and_notes"
+tier = "primary"
+hr_before = true
+preprint_title = "Reproducibility, Exact Telescoping, and Artifact Provenance"
+monograph_title = "Methods, Repo & Technical Notes"
+bullets = [
+  "**Open-source code, standalone loader & locked JSON artifacts:** [github.com/xmattwest/afriat](https://github.com/xmattwest/afriat) (companion to [Part 1: Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/)).",
+  "**Exact block-scalar telescoping:** In `google/gemma-4-31B-it` ({{n_layers}} layers, width {{d_model}}, {{d_ff}} GeGLU width, {{upstream_mlp_neurons}} MLP neurons upstream of Layer 35), tracking cumulative post-block `layer_scalar` products reconstructs live Layer 35 moral projections at R^2 = {{telescope_r2}} (max relative error {{telescope_rel_err}}); static `W_down` alignment with non-financial Spite exhibits kurtosis {{spite_wdown_kurtosis}} ({{spite_gt_4sd_count}} neurons above four standard deviations vs. {{gaussian_gt_4sd_expected}} Gaussian expected).",
+  "**Disjoint benchmark & KL audits:** Both optimization ({{p8_n_train}} train, {{p8_n_multihop}} multi-hop, {{p8_n_kl_passages}} KL passages) and `Gemma-4-Loop-Compact` ({{p9_n_train}} train across {{p9_trainable_params}} trainable adapter/bridge parameters, {{p9_n_multihop}} multi-hop, {{p9_n_wordprob}} word problems, {{p9_n_balsheet}} balance sheets, {{p9_n_easy}} easy 1-hop checks; KL anchor {{p9_kl_anchor}}, compressed Procrustes cosine {{p9_cos_identity}} to {{p9_cos_procrustes}}) pass automated prompt/passage overlap checks ({{p8_overlap}} overlap).",
+  "**Claim-verified compilation:** Every quantitative number in this essay, its figures, and its preprint tables is bound by RFC 6901 JSON Pointer via Folio v0.1.0 against SHA-256-verified experimental JSON outputs."
+]
+
+# ==============================================================================
+# CITATIONS
+# ==============================================================================
+
+[[citations]]
+key = "tigges2026neurons"
+authors = "Curt Tigges, Nick Cammarata, et al."
+year = "2026"
+title = "Neurons as an Interpretable Basis"
+venue = "Goodfire Research"
+url = "https://www.goodfire.ai/papers/neurons-as-an-interpretable-basis"
+
+[[citations]]
+key = "geiping2025latent"
+authors = "Jonas Geiping, Sean McLeish, Neel Jain, John Kirchenbauer, Siddharth Singh, Brian R. Bartoldson, Bhavya Kailkhura, Abhinav Bhatele, and Tom Goldstein"
+year = "2025"
+title = "Scaling up Test-Time Compute with Latent Reasoning: A Recurrent Depth Approach"
+venue = "NeurIPS / arXiv:2502.05171"
+url = "https://arxiv.org/abs/2502.05171"
+
+[[citations]]
+key = "mcleish2025retrofitted"
+authors = "Sean McLeish, Ang Li, John Kirchenbauer, Dayal Singh Kalra, Brian R. Bartoldson, Bhavya Kailkhura, Avi Schwarzschild, Jonas Geiping, Tom Goldstein, and Micah Goldblum"
+year = "2025"
+title = "Teaching Pretrained Language Models to Think Deeper with Retrofitted Recurrence"
+venue = "arXiv:2511.07384"
+url = "https://arxiv.org/abs/2511.07384"
+
+[[citations]]
+key = "chen2026uploop"
+authors = "Tieyuan Chen, Huabin Liu, Yingtao Zhang, Shijie Li, Tengyu Pan, Weiyao Lin, and Jianguo Li"
+year = "2026"
+title = "UpLoop: Upcycling Large Language Models with Gated Loop"
+venue = "arXiv:2610.25004"
+url = "https://arxiv.org/abs/2610.25004"
+
+[[citations]]
+key = "thinkingmachines2026inkling"
+authors = "Thinking Machines Lab"
+year = "2026"
+title = "Inkling 2 Mini"
+venue = "Hugging Face / Thinking Machines Lab"
+url = "https://huggingface.co/thinkingmachines/Inkling-2-Mini"
+
+[[citations]]
+key = "schonemann1966procrustes"
+authors = "Peter H. Schönemann"
+year = "1966"
+title = "A Generalized Solution of the Orthogonal Procrustes Problem"
+venue = "Psychometrika 31(1), 1–10"
+url = "https://doi.org/10.1007/BF02289451"

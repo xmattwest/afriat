@@ -7,6 +7,12 @@
     "amd64_digest": "sha256:5f5e535216848d0c52159c8c13a0af04be5f6fe1a84e79914300610796f76d40",
     "source": "https://hub.docker.com/v2/repositories/vllm/vllm-openai/tags/v0.30.0"
   },
+  "acr_slim_image": {
+    "repo": "${AFRIAT_ACR_HOST}/afriat-gpu",
+    "tag": "${AFRIAT_ACR_HOST}/afriat-gpu:slim",
+    "digest": "sha256:9f4a64ef696325441dee5e7b7be69610911f511245828c7e40bd92fccaf2bb3a",
+    "runtime": "ubuntu:24.04 + python3.12 + openssh-server + torch==2.15.0+cu132 + transformers==5.23.0"
+  },
   "models": [
     {
       "name": "gemma-4-12b-it",

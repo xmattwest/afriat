@@ -1,0 +1,677 @@
+{
+  "metadata": {
+    "model_id": "google/gemma-4-31B-it",
+    "n_layers": 60,
+    "d_model": 5376,
+    "d_ff": 21504,
+    "funnel_band": [
+      24,
+      42
+    ],
+    "timestamp_utc": "2026-11-20T12:50:45Z",
+    "benchmark_audit": {
+      "valid": true,
+      "n_train_items": 384,
+      "n_eval_multihop": 96,
+      "n_eval_word_problems": 48,
+      "n_eval_kl_passages": 24,
+      "train_eval_prompt_overlap": 0,
+      "kl_passage_overlap": 0
+    }
+  },
+  "part_a_hourglass_sparsity": {
+    "intact_base": {
+      "active_fraction_global": 1.0,
+      "k_outer": 21504,
+      "k_funnel": 21504,
+      "kl_eval": {
+        "kl_nats": 0.0,
+        "nll": 4.8616,
+        "delta_nll": 0.0,
+        "ppl": 129.231,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0208,
+        "mean_gold_logprob": -35.6568,
+        "ms_per_item": 506.0,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -35.0114,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -34.0028,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -37.9561,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -37.4914,
+        "ms_per_item": 352.82,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -37.4914,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 1.0,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2852.18,
+        "n_items": 24
+      },
+      "multihop_5_7_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 0.7917,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2146.77,
+        "n_items": 24
+      }
+    },
+    "uniform_15pct": {
+      "active_fraction_global": 0.15002,
+      "k_outer": 3226,
+      "k_funnel": 3226,
+      "kl_eval": {
+        "kl_nats": 0.43935,
+        "nll": 5.2181,
+        "delta_nll": 0.3565,
+        "ppl": 184.584,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0208,
+        "mean_gold_logprob": -35.9127,
+        "ms_per_item": 533.58,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -38.9532,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -34.1884,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -34.5965,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -41.9387,
+        "ms_per_item": 388.49,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -41.9387,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 0.9167,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2609.45,
+        "n_items": 24
+      }
+    },
+    "hourglass_15pct": {
+      "active_fraction_global": 0.15,
+      "k_outer": 1613,
+      "k_funnel": 6049,
+      "kl_eval": {
+        "kl_nats": 0.42508,
+        "nll": 5.2563,
+        "delta_nll": 0.3947,
+        "ppl": 191.765,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0208,
+        "mean_gold_logprob": -33.7718,
+        "ms_per_item": 533.04,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -38.3852,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -30.3735,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -32.5566,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -41.6642,
+        "ms_per_item": 388.01,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -41.6642,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 0.9583,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2468.95,
+        "n_items": 24
+      }
+    },
+    "anti_hourglass_15pct": {
+      "active_fraction_global": 0.15,
+      "k_outer": 4193,
+      "k_funnel": 1138,
+      "kl_eval": {
+        "kl_nats": 1.35852,
+        "nll": 5.7418,
+        "delta_nll": 0.8802,
+        "ppl": 311.639,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -34.2017,
+        "ms_per_item": 533.13,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0,
+            "mean_gold_logprob": -33.2869,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -33.9709,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -35.3472,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -40.9623,
+        "ms_per_item": 387.86,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -40.9623,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 0.9583,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2474.31,
+        "n_items": 24
+      }
+    },
+    "uniform_10pct": {
+      "active_fraction_global": 0.09998,
+      "k_outer": 2150,
+      "k_funnel": 2150,
+      "kl_eval": {
+        "kl_nats": 0.87328,
+        "nll": 5.5354,
+        "delta_nll": 0.6738,
+        "ppl": 253.516,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0104,
+        "mean_gold_logprob": -33.47,
+        "ms_per_item": 530.39,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -37.458,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -31.8987,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -31.0532,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -41.9195,
+        "ms_per_item": 386.14,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -41.9195,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 1.0,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2426.86,
+        "n_items": 24
+      }
+    },
+    "hourglass_10pct": {
+      "active_fraction_global": 0.10001,
+      "k_outer": 1032,
+      "k_funnel": 4057,
+      "kl_eval": {
+        "kl_nats": 0.70483,
+        "nll": 5.334,
+        "delta_nll": 0.4724,
+        "ppl": 207.26,
+        "n_tokens": 842
+      },
+      "multihop_nothink": {
+        "overall_acc": 0.0104,
+        "mean_gold_logprob": -31.5542,
+        "ms_per_item": 529.32,
+        "n_items": 96,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -33.3111,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -31.3427,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -30.0087,
+            "n": 32
+          }
+        }
+      },
+      "word_problems_nothink": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -43.3274,
+        "ms_per_item": 385.38,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -43.3274,
+            "n": 48
+          }
+        }
+      },
+      "word_problems_thought": {
+        "thought_acc": 0.0,
+        "unclosed_loop_rate": 1.0,
+        "mean_gen_tokens": 512.0,
+        "ms_per_item": 2428.36,
+        "n_items": 24
+      }
+    }
+  },
+  "part_b_procrustes_looping": {
+    "procrustes_alignment": {
+      "rms_src": 1.1470258235931396,
+      "rms_dst": 0.9746201038360596,
+      "d_model": 5376.0,
+      "rel_err_identity": 0.6984,
+      "rel_err_procrustes": 0.1382,
+      "mean_cosine_identity": 0.0514,
+      "mean_cosine_procrustes": 0.8326
+    },
+    "gate0_replay_max_logit_diff": 0.0,
+    "bridge_training": {
+      "n_steps": 240,
+      "batch_size": 4,
+      "trainable_params": 1387009,
+      "train_seconds": 90.85,
+      "ce_loss_first10_mean": 4.9,
+      "ce_loss_last10_mean": 0.4452,
+      "loss_curve_subsampled": [
+        6.5792,
+        2.6024,
+        0.5889,
+        0.8012,
+        0.846,
+        0.6541,
+        0.5376,
+        0.4322,
+        0.5275,
+        0.5842,
+        0.6504,
+        0.724,
+        0.7077,
+        0.5894,
+        0.5983,
+        0.6828,
+        0.7969,
+        0.4981,
+        0.3951,
+        0.4648,
+        0.5842,
+        0.5098,
+        0.5532,
+        0.4952,
+        0.3879,
+        0.5001,
+        0.4517,
+        0.5305,
+        0.6569,
+        0.4551,
+        0.4263,
+        0.4207,
+        0.4621,
+        0.516,
+        0.4912
+      ],
+      "kl_anchor_last5_mean": 0.01964,
+      "learned_gate_summary": {
+        "mean": 0.1393,
+        "std": 0.0033,
+        "p10": 0.1353,
+        "p90": 0.1435,
+        "max": 0.1531
+      }
+    },
+    "conditions": {
+      "base_1pass_nothink": {
+        "n_loops": 1,
+        "kl_eval": {
+          "kl_nats": 0.0,
+          "nll": 4.8616,
+          "delta_nll": 0.0,
+          "ppl": 129.231,
+          "n_tokens": 842
+        },
+        "multihop_nothink": {
+          "overall_acc": 0.0208,
+          "mean_gold_logprob": -35.6568,
+          "ms_per_item": 506.0,
+          "n_items": 96,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -35.0114,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -34.0028,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0,
+              "mean_gold_logprob": -37.9561,
+              "n": 32
+            }
+          }
+        },
+        "word_problems_nothink": {
+          "overall_acc": 0.0,
+          "mean_gold_logprob": -37.4914,
+          "ms_per_item": 352.82,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0,
+              "mean_gold_logprob": -37.4914,
+              "n": 48
+            }
+          }
+        }
+      },
+      "naive_2loop_unrotated": {
+        "n_loops": 2,
+        "kl_eval": {
+          "kl_nats": 0.36261,
+          "nll": 4.5112,
+          "delta_nll": -0.3504,
+          "ppl": 91.031,
+          "n_tokens": 842
+        },
+        "multihop_nothink": {
+          "overall_acc": 0.0208,
+          "mean_gold_logprob": -40.3539,
+          "ms_per_item": 629.91,
+          "n_items": 96,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -36.3166,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -39.2539,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0,
+              "mean_gold_logprob": -45.4912,
+              "n": 32
+            }
+          }
+        },
+        "word_problems_nothink": {
+          "overall_acc": 0.0,
+          "mean_gold_logprob": -38.7367,
+          "ms_per_item": 453.74,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0,
+              "mean_gold_logprob": -38.7367,
+              "n": 48
+            }
+          }
+        }
+      },
+      "procrustes_2loop_zeroshot": {
+        "n_loops": 2,
+        "kl_eval": {
+          "kl_nats": 0.0581,
+          "nll": 4.764,
+          "delta_nll": -0.0976,
+          "ppl": 117.213,
+          "n_tokens": 842
+        },
+        "multihop_nothink": {
+          "overall_acc": 0.0208,
+          "mean_gold_logprob": -35.8546,
+          "ms_per_item": 631.41,
+          "n_items": 96,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -35.3845,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -34.4568,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0,
+              "mean_gold_logprob": -37.7224,
+              "n": 32
+            }
+          }
+        },
+        "word_problems_nothink": {
+          "overall_acc": 0.0,
+          "mean_gold_logprob": -36.732,
+          "ms_per_item": 454.34,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0,
+              "mean_gold_logprob": -36.732,
+              "n": 48
+            }
+          }
+        }
+      },
+      "procrustes_2loop_distilled": {
+        "n_loops": 2,
+        "kl_eval": {
+          "kl_nats": 0.26263,
+          "nll": 4.657,
+          "delta_nll": -0.2046,
+          "ppl": 105.324,
+          "n_tokens": 842
+        },
+        "multihop_nothink": {
+          "overall_acc": 0.0938,
+          "mean_gold_logprob": -3.4666,
+          "ms_per_item": 242.45,
+          "n_items": 96,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.125,
+              "mean_gold_logprob": -2.4758,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0938,
+              "mean_gold_logprob": -3.3177,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0625,
+              "mean_gold_logprob": -4.6063,
+              "n": 32
+            }
+          }
+        },
+        "word_problems_nothink": {
+          "overall_acc": 0.0208,
+          "mean_gold_logprob": -5.2167,
+          "ms_per_item": 218.07,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0208,
+              "mean_gold_logprob": -5.2167,
+              "n": 48
+            }
+          }
+        }
+      },
+      "procrustes_3loop_extrap": {
+        "n_loops": 3,
+        "kl_eval": {
+          "kl_nats": 0.27022,
+          "nll": 4.6833,
+          "delta_nll": -0.1783,
+          "ppl": 108.132,
+          "n_tokens": 842
+        },
+        "multihop_nothink": {
+          "overall_acc": 0.0104,
+          "mean_gold_logprob": -6.1945,
+          "ms_per_item": 782.86,
+          "n_items": 96,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -3.2092,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0,
+              "mean_gold_logprob": -5.4171,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0,
+              "mean_gold_logprob": -9.9573,
+              "n": 32
+            }
+          }
+        },
+        "word_problems_nothink": {
+          "overall_acc": 0.0,
+          "mean_gold_logprob": -7.9698,
+          "ms_per_item": 562.59,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0,
+              "mean_gold_logprob": -7.9698,
+              "n": 48
+            }
+          }
+        }
+      },
+      "ceiling_1pass_with_thought": {
+        "n_loops": 1,
+        "word_problems_thought": {
+          "thought_acc": 0.0,
+          "unclosed_loop_rate": 1.0,
+          "mean_gen_tokens": 512.0,
+          "ms_per_item": 2852.18,
+          "n_items": 24
+        },
+        "multihop_5_7_thought": {
+          "thought_acc": 0.0,
+          "unclosed_loop_rate": 0.7917,
+          "mean_gen_tokens": 512.0,
+          "ms_per_item": 2146.77,
+          "n_items": 24
+        }
+      }
+    }
+  },
+  "runtime_seconds": 1305.91,
+  "completed": true
+}

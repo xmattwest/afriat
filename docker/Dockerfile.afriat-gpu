@@ -1,0 +1,59 @@
+# Slim GPU runtime image for Project Afriat (afriat-gpu:slim)
+# Contains ONLY open-source system + Python ML runtime dependencies:
+#   - ZERO repository code (shipped & SHA-256 verified over pinned SSH at launch)
+#   - ZERO credentials or secrets
+#   - Pre-installed openssh-server so boot_afriat.sh skips apt-get in 0.0s
+#   - NVIDIA_VISIBLE_DEVICES / NVIDIA_DRIVER_CAPABILITIES set for RunPod GPU driver injection
+
+FROM ubuntu:24.04
+
+ENV DEBIAN_FRONTEND=noninteractive \
+    LC_ALL=C \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=1 \
+    NVIDIA_VISIBLE_DEVICES=all \
+    NVIDIA_DRIVER_CAPABILITIES=compute,utility
+
+RUN apt-get update -qq && \
+    apt-get install -y -qq --no-install-recommends \
+      ca-certificates \
+      curl \
+      jq \
+      openssh-server \
+      perl \
+      procps \
+      python3 \
+      tar && \
+    mkdir -p /run/sshd /models /workspace /var/log/afriat && \
+    rm -rf /var/lib/apt/lists/* /etc/ssh/ssh_host_*
+
+# Install uv transiently to resolve & install wheels cleanly into system python3 (/usr/bin/python3)
+RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR=/usr/local/bin sh && \
+    uv pip install --system --break-system-packages --no-cache \
+      "torch>=2.6" \
+      "transformers>=5.0" \
+      "accelerate>=1.0" \
+      "safetensors>=0.4" \
+      "huggingface-hub>=0.28" \
+      "tokenizers>=0.20" \
+      "sentencepiece" \
+      "protobuf" \
+      "jinja2" \
+      "pillow" \
+      "urllib3>=2.0" \
+      "numpy>=2.0" \
+      "scipy>=1.13" \
+      "matplotlib>=3.9" && \
+    rm -f /usr/local/bin/uv /usr/local/bin/uvx && \
+    find /usr/local/lib /usr/lib -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+
+# Build-time verification: confirm Gemma 4 architecture, CUDA build baked into torch, and sshd binary
+RUN /usr/bin/python3 -c "\
+import torch, transformers, accelerate, safetensors, numpy, scipy, matplotlib, urllib3; \
+assert torch.version.cuda is not None, 'torch missing CUDA runtime!'; \
+assert hasattr(transformers, 'Gemma4ForConditionalGeneration'), 'transformers missing Gemma4ForConditionalGeneration!'; \
+print('VERIFIED afriat-gpu:slim -> torch', torch.__version__, 'cuda', torch.version.cuda, 'transformers', transformers.__version__)" && \
+    test -x /usr/sbin/sshd
+
+WORKDIR /workspace
+CMD ["/bin/bash"]

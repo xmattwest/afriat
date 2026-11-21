@@ -1,0 +1,253 @@
+{
+  "architecture": "Gemma4LoopCompactForCausalLM",
+  "base_model_id": "google/gemma-4-31B-it",
+  "n_layers": 60,
+  "funnel_start": 24,
+  "funnel_end": 42,
+  "max_loops": 4,
+  "bridge_rank": 128,
+  "lora_rank": 16,
+  "lora_alpha": 16.0,
+  "compression_plan": {
+    "0": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "1": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "2": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "3": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "4": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "5": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "6": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "7": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "8": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "9": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "10": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "11": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "12": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "13": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "14": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "15": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "16": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "17": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "18": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "19": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "20": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "21": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "22": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "23": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "24": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "25": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "26": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "27": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "28": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "29": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "30": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "31": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "32": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "33": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "34": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "35": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "36": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "37": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "38": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "39": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "40": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "41": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "42": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "43": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "44": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "45": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "46": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "47": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "48": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "49": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "50": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "51": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "52": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "53": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "54": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "55": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "56": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "57": {
+      "d_ff_keep": 16128,
+      "bits": 4
+    },
+    "58": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    },
+    "59": {
+      "d_ff_keep": 21504,
+      "bits": 8
+    }
+  }
+}

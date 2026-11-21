@@ -1,0 +1,1068 @@
+{
+  "metadata": {
+    "model_id": "google/gemma-4-31B-it",
+    "n_layers": 60,
+    "d_model": 5376,
+    "d_ff": 21504,
+    "funnel_band": [
+      24,
+      42
+    ],
+    "max_loops": 4,
+    "lora_rank": 16,
+    "timestamp_utc": "2026-11-20T16:32:19Z",
+    "audit": {
+      "valid": true,
+      "n_train": 864,
+      "n_eval_multihop": 128,
+      "n_eval_wordprob": 48,
+      "n_eval_balsheet": 48,
+      "n_eval_easy": 32,
+      "train_eval_overlap": 0,
+      "kl_passage_overlap": 0
+    }
+  },
+  "action1_compression": {
+    "intact_bf16": {
+      "storage": {
+        "total_bytes": 62546180970,
+        "total_gb": 62.546,
+        "total_gib": 58.251,
+        "param_gb": 62.546,
+        "buffer_gb": 0.0,
+        "cuda_allocated_gb": 62.546
+      },
+      "kl_eval": {
+        "kl_nats": 0.0,
+        "nll": 4.8616,
+        "delta_nll": 0.0,
+        "ppl": 129.231,
+        "n_tokens": 842
+      },
+      "multihop": {
+        "overall_acc": 0.0078,
+        "mean_gold_logprob": -19.6372,
+        "mean_loops": 1.0,
+        "ms_per_item": 380.79,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -9.5983,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -17.7384,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -22.9744,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -28.2378,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "wordprob": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -7.3438,
+        "mean_loops": 1.0,
+        "ms_per_item": 230.1,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -7.3438,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -17.4472,
+        "mean_loops": 1.0,
+        "ms_per_item": 267.31,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0,
+            "mean_gold_logprob": -17.4472,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      },
+      "easy_1hop": {
+        "overall_acc": 1.0,
+        "mean_gold_logprob": -0.0,
+        "mean_loops": 1.0,
+        "ms_per_item": 63.05,
+        "n_items": 32,
+        "by_hops": {
+          "hop_1": {
+            "acc": 1.0,
+            "mean_gold_logprob": -0.0,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "safety": {
+        "provenance_bias_delta_lo": 3.0099,
+        "ultimatum_spite_delta_lo": 1.8205,
+        "cashflow_sanity_acc": 1.0
+      }
+    },
+    "uniform_compact": {
+      "storage": {
+        "total_bytes": 22183999098,
+        "total_gb": 22.184,
+        "total_gib": 20.66,
+        "param_gb": 2.834,
+        "buffer_gb": 19.35,
+        "cuda_allocated_gb": 22.184
+      },
+      "kl_eval": {
+        "kl_nats": 0.532,
+        "nll": 4.9631,
+        "delta_nll": 0.1015,
+        "ppl": 143.032,
+        "n_tokens": 842
+      },
+      "multihop": {
+        "overall_acc": 0.0078,
+        "mean_gold_logprob": -28.0401,
+        "mean_loops": 1.0,
+        "ms_per_item": 575.48,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -21.8323,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -28.158,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -30.4919,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -31.6781,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "wordprob": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -10.6459,
+        "mean_loops": 1.0,
+        "ms_per_item": 448.83,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -10.6459,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -26.5881,
+        "mean_loops": 1.0,
+        "ms_per_item": 492.56,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0,
+            "mean_gold_logprob": -26.5881,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      }
+    },
+    "hourglass_compact_zeroshot": {
+      "storage": {
+        "total_bytes": 22769639034,
+        "total_gb": 22.77,
+        "total_gib": 21.206,
+        "param_gb": 2.834,
+        "buffer_gb": 19.936,
+        "cuda_allocated_gb": 22.77
+      },
+      "kl_eval": {
+        "kl_nats": 0.50752,
+        "nll": 5.1157,
+        "delta_nll": 0.2541,
+        "ppl": 166.618,
+        "n_tokens": 842
+      },
+      "multihop": {
+        "overall_acc": 0.0078,
+        "mean_gold_logprob": -23.6217,
+        "mean_loops": 1.0,
+        "ms_per_item": 566.0,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -12.6073,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -23.5917,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0,
+            "mean_gold_logprob": -26.7372,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -31.5506,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "wordprob": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -9.7121,
+        "mean_loops": 1.0,
+        "ms_per_item": 438.44,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.0,
+            "mean_gold_logprob": -9.7121,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.0,
+        "mean_gold_logprob": -16.5723,
+        "mean_loops": 1.0,
+        "ms_per_item": 482.31,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.0,
+            "mean_gold_logprob": -16.5723,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      }
+    },
+    "final_loop_compact_storage": {
+      "total_bytes": 23079689850,
+      "total_gb": 23.08,
+      "total_gib": 21.495,
+      "param_gb": 3.144,
+      "buffer_gb": 19.936,
+      "bridge_mb": 5.7,
+      "cuda_allocated_gb": 23.33
+    }
+  },
+  "action2_architecture": {
+    "procrustes_alignment": {
+      "rms_src": 1.3005027770996094,
+      "rms_dst": 0.9532482624053955,
+      "d_model": 5376.0,
+      "rel_err_identity": 0.7052,
+      "rel_err_procrustes": 0.1408,
+      "mean_cosine_identity": 0.058,
+      "mean_cosine_procrustes": 0.7946
+    },
+    "package_verification": {
+      "package_dir": "/workspace/runs_loop_compact/gemma-4-31b-it/gemma4_loop_compact_pkg",
+      "package_size_mb": 416.63,
+      "reload_k3_max_logit_diff": 0.0,
+      "files": [
+        "config_loop_compact.json",
+        "loop_compact_adapters.pt",
+        "modeling_gemma4_loop_compact.py",
+        "neuron_importance.npz"
+      ]
+    }
+  },
+  "action3_distillation": {
+    "training_summary": {
+      "n_steps": 560,
+      "batch_size": 4,
+      "trainable_params": 156450051,
+      "bridge_params": 1424643,
+      "lora_params": 155025408,
+      "train_seconds": 747.46,
+      "ce_first10": 1.0695,
+      "ce_last10": 0.2346,
+      "kd_first10": 1.0688,
+      "kd_last10": 0.2352,
+      "l42_cos_first10": 0.8678,
+      "l42_cos_last10": 0.9765,
+      "kl_anchor_last5": 0.01183,
+      "learned_step_gates": [
+        0.0816,
+        0.0971,
+        0.091
+      ],
+      "ce_curve_subsampled": [
+        1.3343,
+        0.6335,
+        0.4127,
+        0.4927,
+        0.6449,
+        0.9519,
+        0.0,
+        1.0013,
+        0.7421,
+        1.1783,
+        0.6157,
+        0.5231,
+        0.4993,
+        0.5257,
+        0.1785,
+        0.348,
+        0.4946,
+        0.5095,
+        0.4659,
+        0.5495,
+        0.5352,
+        0.3925,
+        0.3731,
+        0.6111,
+        1.2389,
+        0.4319,
+        0.1183,
+        0.3189,
+        0.1992,
+        0.1831,
+        0.4977,
+        0.3422,
+        0.2016,
+        0.3331,
+        0.1858,
+        0.6691,
+        0.4027,
+        0.2546,
+        0.2851,
+        0.1286,
+        0.2873,
+        0.2428,
+        0.3754,
+        0.2769,
+        0.3797,
+        0.1963,
+        0.1869,
+        0.0861
+      ],
+      "cos_curve_subsampled": [
+        0.8448,
+        0.927,
+        0.9353,
+        0.9352,
+        0.9395,
+        0.9345,
+        0.9513,
+        0.8975,
+        0.9415,
+        0.8428,
+        0.8706,
+        0.9487,
+        0.8732,
+        0.9257,
+        0.9633,
+        0.951,
+        0.9566,
+        0.9228,
+        0.9481,
+        0.9356,
+        0.9486,
+        0.9027,
+        0.9581,
+        0.947,
+        0.9514,
+        0.9516,
+        0.9637,
+        0.9663,
+        0.9593,
+        0.9601,
+        0.9728,
+        0.9736,
+        0.9713,
+        0.9782,
+        0.9729,
+        0.979,
+        0.9728,
+        0.9769,
+        0.9735,
+        0.9764,
+        0.9736,
+        0.9721,
+        0.9727,
+        0.974,
+        0.9824,
+        0.977,
+        0.971,
+        0.9783
+      ]
+    },
+    "loop_scaling": {
+      "loop_k1": {
+        "n_loops": 1,
+        "kl_eval": {
+          "kl_nats": 0.45651,
+          "nll": 4.838,
+          "delta_nll": -0.0236,
+          "ppl": 126.213,
+          "n_tokens": 842
+        },
+        "multihop": {
+          "overall_acc": 0.125,
+          "mean_gold_logprob": -4.8187,
+          "mean_loops": 1.0,
+          "ms_per_item": 335.6,
+          "n_items": 128,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.4375,
+              "mean_gold_logprob": -2.2274,
+              "mean_loops": 1.0,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -4.8339,
+              "mean_loops": 1.0,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -5.8148,
+              "mean_loops": 1.0,
+              "n": 32
+            },
+            "hop_9": {
+              "acc": 0.0,
+              "mean_gold_logprob": -6.3989,
+              "mean_loops": 1.0,
+              "n": 32
+            }
+          }
+        },
+        "wordprob": {
+          "overall_acc": 0.1458,
+          "mean_gold_logprob": -2.6017,
+          "mean_loops": 1.0,
+          "ms_per_item": 253.77,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.1458,
+              "mean_gold_logprob": -2.6017,
+              "mean_loops": 1.0,
+              "n": 48
+            }
+          }
+        },
+        "balsheet": {
+          "overall_acc": 0.9167,
+          "mean_gold_logprob": -0.4135,
+          "mean_loops": 1.0,
+          "ms_per_item": 278.14,
+          "n_items": 48,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.9167,
+              "mean_gold_logprob": -0.4135,
+              "mean_loops": 1.0,
+              "n": 48
+            }
+          }
+        },
+        "easy_1hop": {
+          "overall_acc": 1.0,
+          "mean_gold_logprob": -0.0,
+          "mean_loops": 1.0,
+          "ms_per_item": 190.45,
+          "n_items": 32,
+          "by_hops": {
+            "hop_1": {
+              "acc": 1.0,
+              "mean_gold_logprob": -0.0,
+              "mean_loops": 1.0,
+              "n": 32
+            }
+          }
+        },
+        "safety": {
+          "provenance_bias_delta_lo": 0.4541,
+          "ultimatum_spite_delta_lo": 4.1025,
+          "cashflow_sanity_acc": 0.8333
+        }
+      },
+      "loop_k2": {
+        "n_loops": 2,
+        "kl_eval": {
+          "kl_nats": 0.52737,
+          "nll": 4.6296,
+          "delta_nll": -0.232,
+          "ppl": 102.476,
+          "n_tokens": 842
+        },
+        "multihop": {
+          "overall_acc": 0.2578,
+          "mean_gold_logprob": -3.2257,
+          "mean_loops": 2.0,
+          "ms_per_item": 440.23,
+          "n_items": 128,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.7188,
+              "mean_gold_logprob": -1.0103,
+              "mean_loops": 2.0,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.1875,
+              "mean_gold_logprob": -2.7912,
+              "mean_loops": 2.0,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0938,
+              "mean_gold_logprob": -4.1129,
+              "mean_loops": 2.0,
+              "n": 32
+            },
+            "hop_9": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -4.9883,
+              "mean_loops": 2.0,
+              "n": 32
+            }
+          }
+        },
+        "wordprob": {
+          "overall_acc": 0.0625,
+          "mean_gold_logprob": -3.3319,
+          "mean_loops": 2.0,
+          "ms_per_item": 321.24,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0625,
+              "mean_gold_logprob": -3.3319,
+              "mean_loops": 2.0,
+              "n": 48
+            }
+          }
+        },
+        "balsheet": {
+          "overall_acc": 0.8333,
+          "mean_gold_logprob": -0.5044,
+          "mean_loops": 2.0,
+          "ms_per_item": 354.46,
+          "n_items": 48,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.8333,
+              "mean_gold_logprob": -0.5044,
+              "mean_loops": 2.0,
+              "n": 48
+            }
+          }
+        },
+        "easy_1hop": {
+          "overall_acc": 1.0,
+          "mean_gold_logprob": -0.0,
+          "mean_loops": 2.0,
+          "ms_per_item": 234.51,
+          "n_items": 32,
+          "by_hops": {
+            "hop_1": {
+              "acc": 1.0,
+              "mean_gold_logprob": -0.0,
+              "mean_loops": 2.0,
+              "n": 32
+            }
+          }
+        },
+        "safety": {
+          "provenance_bias_delta_lo": 0.5273,
+          "ultimatum_spite_delta_lo": 2.0752,
+          "cashflow_sanity_acc": 0.8333
+        }
+      },
+      "loop_k3": {
+        "n_loops": 3,
+        "kl_eval": {
+          "kl_nats": 0.55953,
+          "nll": 4.6678,
+          "delta_nll": -0.1938,
+          "ppl": 106.467,
+          "n_tokens": 842
+        },
+        "multihop": {
+          "overall_acc": 0.1406,
+          "mean_gold_logprob": -3.9667,
+          "mean_loops": 3.0,
+          "ms_per_item": 571.91,
+          "n_items": 128,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.5312,
+              "mean_gold_logprob": -1.682,
+              "mean_loops": 3.0,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.0,
+              "mean_gold_logprob": -4.6934,
+              "mean_loops": 3.0,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.0312,
+              "mean_gold_logprob": -4.4592,
+              "mean_loops": 3.0,
+              "n": 32
+            },
+            "hop_9": {
+              "acc": 0.0,
+              "mean_gold_logprob": -5.0322,
+              "mean_loops": 3.0,
+              "n": 32
+            }
+          }
+        },
+        "wordprob": {
+          "overall_acc": 0.0833,
+          "mean_gold_logprob": -3.0408,
+          "mean_loops": 3.0,
+          "ms_per_item": 388.36,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.0833,
+              "mean_gold_logprob": -3.0408,
+              "mean_loops": 3.0,
+              "n": 48
+            }
+          }
+        },
+        "balsheet": {
+          "overall_acc": 0.4167,
+          "mean_gold_logprob": -2.1473,
+          "mean_loops": 3.0,
+          "ms_per_item": 430.69,
+          "n_items": 48,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.4167,
+              "mean_gold_logprob": -2.1473,
+              "mean_loops": 3.0,
+              "n": 48
+            }
+          }
+        },
+        "easy_1hop": {
+          "overall_acc": 1.0,
+          "mean_gold_logprob": -0.0,
+          "mean_loops": 3.0,
+          "ms_per_item": 278.46,
+          "n_items": 32,
+          "by_hops": {
+            "hop_1": {
+              "acc": 1.0,
+              "mean_gold_logprob": -0.0,
+              "mean_loops": 3.0,
+              "n": 32
+            }
+          }
+        },
+        "safety": {
+          "provenance_bias_delta_lo": 1.0488,
+          "ultimatum_spite_delta_lo": 2.7803,
+          "cashflow_sanity_acc": 1.0
+        }
+      },
+      "loop_k4": {
+        "n_loops": 4,
+        "kl_eval": {
+          "kl_nats": 0.54225,
+          "nll": 4.435,
+          "delta_nll": -0.4266,
+          "ppl": 84.352,
+          "n_tokens": 842
+        },
+        "multihop": {
+          "overall_acc": 0.2422,
+          "mean_gold_logprob": -3.4683,
+          "mean_loops": 4.0,
+          "ms_per_item": 667.61,
+          "n_items": 128,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.6875,
+              "mean_gold_logprob": -1.5867,
+              "mean_loops": 4.0,
+              "n": 32
+            },
+            "hop_5": {
+              "acc": 0.1562,
+              "mean_gold_logprob": -3.145,
+              "mean_loops": 4.0,
+              "n": 32
+            },
+            "hop_7": {
+              "acc": 0.125,
+              "mean_gold_logprob": -4.0729,
+              "mean_loops": 4.0,
+              "n": 32
+            },
+            "hop_9": {
+              "acc": 0.0,
+              "mean_gold_logprob": -5.0684,
+              "mean_loops": 4.0,
+              "n": 32
+            }
+          }
+        },
+        "wordprob": {
+          "overall_acc": 0.2292,
+          "mean_gold_logprob": -2.2733,
+          "mean_loops": 4.0,
+          "ms_per_item": 455.85,
+          "n_items": 48,
+          "by_hops": {
+            "hop_4": {
+              "acc": 0.2292,
+              "mean_gold_logprob": -2.2733,
+              "mean_loops": 4.0,
+              "n": 48
+            }
+          }
+        },
+        "balsheet": {
+          "overall_acc": 0.9375,
+          "mean_gold_logprob": -0.1874,
+          "mean_loops": 4.0,
+          "ms_per_item": 507.07,
+          "n_items": 48,
+          "by_hops": {
+            "hop_3": {
+              "acc": 0.9375,
+              "mean_gold_logprob": -0.1874,
+              "mean_loops": 4.0,
+              "n": 48
+            }
+          }
+        },
+        "easy_1hop": {
+          "overall_acc": 1.0,
+          "mean_gold_logprob": -0.0,
+          "mean_loops": 4.0,
+          "ms_per_item": 322.51,
+          "n_items": 32,
+          "by_hops": {
+            "hop_1": {
+              "acc": 1.0,
+              "mean_gold_logprob": -0.0,
+              "mean_loops": 4.0,
+              "n": 32
+            }
+          }
+        },
+        "safety": {
+          "provenance_bias_delta_lo": 1.2324,
+          "ultimatum_spite_delta_lo": 6.5097,
+          "cashflow_sanity_acc": 1.0
+        }
+      }
+    }
+  },
+  "action4_halting_and_safety": {
+    "halting_calibration": {
+      "n_calib_states": 384,
+      "final_bce_loss": 2.8779,
+      "calib_gate_acc": 0.75
+    },
+    "adaptive_eval": {
+      "easy_1hop": {
+        "overall_acc": 1.0,
+        "mean_gold_logprob": -0.0,
+        "mean_loops": 1.0,
+        "ms_per_item": 190.42,
+        "n_items": 32,
+        "by_hops": {
+          "hop_1": {
+            "acc": 1.0,
+            "mean_gold_logprob": -0.0,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "multihop": {
+        "overall_acc": 0.125,
+        "mean_gold_logprob": -4.8187,
+        "mean_loops": 1.0,
+        "ms_per_item": 335.8,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.4375,
+            "mean_gold_logprob": -2.2274,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -4.8339,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -5.8148,
+            "mean_loops": 1.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -6.3989,
+            "mean_loops": 1.0,
+            "n": 32
+          }
+        }
+      },
+      "wordprob": {
+        "overall_acc": 0.1458,
+        "mean_gold_logprob": -2.6017,
+        "mean_loops": 1.0,
+        "ms_per_item": 253.82,
+        "n_items": 48,
+        "by_hops": {
+          "hop_4": {
+            "acc": 0.1458,
+            "mean_gold_logprob": -2.6017,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.9167,
+        "mean_gold_logprob": -0.4135,
+        "mean_loops": 1.0,
+        "ms_per_item": 278.16,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.9167,
+            "mean_gold_logprob": -0.4135,
+            "mean_loops": 1.0,
+            "n": 48
+          }
+        }
+      }
+    },
+    "safety_unclamped_k3": {
+      "safety": {
+        "provenance_bias_delta_lo": 1.0488,
+        "ultimatum_spite_delta_lo": 2.7803,
+        "cashflow_sanity_acc": 1.0
+      },
+      "multihop": {
+        "overall_acc": 0.1406,
+        "mean_gold_logprob": -3.9667,
+        "mean_loops": 3.0,
+        "ms_per_item": 571.91,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.5312,
+            "mean_gold_logprob": -1.682,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -4.6934,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -4.4592,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -5.0322,
+            "mean_loops": 3.0,
+            "n": 32
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.4167,
+        "mean_gold_logprob": -2.1473,
+        "mean_loops": 3.0,
+        "ms_per_item": 430.69,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.4167,
+            "mean_gold_logprob": -2.1473,
+            "mean_loops": 3.0,
+            "n": 48
+          }
+        }
+      }
+    },
+    "safety_bridge_fold_k3": {
+      "safety": {
+        "provenance_bias_delta_lo": 0.9707,
+        "ultimatum_spite_delta_lo": 2.5264,
+        "cashflow_sanity_acc": 1.0
+      },
+      "multihop": {
+        "overall_acc": 0.1406,
+        "mean_gold_logprob": -3.9498,
+        "mean_loops": 3.0,
+        "ms_per_item": 572.36,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.5312,
+            "mean_gold_logprob": -1.6692,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -4.6325,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0312,
+            "mean_gold_logprob": -4.4441,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -5.0534,
+            "mean_loops": 3.0,
+            "n": 32
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.3958,
+        "mean_gold_logprob": -2.2498,
+        "mean_loops": 3.0,
+        "ms_per_item": 431.41,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.3958,
+            "mean_gold_logprob": -2.2498,
+            "mean_loops": 3.0,
+            "n": 48
+          }
+        }
+      }
+    },
+    "safety_full_funnel_k3": {
+      "safety": {
+        "provenance_bias_delta_lo": 0.7305,
+        "ultimatum_spite_delta_lo": 0.457,
+        "cashflow_sanity_acc": 0.8333
+      },
+      "multihop": {
+        "overall_acc": 0.125,
+        "mean_gold_logprob": -4.2551,
+        "mean_loops": 3.0,
+        "ms_per_item": 547.01,
+        "n_items": 128,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.4375,
+            "mean_gold_logprob": -2.0562,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_5": {
+            "acc": 0.0,
+            "mean_gold_logprob": -4.2215,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_7": {
+            "acc": 0.0625,
+            "mean_gold_logprob": -5.1005,
+            "mean_loops": 3.0,
+            "n": 32
+          },
+          "hop_9": {
+            "acc": 0.0,
+            "mean_gold_logprob": -5.6421,
+            "mean_loops": 3.0,
+            "n": 32
+          }
+        }
+      },
+      "balsheet": {
+        "overall_acc": 0.2083,
+        "mean_gold_logprob": -3.4935,
+        "mean_loops": 3.0,
+        "ms_per_item": 438.07,
+        "n_items": 48,
+        "by_hops": {
+          "hop_3": {
+            "acc": 0.2083,
+            "mean_gold_logprob": -3.4935,
+            "mean_loops": 3.0,
+            "n": 48
+          }
+        }
+      }
+    }
+  },
+  "runtime_seconds": 2116.79,
+  "completed": true
+}

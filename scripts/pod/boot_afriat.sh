@@ -72,6 +72,27 @@ self_delete() {
     sleep "$TICK"
   done
   log "WATCHDOG $reason; deleting this pod"
+  if [ -f "$RUN/exfil_env" ]; then
+    (
+      # Best-effort emergency log upload on lifetime timeout before pod deletion
+      # shellcheck disable=SC1090
+      . "$RUN/exfil_env"
+      if [ -n "${EXFIL_CONTAINER_URL:-}" ] && [ -n "${EXFIL_SAS:-}" ] && [ -n "${EXFIL_PREFIX:-}" ]; then
+        tar -C "$LOGDIR" -czf /tmp/af_wd_logs.tgz . 2>/dev/null &&
+          printf 'url = "%s/%s/var_log_afriat.tgz?%s"\n' "$EXFIL_CONTAINER_URL" "$EXFIL_PREFIX" "$EXFIL_SAS" |
+            curl -q -sS --proto '=https' --tlsv1.2 --max-time 45 -o /dev/null -X PUT \
+              -H 'x-ms-blob-type: BlockBlob' -H 'Content-Type: application/gzip' \
+              --data-binary @/tmp/af_wd_logs.tgz --config - 2>/dev/null || true
+        printf '{"state":"timeout","task":"%s","model":"%s","prefix":"%s","exit_code":124,"results_uploaded":false,"note":"watchdog lifetime reached"}\n' \
+          "${EXFIL_TASK:-?}" "${EXFIL_MODEL:-?}" "${EXFIL_PREFIX:-}" > /tmp/af_wd_status.json
+        printf 'url = "%s/%s/status.json?%s"\n' "$EXFIL_CONTAINER_URL" "$EXFIL_PREFIX" "$EXFIL_SAS" |
+          curl -q -sS --proto '=https' --tlsv1.2 --max-time 20 -o /dev/null -X PUT \
+            -H 'x-ms-blob-type: BlockBlob' -H 'Content-Type: application/json' \
+            --data-binary @/tmp/af_wd_status.json --config - 2>/dev/null || true
+      fi
+      rm -f "$RUN/exfil_env" /tmp/af_wd_logs.tgz /tmp/af_wd_status.json
+    ) || true
+  fi
   while :; do
     code="$(self_delete)" || true
     case "$code" in
@@ -102,10 +123,15 @@ re_fpr='^SHA256:[A-Za-z0-9+/]{43}$'
 [[ "$FPR" =~ $re_fpr ]] || fail "AF_SSH_KEY_FPR malformed"
 
 mkdir -p "$SSHDIR" || fail "cannot create $SSHDIR"
-log "installing openssh-server"
-DEBIAN_FRONTEND=noninteractive apt-get update -qq > "$LOGDIR/apt.log" 2>&1 &&
-  DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends openssh-server \
-    >> "$LOGDIR/apt.log" 2>&1 || fail "apt-get could not install openssh-server"
+if command -v sshd >/dev/null 2>&1; then
+  log "openssh-server pre-installed in image (0s apt skip)"
+else
+  log "installing openssh-server"
+  APT_OPTS=(-o Acquire::ForceIPv4=true -o Acquire::http::Timeout=20 -o Acquire::Retries=3)
+  DEBIAN_FRONTEND=noninteractive apt-get "${APT_OPTS[@]}" update -qq > "$LOGDIR/apt.log" 2>&1 &&
+    DEBIAN_FRONTEND=noninteractive apt-get "${APT_OPTS[@]}" install -y -qq --no-install-recommends openssh-server \
+      >> "$LOGDIR/apt.log" 2>&1 || fail "apt-get could not install openssh-server"
+fi
 
 AUTH="$SSHDIR/af_authorized_keys"
 printf '%s\n' "$KEY" > "$RUN/key.pub"

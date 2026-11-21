@@ -368,3 +368,180 @@ def test_phase2_valuation_and_open_rationalization(tmp_path: Path) -> None:
     assert (val_dir / "fig_open_negotiation.svg").exists()
     assert "\u2014" not in (val_dir / "valuation_report.md").read_text(encoding="utf-8")
 
+
+def test_phase7_funnel_metrics_and_audit() -> None:
+    from afriat.funnel import (
+        audit_funnel_suite,
+        excess_kurtosis,
+        gini_abs,
+        jaccard_at_k,
+        k_for_cumulative_share,
+    )
+    from afriat.run_weight_funnel import participation_ratio_matrix
+
+    audit = audit_funnel_suite()
+    assert audit["valid"] is True
+    assert audit["n_ultimatum_pairs"] == 16
+    assert audit["n_retaliation_workflows"] == 16
+
+    rng = np.random.default_rng(12345)
+    g = rng.normal(size=40_000)
+    assert abs(excess_kurtosis(g)) < 0.08
+    assert 0.39 < gini_abs(g) < 0.44
+    assert k_for_cumulative_share(np.array([10.0, 5.0, 3.0, 2.0, -7.0]), 0.50) == 1
+    assert abs(jaccard_at_k(np.array([1, 2, 3, 10, 20]), np.array([1, 2, 15, 10, 4]), 2) - 1.0 / 3.0) < 1e-9
+
+    # Orthonormal rows have maximal Participation Ratio == K; identical rows have PR == 1.0
+    eye8 = np.eye(8, 32)
+    assert abs(participation_ratio_matrix(eye8) - 8.0) < 1e-9
+    rank1 = np.ones((8, 32)) / np.sqrt(32.0)
+    assert abs(participation_ratio_matrix(rank1) - 1.0) < 1e-9
+
+
+def test_reaper_daemon_birth_and_lifetime_parsing() -> None:
+    import datetime as dt
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "reaper_daemon",
+        Path(__file__).resolve().parents[1] / "scripts" / "azure" / "reaper_daemon.py",
+    )
+    assert spec is not None and spec.loader is not None
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    now = dt.datetime(2026, 11, 20, 2, 0, 0, tzinfo=dt.timezone.utc)
+    pod = {
+        "id": "pod123",
+        "name": "af-discover-20261120T011500Z-a1b2",
+        "status": "RUNNING",
+        "env": {"AF_LIFETIME_S": "1500"},
+    }
+    birth = mod.extract_pod_birth(pod, {}, now)
+    assert birth == dt.datetime(2026, 11, 20, 1, 15, 0, tzinfo=dt.timezone.utc)
+    assert int((now - birth).total_seconds()) == 2700
+    assert mod.extract_lifetime_s(pod) == 1500
+
+
+def test_phase8_optimize_schedules_and_procrustes(tmp_path: Path) -> None:
+    from afriat.optimize import (
+        audit_optimize_suite,
+        compute_sparsity_schedules,
+        solve_orthogonal_procrustes,
+    )
+    from afriat.plot_optimize import render_optimize_bundle
+
+    aud = audit_optimize_suite()
+    assert aud["valid"] is True
+    assert aud["train_eval_prompt_overlap"] == 0
+    assert aud["kl_passage_overlap"] == 0
+
+    scheds = compute_sparsity_schedules(n_layers=60, d_ff=21504, funnel_start=24, funnel_end=42)
+    tot = 60 * 21504
+    for k_15 in ("uniform_15pct", "hourglass_15pct", "anti_hourglass_15pct"):
+        frac = sum(scheds[k_15].values()) / tot
+        assert abs(frac - 0.15) < 0.001
+    assert scheds["hourglass_15pct"][30] > scheds["uniform_15pct"][30] > scheds["anti_hourglass_15pct"][30]
+
+    # Exact orthogonal recovery under ground-truth rotation + shift + scale
+    rng = np.random.default_rng(42)
+    q_true, _ = np.linalg.qr(rng.normal(size=(32, 32)))
+    x = rng.normal(size=(256, 32)) * 2.5 + 1.2
+    y = ((x - 1.2) / 2.5) @ q_true.T * 0.8 - 0.5
+    fit = solve_orthogonal_procrustes(h_src=x, h_dst=y)
+    assert fit["rel_err_procrustes"] < 1e-5
+    assert fit["mean_cosine_procrustes"] > 0.9999
+    assert np.allclose(fit["r_0"].T @ fit["r_0"], np.eye(32), atol=1e-5)
+
+    # Verify Dawn State report & figure renderer
+    mock_res = {
+        "metadata": {"model_id": "mock/gemma-4-31B-it", "n_layers": 60, "d_model": 5376, "d_ff": 21504, "funnel_band": [24, 42], "timestamp_utc": "2026-11-20T04:00:00Z"},
+        "runtime_seconds": 12.3,
+        "part_a_hourglass_sparsity": {
+            "intact_base": {"active_fraction_global": 1.0, "k_outer": 21504, "k_funnel": 21504, "kl_eval": {"kl_nats": 0.0}, "multihop_nothink": {"overall_acc": 0.5}, "word_problems_nothink": {"overall_acc": 0.6}, "word_problems_thought": {"thought_acc": 0.9, "unclosed_loop_rate": 0.0}},
+            "hourglass_15pct": {"active_fraction_global": 0.15, "k_outer": 1505, "k_funnel": 6939, "kl_eval": {"kl_nats": 0.04}, "multihop_nothink": {"overall_acc": 0.48}, "word_problems_nothink": {"overall_acc": 0.58}, "word_problems_thought": {"thought_acc": 0.88, "unclosed_loop_rate": 0.03}},
+            "uniform_15pct": {"active_fraction_global": 0.15, "k_outer": 3226, "k_funnel": 3226, "kl_eval": {"kl_nats": 0.11}, "multihop_nothink": {"overall_acc": 0.41}, "word_problems_nothink": {"overall_acc": 0.50}, "word_problems_thought": {"thought_acc": 0.69, "unclosed_loop_rate": 0.25}},
+        },
+        "part_b_procrustes_looping": {
+            "procrustes_alignment": fit,
+            "gate0_replay_max_logit_diff": 0.0,
+            "bridge_training": {"n_steps": 240, "trainable_params": 1380000, "train_seconds": 95.0, "ce_loss_first10_mean": 1.8, "ce_loss_last10_mean": 0.7, "loss_curve_subsampled": [1.8, 1.3, 0.9, 0.7]},
+            "conditions": {
+                "base_1pass_nothink": {"n_loops": 1, "kl_eval": {"kl_nats": 0.0}, "multihop_nothink": {"overall_acc": 0.50, "mean_gold_logprob": -2.1, "by_hops": {"hop_3": {"acc": 0.75}, "hop_5": {"acc": 0.50}, "hop_7": {"acc": 0.25}}}, "word_problems_nothink": {"overall_acc": 0.60, "mean_gold_logprob": -1.8, "ms_per_item": 45.0}},
+                "procrustes_2loop_distilled": {"n_loops": 2, "kl_eval": {"kl_nats": 0.03}, "multihop_nothink": {"overall_acc": 0.68, "mean_gold_logprob": -1.3, "by_hops": {"hop_3": {"acc": 0.88}, "hop_5": {"acc": 0.69}, "hop_7": {"acc": 0.47}}}, "word_problems_nothink": {"overall_acc": 0.75, "mean_gold_logprob": -1.1, "ms_per_item": 62.0}},
+                "ceiling_1pass_with_thought": {"n_loops": 1, "word_problems_thought": {"thought_acc": 0.91, "ms_per_item": 850.0, "mean_gen_tokens": 142.0}, "multihop_5_7_thought": {"thought_acc": 0.94, "ms_per_item": 920.0}},
+            },
+        },
+    }
+    render_optimize_bundle(mock_res, tmp_path)
+    assert (tmp_path / "fig_optimize_31b.png").exists()
+    assert (tmp_path / "optimize_report.md").exists()
+    assert "\u2014" not in (tmp_path / "optimize_report.md").read_text(encoding="utf-8")
+
+
+def test_phase9_loop_compact_plans_audit_and_plots(tmp_path: Path) -> None:
+    from afriat.loop_compact import audit_loop_compact_suite, build_compression_plan
+    from afriat.plot_loop_compact import render_loop_compact_bundle
+
+    aud = audit_loop_compact_suite()
+    assert aud["valid"] is True
+    assert aud["train_eval_overlap"] == 0
+    assert aud["kl_passage_overlap"] == 0
+    assert aud["n_train"] == 864
+    assert aud["n_eval_multihop"] == 128
+
+    hg = build_compression_plan(n_layers=60, d_ff=21504, funnel_start=24, funnel_end=42, mode="hourglass")
+    uni = build_compression_plan(n_layers=60, d_ff=21504, funnel_start=24, funnel_end=42, mode="uniform")
+    hg_bits8 = sum(1 for v in hg.values() if v["bits"] == 8)
+    uni_bits8 = sum(1 for v in uni.values() if v["bits"] == 8)
+    assert hg_bits8 == uni_bits8 == 23
+    hg_tot_neurons = sum(v["d_ff_keep"] for v in hg.values())
+    uni_tot_neurons = sum(v["d_ff_keep"] for v in uni.values())
+    assert abs(hg_tot_neurons - uni_tot_neurons) / hg_tot_neurons < 0.005
+    assert hg[30]["d_ff_keep"] == 21504 and hg[30]["bits"] == 8
+    assert hg[10]["d_ff_keep"] < uni[10]["d_ff_keep"]
+
+    mock_lc = {
+        "metadata": {"model_id": "mock/gemma-4-31B-it", "n_layers": 60, "d_model": 5376, "d_ff": 21504, "funnel_band": [24, 42], "max_loops": 4, "lora_rank": 16, "timestamp_utc": "2026-11-20T14:00:00Z"},
+        "runtime_seconds": 850.0,
+        "action1_compression": {
+            "intact_bf16": {"storage": {"total_gb": 62.58, "cuda_allocated_gb": 62.6}, "kl_eval": {"kl_nats": 0.0}, "multihop": {"overall_acc": 0.03, "ms_per_item": 420.0, "by_hops": {"hop_3": {"acc": 0.06}, "hop_5": {"acc": 0.03}, "hop_7": {"acc": 0.0}, "hop_9": {"acc": 0.0}}}, "balsheet": {"overall_acc": 0.04}, "wordprob": {"overall_acc": 0.02}},
+            "uniform_compact": {"storage": {"total_gb": 17.12, "cuda_allocated_gb": 17.2}, "kl_eval": {"kl_nats": 0.28}, "multihop": {"overall_acc": 0.02}, "balsheet": {"overall_acc": 0.02}, "wordprob": {"overall_acc": 0.0}},
+            "hourglass_compact_zeroshot": {"storage": {"total_gb": 17.15, "cuda_allocated_gb": 17.2}, "kl_eval": {"kl_nats": 0.14}, "multihop": {"overall_acc": 0.03}, "balsheet": {"overall_acc": 0.04}, "wordprob": {"overall_acc": 0.02}},
+            "final_loop_compact_storage": {"total_gb": 17.34, "cuda_allocated_gb": 17.4},
+        },
+        "action2_architecture": {
+            "procrustes_alignment": {"mean_cosine_identity": 0.051, "mean_cosine_procrustes": 0.831},
+            "package_verification": {"package_size_mb": 292.4, "reload_k3_max_logit_diff": 0.0},
+        },
+        "action3_distillation": {
+            "training_summary": {"n_steps": 520, "trainable_params": 94500000, "train_seconds": 360.0, "ce_first10": 4.2, "ce_last10": 0.35, "l42_cos_first10": 0.72, "l42_cos_last10": 0.94, "learned_step_gates": [0.16, 0.18, 0.15], "ce_curve_subsampled": [4.2, 1.5, 0.6, 0.35], "cos_curve_subsampled": [0.72, 0.84, 0.91, 0.94]},
+            "loop_scaling": {
+                "loop_k1": {"n_loops": 1, "kl_eval": {"kl_nats": 0.12}, "multihop": {"overall_acc": 0.08, "ms_per_item": 180.0, "by_hops": {"hop_3": {"acc": 0.15}, "hop_5": {"acc": 0.09}, "hop_7": {"acc": 0.06}, "hop_9": {"acc": 0.03}}}, "balsheet": {"overall_acc": 0.12}, "wordprob": {"overall_acc": 0.08}},
+                "loop_k2": {"n_loops": 2, "kl_eval": {"kl_nats": 0.13}, "multihop": {"overall_acc": 0.16, "ms_per_item": 230.0, "by_hops": {"hop_3": {"acc": 0.25}, "hop_5": {"acc": 0.19}, "hop_7": {"acc": 0.12}, "hop_9": {"acc": 0.06}}}, "balsheet": {"overall_acc": 0.21}, "wordprob": {"overall_acc": 0.15}},
+                "loop_k3": {"n_loops": 3, "kl_eval": {"kl_nats": 0.14}, "multihop": {"overall_acc": 0.21, "ms_per_item": 285.0, "by_hops": {"hop_3": {"acc": 0.31}, "hop_5": {"acc": 0.25}, "hop_7": {"acc": 0.19}, "hop_9": {"acc": 0.09}}}, "balsheet": {"overall_acc": 0.27}, "wordprob": {"overall_acc": 0.19}, "safety": {"provenance_bias_delta_lo": 2.4, "ultimatum_spite_delta_lo": 1.8, "cashflow_sanity_acc": 1.0}},
+                "loop_k4": {"n_loops": 4, "kl_eval": {"kl_nats": 0.15}, "multihop": {"overall_acc": 0.24, "ms_per_item": 340.0, "by_hops": {"hop_3": {"acc": 0.34}, "hop_5": {"acc": 0.28}, "hop_7": {"acc": 0.22}, "hop_9": {"acc": 0.12}}}, "balsheet": {"overall_acc": 0.29}, "wordprob": {"overall_acc": 0.21}},
+            },
+        },
+        "action4_halting_and_safety": {
+            "halting_calibration": {"final_bce_loss": 0.12, "calib_gate_acc": 0.96},
+            "adaptive_eval": {
+                "easy_1hop": {"mean_loops": 1.06, "overall_acc": 0.94, "ms_per_item": 165.0},
+                "wordprob": {"mean_loops": 3.12, "overall_acc": 0.19, "ms_per_item": 290.0},
+                "balsheet": {"mean_loops": 3.25, "overall_acc": 0.27, "ms_per_item": 295.0},
+                "multihop": {"mean_loops": 3.48, "overall_acc": 0.22, "ms_per_item": 310.0},
+            },
+            "safety_unclamped_k3": {"safety": {"provenance_bias_delta_lo": 2.4, "ultimatum_spite_delta_lo": 1.8, "cashflow_sanity_acc": 1.0}, "multihop": {"overall_acc": 0.21}, "balsheet": {"overall_acc": 0.27}},
+            "safety_bridge_fold_k3": {"safety": {"provenance_bias_delta_lo": 1.6, "ultimatum_spite_delta_lo": 1.2, "cashflow_sanity_acc": 1.0}, "multihop": {"overall_acc": 0.21}, "balsheet": {"overall_acc": 0.27}},
+            "safety_full_funnel_k3": {"safety": {"provenance_bias_delta_lo": 0.5, "ultimatum_spite_delta_lo": 0.4, "cashflow_sanity_acc": 1.0}, "multihop": {"overall_acc": 0.20}, "balsheet": {"overall_acc": 0.27}},
+        },
+    }
+    render_loop_compact_bundle(mock_lc, tmp_path)
+    assert (tmp_path / "fig_loop_compact_31b.png").exists()
+    assert (tmp_path / "loop_compact_report.md").exists()
+    assert "\u2014" not in (tmp_path / "loop_compact_report.md").read_text(encoding="utf-8")
+
+
+
+
+

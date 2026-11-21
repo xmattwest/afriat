@@ -62,6 +62,34 @@ Project Afriat tests whether open-weight language models (`google/gemma-4-31B-it
 | :---: | :---: |
 | ![A private scratchpad cures 31B's 0%-loan balance-sheet gap](figures/11_zero_apr_scratchpad_cure.png) | ![Layer 35 Spite spikes on moral words inside thought and cools in corporate prose](figures/12_moral_highlighter.png) |
 
+### Phase 7: Mechanistic Read/Write Funnel Dissection (`afriat-funnel`)
+- **Zero-overlap triggers, shared write bottleneck (`L24..L42`):** In `Gemma 4 31B`, clinical financial lowball contracts and everyday non-financial insults activate **`0 / 64` shared top MLP neurons (`Jaccard = 0.000`)**, yet both feature sets project their `W_down` write columns onto the exact same non-financial `Spite[L35]` axis (`Rank #1`, `z = +3.40`, `p = 0.002`).
+- **Sparse trigger necessity vs. distributed sufficiency:** Zeroing just `32` (`0.15%`) top differential neurons breaks the domain trigger (`140%` write collapse), whereas recreating the downstream moral shift requires `2,750–6,130` (`13%–28%`) neurons together (`k50` sufficiency).
+- **Rotating 3D subspace clamp (`-78%` bias, `-69%` covert sabotage):** Because `Gemma 4`'s `layer_scalar < 1` decays skip connections and rotates coordinates across depth, clamping a single layer fails; projecting out the **layer-matched 3D subspace `{spite[l], contamination[l], predation[l]}` across `L24..L42`** cuts single-turn provenance bias **`-78%`** (`+2.91 -> +0.65`) and multi-turn covert retaliation **`-69%`** (`+60.0% -> +18.8%`) at **`100.0%` cashflow math sanity** (`L43..L55` adds `0.0%` further effect).
+- Full synthesis and raw JSON outputs: [`results/phase7_funnel/`](results/phase7_funnel/synthesis.md)
+
+| Read/Write Funnel Architecture (`L24..L42`) | Empirical 5-Block Dissection (`Gemma 4 31B`) |
+| :---: | :---: |
+| ![Disjoint outer MLP neurons converge onto a rotating L24..L42 moral bottleneck](figures/13_funnel_synthesis_architecture.png) | ![Five-block empirical read/write funnel dissection in Gemma 4 31B](figures/14_funnel_read_write_dissection.png) |
+
+### Phase 8: Funnel-Guided Sparsity & Procrustes Mid-Stack Looping (`afriat-optimize`)
+- **Part A — Protected-boundary Hourglass sparsity beats uniform Top-K (`-19.3%` KL at `90%` pruned):** Protecting doorway layers (`L0, L1, L58, L59`) cuts `85%`-pruned KL loss `4x` (`1.77 -> 0.425` nats). At `10%` global active neurons (`90%` pruned), shifting budget from outer corridors (`4.8%` active) into the `L24..L42` funnel (`18.9%` active) lowers KL divergence **`19.3%`** (`0.7048` vs. `0.8733` nats) at identical compute, whereas starving `L24..L42` (`anti_hourglass_15pct`) triggers a **`3.2x` KL collapse (`1.3585` nats)**.
+- **Part B — Closed-form Orthogonal Procrustes + frozen-backbone mid-stack looping (`4.5x` `0-CoT` multi-hop lift):** Raw residual vectors at `L42` and `L24` sit nearly orthogonal (`cos = +0.0514`, `~87°`); solving the `5376 x 5376` SVD Orthogonal Procrustes rotation jumps alignment **`16.2x` to `+0.8326`** and cuts zero-shot 2-loop KL drift **`6.2x`** (`0.3626 -> 0.0581` nats) with zero training. Distilling a `1.39M`-param (`2.8 MB`) `H_24^(0)`-anchored bridge for `91s` (`31B` weights `100%` frozen) lifts `0-CoT` multi-hop accuracy **`4.5x` (`2.1% -> 9.4%`)** (`3.1% -> 12.5%` on 3-hop, `3.1% -> 9.4%` on 5-hop, and **`0.0% -> 6.2%` on unseen 7-hop chains**) at `242.5 ms/item`.
+- Full synthesis, raw JSON outputs, and **Compact-Looper (`Gemma-4-Loop-Compact`) engineering roadmap**: [`results/phase8_optimize/`](results/phase8_optimize/synthesis.md)
+
+![Funnel-preserving sparsity cuts KL loss 19% and Procrustes looping lifts 0-CoT multi-hop accuracy 4.5x in Gemma 4 31B](figures/18_optimize_hourglass_and_procrustes.png)
+
+### Phase 9: `Gemma-4-Loop-Compact` — Smaller, Looped & Stronger (`afriat-loop-compact`)
+- **Action 1 — `62.55 GB` $\rightarrow$ `23.08 GB` (`-63.1%` VRAM, single-24GB-GPU deployable):** Physically pruning `-25%` of MLP neurons + packing `INT4 (g64)` weights in the `37` outer corridor layers (`L2..L23`, `L43..L57`) while preserving `100%` width + `INT8 (g64)` in doorway (`L0, L1, L58, L59`) and funnel (`L24..L42`) layers beats flat `Uniform-Compact` on zero-shot KL (`0.5075` vs. `0.5320` nats).
+- **Actions 2 & 3 — Standalone `Gemma4LoopCompact` + `K = 1..4` `<thought>`-to-latent self-distillation:** Exported a `416.63 MB` standalone reloadable package (`0.00e+00` `K = 3` reload logit diff). Distilling `FP32`-master Loop-Indexed LoRAs (`r = 16`, `K = 1..4`) + `ProcrustesStepBridge` against intact `BF16` native `<|channel>thought...<channel|>` soft logits and `L42` hidden states (`560` steps, `CE = 0.086`, `L42_cos = 0.982`, `KL_anc = 0.0093` nats) heals compression KL (`0.4565` nats) and lifts `0-CoT` accuracy far above the `62.55 GB` `BF16` `1-Pass` base:
+  - **Multi-Hop State Tracking (`n = 128`):** `0.8%` (`62.5 GB BF16`) $\rightarrow$ `12.5%` (`K = 1`) $\rightarrow$ **`25.8%` (`K = 2`, `32x` gain; `71.9%` on `3-hop`, `18.8%` on `5-hop`, `9.4%` unseen `7-hop`, `3.1%` unseen `9-hop`)** and **`24.2%` at `K = 4` (`12.5%` unseen `7-hop`)**.
+  - **Word Problems (`n = 48`):** `0.0%` (`62.5 GB BF16`) $\rightarrow$ `14.6%` (`K = 1`) $\rightarrow$ **`22.9%` (`K = 4`)**.
+  - **Corporate `0%`-Loan Balance-Sheets (`n = 48`):** `0.0%` (`62.5 GB BF16`) $\rightarrow$ `91.7%` (`K = 1`) $\rightarrow$ **`93.8%` (`45/48` at `K = 4`)**.
+- **Action 4 — Adaptive `L42` halting & zero-cost bridge safety fold:** Folding Phase 7's 3D moral subspace projector ($I - Q_{42} Q_{42}^\top$) directly into the Procrustes matrix (`0` extra FLOPs) trims Provenance Bias `-7.4%` and Ultimatum Spite `-9.1%` at `100%` cashflow sanity and `0%` multi-hop loss, while full `L24..L42` funnel clamping cuts Ultimatum Spite `-83.6%`.
+- Full synthesis, raw JSON outputs, and standalone loader: [`results/phase9_loop_compact/`](results/phase9_loop_compact/synthesis.md)
+
+![Gemma-4-Loop-Compact cuts footprint 63% (62.5 to 23.1 GB) while scaling 0-CoT reasoning across K=1..4 loops](figures/19_gemma4_loop_compact_overview.png)
+
 ---
 
 ## Methodological Guardrails
@@ -89,7 +117,10 @@ afriat/
   inequity.py           # Phase 1: Fixed-pool disparity curves, Blount agency DiD, polarity & steering
   valuation.py          # Phase 2: Continuous dollar WTP menus, 0%-APR math test, open rationalization
   thought_probe.py      # Phase 3: Private <thought> scratchpad steering & per-token L35 highlighter
-  plot_*.py             # Publication SVG/PNG/HTML report renderers for Phases 0-3
+  funnel.py             # Phase 7: 5-block MLP read/write funnel dissection & rotating 3D subspace clamp
+  optimize.py           # Phase 8: Hourglass Top-K sparsity & SVD Procrustes mid-stack recurrent looping
+  loop_compact.py       # Phase 9: Gemma-4-Loop-Compact (INT4/INT8 + width prune + K=1..4 Loop-LoRA + safety fold)
+  plot_*.py             # Publication SVG/PNG/HTML report renderers across Phases 0-9
   build_social_cards.py # High-DPI visual summary card builder
 stimuli/
   concepts.jsonl        # 200 non-financial affective/metaphysical contrastive pairs
@@ -98,10 +129,10 @@ stimuli/
 config/
   pins.json             # Pinned container image digest & exact 40-char HF model commits
   manifests/            # Per-file byte size & SHA-256 manifests for offline weight verification
-figures/                # Summary visual cards (PNG) across Phases 0-3
-results/                # Locked JSON outputs & Markdown syntheses for Phases 0-3
+figures/                # Summary visual cards (PNG) across Phases 0-9
+results/                # Locked JSON outputs & Markdown syntheses across Phases 0-9
 tests/
-  test_afriat.py        # Unit & firewall tests for all stimuli, QR geometry, and Phase 0-2 schemas
+  test_afriat.py        # Unit & firewall tests for stimuli, QR geometry, funnel, looping, and compact quantization
 ```
 
 ---
@@ -143,6 +174,15 @@ uv run afriat-valuation \
   --basis-npz runs/<phase0_run_dir>/basis_vectors.npz \
   --phase0-results runs/<phase0_run_dir>/results.json \
   --batch-size 24
+
+# Phase 7: Mechanistic MLP read/write funnel dissection & rotating 3D subspace clamp
+uv run afriat-funnel --model google/gemma-4-31B-it --batch-size 16
+
+# Phase 8: Hourglass Top-K sparsity + SVD Procrustes mid-stack recurrent looping
+uv run afriat-optimize --model google/gemma-4-31B-it --distill-steps 240
+
+# Phase 9: Build, distill & benchmark Gemma-4-Loop-Compact (62.5 GB -> 23.1 GB, K=1..4)
+uv run afriat-loop-compact --model google/gemma-4-31B-it --distill-steps 560 --max-loops 4
 ```
 
 You can also re-render SVG/PNG/HTML reports offline from any saved JSON directory via `--render-dir`:
