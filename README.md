@@ -2,9 +2,11 @@
 
 **Mechanistic Moral Geometry, Hourglass Sparsity, and Procrustes Mid-Stack Recurrence in Open-Weight LLMs**
 
-**Author:** [Matt West](https://shelltoho.me/) ([GitHub](https://github.com/xmattwest) · [X](https://x.com/xmattwest) · [LinkedIn](https://www.linkedin.com/in/matt-e-west))
-- **Part 1 (Essay):** [Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/)
-- **Part 2 (Essay & Preprint):** [Rotating the Bottleneck](https://shelltoho.me/pubs/rotating-the-bottleneck/) — Read/write funnel dissection, `23.08 GB` (`−63.1%`) Hourglass compression, and `87.1°` Orthogonal Procrustes mid-stack recurrence (`Gemma-4-Loop-Compact`)
+**Author:** [Matt West](https://shelltoho.me/) ([GitHub](https://github.com/xmattwest) · [Hugging Face](https://huggingface.co/mattyxcakes) · [ORCID](https://orcid.org/0009-0008-5557-9394) · [X](https://x.com/xmattwest) · [LinkedIn](https://www.linkedin.com/in/matt-e-west))
+- **Part 1 (Essay & PDF):** [Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/) ([PDF](https://shelltoho.me/pubs/money-is-moral/paper.pdf))
+- **Part 2 (Essay & PDF):** [Rotating the Bottleneck](https://shelltoho.me/pubs/rotating-the-bottleneck/) ([PDF](https://shelltoho.me/pubs/rotating-the-bottleneck/paper.pdf)) - Read/write funnel dissection, `23.08 GB` (`−63.1%`) Hourglass compression, and `87.1°` Orthogonal Procrustes mid-stack recurrence (`Gemma-4-Loop-Compact`)
+- **Hugging Face Model Checkpoint:** [`mattyxcakes/Gemma-4-31B-Loop-Compact`](https://huggingface.co/mattyxcakes/Gemma-4-31B-Loop-Compact)
+- **Hugging Face Benchmark Dataset:** [`mattyxcakes/afriat-bench`](https://huggingface.co/datasets/mattyxcakes/afriat-bench)
 
 Standard microeconomics treats money as cold and fungible: a dollar is a dollar regardless of where it came from, `+$1,000` cash paired with a `-$350` zero-interest payable equals `+$650` net worth, and `+$20` beats `$0` regardless of what a counterparty keeps. Human economic behavior systematically violates those axioms, attaching spite, guilt, physical disgust, predation, captivity, and dread to specific deal structures.
 

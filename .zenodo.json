@@ -1,0 +1,54 @@
+{
+  "upload_type": "publication",
+  "publication_type": "preprint",
+  "title": "Read/Write Funnel Dissection, Protected-Boundary Sparsity, and Procrustes Mid-Stack Recurrence in Gemma 4 31B: Where unrelated prompts converge in Gemma 4 31B, why the residual stream twists 87.1° across depth, and how untwisting it shrinks 31B onto one 24 GB card.",
+  "creators": [
+    {
+      "name": "Matt West",
+      "affiliation": "Independent research",
+      "orcid": "0009-0008-5557-9394"
+    }
+  ],
+  "description": "Dissecting residual writes in `google/gemma-4-31B-it` (60 layers, width 5,376) reveals a read-divergent, write-convergent bottleneck across L24..L42: clinical financial lowball contracts and non-financial spite stories share 0 of 64 top backward-attributed MLP neurons (Jaccard 0.000), yet project their `W_down` write columns onto the same Spite direction at Rank #1 (z = +3.40, p = 0.002). Projecting out a layer-matched three-dimensional moral subspace across all 19 funnel layers cuts single-turn provenance bias from +2.91 to +0.65 log-odds (−77.8%) and multi-turn covert retaliation from 60.0 pp to 18.8 pp (−68.8%) at 100.0% cashflow math accuracy. Treating that bottleneck as a capacity map improves both compression and latent recurrence. At 10.0% global active MLP budget, preserving doorway layers (L0, L1, L58, L59) and concentrating active width inside L24..L42 lowers held-out KL divergence from 0.8733 nats to 0.7048 nats (−19.3%). Across depth, raw residuals at L42 and L24 twist 87.1° apart (cosine +0.0514), explaining why naive layer looping drifts; closed-form SVD Orthogonal Procrustes rotation raises cosine alignment 16.2x to +0.8326 (33.6°) and cuts zero-shot two-pass KL drift 6.2x (0.3626 nats to 0.0581 nats) before training. Combining corridor structured pruning and mixed INT4/INT8 quantization with K = 1..4 `<thought>` self-distillation produces `Gemma-4-Loop-Compact`, cutting footprint from 62.55 GB to 23.08 GB (−63.1%) while lifting held-out 0-CoT multi-hop state tracking from 0.8% (BF16 single pass) and 12.5% (K = 1) to 25.8% at K = 2 (2.1x over K = 1). Explicit negative boundaries are reported for single-layer clamping, sparse subset sufficiency, untrained depth extrapolation, and thresholded adaptive halting, situated against McLeish et al., UpLoop, and Inkling-2-Mini.",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "publication_date": "2026-11-20",
+  "keywords": [
+    "Matt West",
+    "Gemma 4 31B",
+    "mechanistic interpretability",
+    "Orthogonal Procrustes",
+    "looped transformers",
+    "latent reasoning",
+    "model compression",
+    "AI alignment",
+    "Project Afriat"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://shelltoho.me/pubs/rotating-the-bottleneck/",
+      "relation": "isIdenticalTo",
+      "resource_type": "publication-preprint"
+    },
+    {
+      "identifier": "https://github.com/xmattwest/afriat",
+      "relation": "isSupplementedBy",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://huggingface.co/mattyxcakes/Gemma-4-31B-Loop-Compact",
+      "relation": "isSupplementedBy",
+      "resource_type": "model"
+    },
+    {
+      "identifier": "https://huggingface.co/datasets/mattyxcakes/afriat-bench",
+      "relation": "isSupplementedBy",
+      "resource_type": "dataset"
+    },
+    {
+      "identifier": "https://shelltoho.me/pubs/money-is-moral/",
+      "relation": "continues",
+      "resource_type": "publication-preprint"
+    }
+  ]
+}
