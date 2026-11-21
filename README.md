@@ -1,8 +1,11 @@
 # Project Afriat
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24419425.svg)](https://doi.org/10.5281/zenodo.24419425)
+
 **Mechanistic Moral Geometry, Hourglass Sparsity, and Procrustes Mid-Stack Recurrence in Open-Weight LLMs**
 
 **Author:** [Matt West](https://shelltoho.me/) ([GitHub](https://github.com/xmattwest) · [Hugging Face](https://huggingface.co/mattyxcakes) · [ORCID](https://orcid.org/0009-0008-5557-9394) · [X](https://x.com/xmattwest) · [LinkedIn](https://www.linkedin.com/in/matt-e-west))
+- **DOI (Zenodo):** [`10.5281/zenodo.24419425`](https://doi.org/10.5281/zenodo.24419425) (Concept DOI: [`10.5281/zenodo.24419424`](https://doi.org/10.5281/zenodo.24419424))
 - **Part 1 (Essay & PDF):** [Inside the Weights, Money Is Moral](https://shelltoho.me/pubs/money-is-moral/) ([PDF](https://shelltoho.me/pubs/money-is-moral/paper.pdf))
 - **Part 2 (Essay & PDF):** [Rotating the Bottleneck](https://shelltoho.me/pubs/rotating-the-bottleneck/) ([PDF](https://shelltoho.me/pubs/rotating-the-bottleneck/paper.pdf)) - Read/write funnel dissection, `23.08 GB` (`−63.1%`) Hourglass compression, and `87.1°` Orthogonal Procrustes mid-stack recurrence (`Gemma-4-Loop-Compact`)
 - **Hugging Face Model Checkpoint:** [`mattyxcakes/Gemma-4-31B-Loop-Compact`](https://huggingface.co/mattyxcakes/Gemma-4-31B-Loop-Compact)
@@ -198,6 +201,18 @@ uv run afriat-discover --render-dir results/phase0_discovery
 ```
 
 ---
+
+## Citation
+
+```bibtex
+@misc{west2026afriat,
+  title   = {Project Afriat: Moral Geometry, Hourglass Sparsity, and Orthogonal Procrustes Mid-Stack Recurrence in Gemma 4 31B},
+  author  = {West, Matt},
+  year    = {2026},
+  doi     = {10.5281/zenodo.24419425},
+  url     = {https://doi.org/10.5281/zenodo.24419425}
+}
+```
 
 ## License
 
